@@ -25,21 +25,10 @@ h1{font-family:'Fraunces',serif;font-weight:600;font-size:32px;line-height:1.02}
 h1 em{font-style:italic;color:var(--gold)}
 .tagline{color:var(--muted);font-size:13.5px;margin-top:7px}
 
-/* Tabs */
-.tabs{display:flex;gap:0;padding:0 22px;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10;background:var(--bg)}
-.tab{flex:1;text-align:center;padding:12px 4px;font-size:12.5px;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:all .15s ease;margin-bottom:-1px}
-.tab.active{color:var(--cream);border-bottom-color:var(--ember)}
-
-.view{display:none}.view.active{display:block}
-@keyframes fade{from{opacity:0}to{opacity:1}}
-@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-@keyframes slideup{from{opacity:0;transform:translateY(100%)}to{opacity:1;transform:none}}
-
 /* Panel */
 .panel{margin:14px 22px 0;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:15px;box-shadow:var(--shadow)}
 .row{display:flex;gap:10px}
 .loc-btn{flex:0 0 auto;display:flex;align-items:center;gap:6px;background:var(--ember);color:#1c140f;border:none;border-radius:12px;padding:0 14px;font-family:inherit;font-weight:700;font-size:13px;cursor:pointer;white-space:nowrap;transition:filter .12s}
-.loc-btn:hover{filter:brightness(1.07)}
 .loc-btn:active{filter:brightness(.95)}
 input[type=text]{background:var(--s2);border:1px solid var(--line);border-radius:11px;padding:11px 12px;color:var(--cream);font-family:inherit;font-size:14px;width:100%;transition:border-color .15s,background .15s}
 input::placeholder{color:#7d6c5d}
@@ -56,13 +45,13 @@ label{font-size:11px;color:var(--muted);font-weight:600;padding-left:2px}
 .loc-msg{font-size:12px;margin:9px 2px 0;line-height:1.5;display:none}
 .loc-msg.show{display:block}.loc-msg.err{color:var(--red)}.loc-msg.ok{color:var(--green)}
 
-/* Filtre chips */
+/* Filtre */
 .filter-scroll{overflow-x:auto;display:flex;gap:7px;padding:12px 22px 4px;scrollbar-width:none}
 .filter-scroll::-webkit-scrollbar{display:none}
 .fchip{flex:0 0 auto;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:7px 14px;font-size:12.5px;font-weight:600;color:var(--muted);cursor:pointer;white-space:nowrap;transition:all .15s}
 .fchip.active{background:var(--s2);color:var(--cream);border-color:var(--ember)}
 
-/* Sort bar */
+/* Sort */
 .sortbar{display:flex;gap:8px;margin:8px 22px 4px}
 .chip{flex:1;text-align:center;background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:8px;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .15s}
 .chip.active{background:var(--s2);color:var(--cream);border-color:var(--ember)}
@@ -76,6 +65,7 @@ label{font-size:11px;color:var(--muted);font-weight:600;padding-left:2px}
 
 /* Card */
 .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;margin-bottom:10px;overflow:hidden;box-shadow:var(--shadow);animation:rise .35s ease both}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 .card-main{display:flex;gap:12px;align-items:center;padding:13px;cursor:pointer}
 .rank{flex:0 0 auto;width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-weight:700;font-size:16px;background:var(--s2);color:var(--muted)}
 .card:first-child .rank{background:linear-gradient(135deg,var(--gold),var(--ember));color:#1c140f}
@@ -88,16 +78,33 @@ label{font-size:11px;color:var(--muted);font-weight:600;padding-left:2px}
 .stars{color:var(--gold);font-size:12px}
 .rnum{font-family:'Fraunces',serif;font-weight:700;font-size:19px;line-height:1;margin-top:2px}
 .rcnt{color:var(--muted);font-size:10.5px;margin-top:2px}
-.card-actions{display:flex;gap:0;border-top:1px solid var(--line)}
+.card-actions{display:flex;border-top:1px solid var(--line)}
 .cact{flex:1;display:flex;align-items:center;justify-content:center;gap:5px;padding:10px 4px;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .15s;border:none;background:none;font-family:inherit}
 .cact:not(:last-child){border-right:1px solid var(--line)}
 .cact:hover{color:var(--cream);background:var(--s2)}
 .cact.map-btn{color:var(--blue)}
 .cact.detail-btn{color:var(--embersoft)}
 
-/* Accordion yorumlar */
-.accordion{display:none;border-top:1px solid var(--line);padding:12px 13px;background:var(--s2);animation:fade .2s ease}
-.accordion.open{display:block}
+/* Modal */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:100;display:none;align-items:flex-end;justify-content:center}
+.modal-bg.open{display:flex}
+.modal{background:var(--surface);border-radius:22px 22px 0 0;width:100%;max-width:480px;max-height:88vh;overflow-y:auto;padding:20px;animation:slideup .28s ease}
+@keyframes slideup{from{opacity:0;transform:translateY(100%)}to{opacity:1;transform:none}}
+.modal-handle{width:36px;height:4px;background:var(--s2);border-radius:2px;margin:0 auto 16px}
+.modal-close{float:right;background:var(--s2);border:none;color:var(--muted);border-radius:8px;padding:4px 10px;font-size:13px;cursor:pointer;font-family:inherit}
+.modal h2{font-family:'Fraunces',serif;font-weight:600;font-size:22px;margin-bottom:4px;clear:both}
+.modal .mcuisine{color:var(--embersoft);font-size:12.5px;font-weight:600;margin-bottom:10px}
+.modal .mrating{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.modal .mrating .big{font-family:'Fraunces',serif;font-weight:700;font-size:28px}
+.modal .mrating .mstars{color:var(--gold);font-size:16px}
+.modal .mrating .mcnt{color:var(--muted);font-size:12px}
+.minfo-row{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;font-size:13px;color:var(--muted)}
+.minfo-row a{color:var(--embersoft);text-decoration:none}
+.mbadge{display:inline-block;padding:3px 9px;border-radius:7px;font-size:11px;font-weight:700;margin-bottom:12px}
+.mbadge.open{background:rgba(127,166,106,.15);color:var(--green)}
+.mbadge.closed{background:rgba(216,98,74,.12);color:var(--red)}
+.section-title{font-size:13px;font-weight:700;color:var(--cream);margin:14px 0 8px;letter-spacing:.02em;text-transform:uppercase}
+.modal-map-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:linear-gradient(135deg,var(--gold),var(--ember));color:#1c140f;border:none;border-radius:12px;padding:12px;font-family:'Fraunces',serif;font-weight:600;font-size:15px;cursor:pointer;margin-top:14px}
 .rev-item{padding:9px 0;border-bottom:1px solid var(--line)}
 .rev-item:last-child{border-bottom:none;padding-bottom:0}
 .rev-author{font-weight:700;font-size:12.5px}
@@ -108,51 +115,6 @@ label{font-size:11px;color:var(--muted);font-weight:600;padding-left:2px}
 .no-rev{color:var(--dim);font-size:13px;text-align:center;padding:8px 0}
 .load-rev{color:var(--muted);font-size:12px;text-align:center;padding:6px}
 
-/* Modal */
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:100;display:none;align-items:flex-end;justify-content:center}
-.modal-bg.open{display:flex}
-.modal{background:var(--surface);border-radius:22px 22px 0 0;width:100%;max-width:480px;max-height:88vh;overflow-y:auto;padding:20px;animation:slideup .28s ease}
-.modal-handle{width:36px;height:4px;background:var(--s3);border-radius:2px;margin:0 auto 16px}
-.modal-close{float:right;background:var(--s2);border:none;color:var(--muted);border-radius:8px;padding:4px 10px;font-size:13px;cursor:pointer;font-family:inherit}
-.modal h2{font-family:'Fraunces',serif;font-weight:600;font-size:22px;margin-bottom:4px;clear:both}
-.modal .mcuisine{color:var(--embersoft);font-size:12.5px;font-weight:600;margin-bottom:10px}
-.modal .mrating{display:flex;align-items:center;gap:10px;margin-bottom:12px}
-.modal .mrating .big{font-family:'Fraunces',serif;font-weight:700;font-size:28px}
-.modal .mrating .mstars{color:var(--gold);font-size:16px}
-.modal .mrating .mcnt{color:var(--muted);font-size:12px}
-.minfo-row{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;font-size:13px;color:var(--muted)}
-.minfo-row .ico{flex:0 0 auto;font-size:15px}
-.minfo-row a{color:var(--embersoft);text-decoration:none}
-.mbadge{display:inline-block;padding:3px 9px;border-radius:7px;font-size:11px;font-weight:700;margin-bottom:12px}
-.mbadge.open{background:rgba(127,166,106,.15);color:var(--green)}
-.mbadge.closed{background:rgba(216,98,74,.12);color:var(--red)}
-.section-title{font-size:13px;font-weight:700;color:var(--cream);margin:14px 0 8px;letter-spacing:.02em;text-transform:uppercase}
-.modal-map-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:linear-gradient(135deg,var(--gold),var(--ember));color:#1c140f;border:none;border-radius:12px;padding:12px;font-family:'Fraunces',serif;font-weight:600;font-size:15px;cursor:pointer;margin-top:14px}
-
-/* Settings & Guide */
-.sect{margin:14px 22px 0;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:15px;box-shadow:var(--shadow)}
-.sect h3{font-family:'Fraunces',serif;font-weight:600;font-size:16px;margin-bottom:5px}
-.sect p{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:10px}
-.key-row{display:flex;gap:8px;margin-top:4px}
-.key-row input{flex:1}
-.test-btn,.save-btn{background:var(--s2);color:var(--cream);border:1px solid var(--line);border-radius:11px;padding:0 14px;font-family:inherit;font-weight:700;font-size:13px;cursor:pointer;transition:all .15s;white-space:nowrap}
-.test-btn:hover,.save-btn:hover{border-color:var(--ember);color:var(--gold)}
-.save-btn{width:100%;padding:11px;margin-top:9px}
-.test-result{font-size:12px;margin-top:10px;line-height:1.5;padding:9px 11px;border-radius:9px;display:none}
-.test-result.show{display:block}
-.test-result.ok{background:rgba(127,166,106,.12);color:var(--green);border:1px solid rgba(127,166,106,.3)}
-.test-result.err{background:rgba(216,98,74,.12);color:var(--red);border:1px solid rgba(216,98,74,.3)}
-.test-result.busy{background:var(--s2);color:var(--muted)}
-.note{font-size:11px;color:var(--dim);line-height:1.6;margin-top:11px;padding-top:11px;border-top:1px solid var(--line)}
-.step{display:flex;gap:12px;margin-bottom:16px}
-.step:last-child{margin-bottom:0}
-.step-num{flex:0 0 auto;width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--gold),var(--ember));color:#1c140f;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-weight:700;font-size:14px}
-.step-body h4{font-size:14px;font-weight:700;margin-bottom:3px}
-.step-body p{font-size:12px;color:var(--muted);line-height:1.6}
-.step-body a{color:var(--embersoft);text-decoration:none}
-.step-body code{background:var(--s2);padding:1px 5px;border-radius:4px;font-size:11px;color:var(--gold)}
-.warn{background:rgba(233,176,74,.1);border:1px solid rgba(233,176,74,.25);border-radius:11px;padding:11px 13px;font-size:12px;color:var(--gold);line-height:1.6;margin-top:4px}
-
 .empty{text-align:center;color:var(--muted);padding:45px 20px;font-size:14px;line-height:1.6}
 .empty .ico{font-size:34px;display:block;margin-bottom:10px}
 footer{padding:20px 22px 26px;text-align:center;color:var(--dim);font-size:11px;line-height:1.7}
@@ -161,66 +123,60 @@ footer strong{color:var(--muted);font-weight:600}
 </head>
 <body>
 <div class="app">
+
 <header>
   <div class="eyebrow">Şehir şehir, lokma lokma</div>
   <h1>Lezzet <em>Rotası</em></h1>
   <p class="tagline">Bulunduğun yerin en sevilen sofralarını keşfet.</p>
 </header>
 
+<div class="panel">
+  <div class="row">
+    <button class="loc-btn" id="locBtn">📍 Konumumu kullan</button>
+    <input type="text" id="locStatus" placeholder="Konum bekleniyor…" readonly style="flex:1;font-size:13px">
+  </div>
+  <div class="loc-msg" id="locMsg"></div>
+  <div class="divider-or">veya elle gir</div>
+  <div class="field-grid">
+    <div class="field"><label>İl</label><input type="text" id="il" placeholder="Ankara"></div>
+    <div class="field"><label>İlçe</label><input type="text" id="ilce" placeholder="Sincan"></div>
+    <div class="field full"><label>Mahalle (isteğe bağlı)</label><input type="text" id="mah" placeholder="Fatih Mahallesi"></div>
+  </div>
+  <button class="go" id="searchBtn">Sofraları getir</button>
 </div>
 
-<!-- SEARCH VIEW -->
-<div class="view active" id="view-search">
-  <div class="panel">
-    <div class="row">
-      <button class="loc-btn" id="locBtn">📍 Konumumu kullan</button>
-      <input type="text" id="locStatus" placeholder="Konum bekleniyor…" readonly style="flex:1;font-size:13px">
-    </div>
-    <div class="loc-msg" id="locMsg"></div>
-    <div class="divider-or">veya elle gir</div>
-    <div class="field-grid">
-      <div class="field"><label>İl</label><input type="text" id="il" placeholder="Ankara"></div>
-      <div class="field"><label>İlçe</label><input type="text" id="ilce" placeholder="Sincan"></div>
-      <div class="field full"><label>Mahalle (isteğe bağlı)</label><input type="text" id="mah" placeholder="Fatih Mahallesi"></div>
-    </div>
-    <button class="go" id="searchBtn">Sofraları getir</button>
-  </div>
-
-  <!-- Mutfak filtresi -->
-  <div class="filter-scroll" id="filterBar">
-    <div class="fchip active" data-tur="">Tümü</div>
-    <div class="fchip" data-tur="kebap">🥩 Kebap</div>
-    <div class="fchip" data-tur="izgara">🔥 Izgara</div>
-    <div class="fchip" data-tur="pide lahmacun">🫓 Pide & Lahmacun</div>
-    <div class="fchip" data-tur="balık">🐟 Balık</div>
-    <div class="fchip" data-tur="meze meyhane">🍷 Meze & Meyhane</div>
-    <div class="fchip" data-tur="ev yemeği">🍲 Ev Yemeği</div>
-    <div class="fchip" data-tur="kahvaltı">🍳 Kahvaltı</div>
-    <div class="fchip" data-tur="kafe pastane">☕ Kafe & Pastane</div>
-    <div class="fchip" data-tur="döner">🌯 Döner</div>
-    <div class="fchip" data-tur="çorba">🥣 Çorba</div>
-    <div class="fchip" data-tur="tatlı künefe">🍮 Tatlı & Künefe</div>
-    <div class="fchip" data-tur="pizza">🍕 Pizza</div>
-    <div class="fchip" data-tur="fast food">🍔 Fast Food</div>
-    <div class="fchip" data-tur="vegan vejetaryen">🥗 Vegan & Vejetaryen</div>
-  </div>
-
-  <div class="sortbar">
-    <div class="chip active" data-sort="balanced">Puan + yorum dengesi</div>
-    <div class="chip" data-sort="rating">Sadece en yüksek puan</div>
-  </div>
-
-  <div class="results" id="results">
-    <div class="empty"><span class="ico">🍽️</span>Bir konum seç ya da il/ilçe gir,<br>en iyi sofraları sıralayalım.</div>
-  </div>
+<div class="filter-scroll">
+  <div class="fchip active" data-tur="">Tümü</div>
+  <div class="fchip" data-tur="kebap">🥩 Kebap</div>
+  <div class="fchip" data-tur="izgara">🔥 Izgara</div>
+  <div class="fchip" data-tur="pide lahmacun">🫓 Pide & Lahmacun</div>
+  <div class="fchip" data-tur="balık">🐟 Balık</div>
+  <div class="fchip" data-tur="meze meyhane">🍷 Meze & Meyhane</div>
+  <div class="fchip" data-tur="ev yemeği">🍲 Ev Yemeği</div>
+  <div class="fchip" data-tur="kahvaltı">🍳 Kahvaltı</div>
+  <div class="fchip" data-tur="kafe pastane">☕ Kafe & Pastane</div>
+  <div class="fchip" data-tur="döner">🌯 Döner</div>
+  <div class="fchip" data-tur="çorba">🥣 Çorba</div>
+  <div class="fchip" data-tur="tatlı künefe">🍮 Tatlı & Künefe</div>
+  <div class="fchip" data-tur="pizza">🍕 Pizza</div>
+  <div class="fchip" data-tur="fast food">🍔 Fast Food</div>
+  <div class="fchip" data-tur="vegan vejetaryen">🥗 Vegan & Vejetaryen</div>
 </div>
 
+<div class="sortbar">
+  <div class="chip active" data-sort="balanced">Puan + yorum dengesi</div>
+  <div class="chip" data-sort="rating">Sadece en yüksek puan</div>
+</div>
+
+<div class="results" id="results">
+  <div class="empty"><span class="ico">🍽️</span>Bir konum seç ya da il/ilçe gir,<br>en iyi sofraları sıralayalım.</div>
+</div>
 
 </div><!-- .app -->
 
 <!-- MODAL -->
 <div class="modal-bg" id="modalBg">
-  <div class="modal" id="modal">
+  <div class="modal">
     <div class="modal-handle"></div>
     <button class="modal-close" id="modalClose">✕ Kapat</button>
     <div id="modalContent"></div>
@@ -242,111 +198,80 @@ let lastParams  = null;
 let lastList    = null;
 let lastLive    = false;
 
-
-/* ---- Proxy storage ---- */
-function defaultProxy(){
-  return (location.protocol==='http:'||location.protocol==='https:') ? location.origin : '';
-}
+/* Proxy: same-origin varsayılan, localStorage'dan override */
 function loadProxy(){
-  try{ const s=localStorage.getItem(PROXY_STORE); if(s!==null) return s.replace(/\/+$/,''); }catch(e){}
-  return defaultProxy();
-}
-function saveProxy(v){
-  try{ v ? localStorage.setItem(PROXY_STORE,v) : localStorage.removeItem(PROXY_STORE); return true; }catch(e){ return false; }
-}
-window.addEventListener('DOMContentLoaded', () => { $('#proxyUrl').value = loadProxy(); });
-
-$('#saveBtn').onclick = () => {
-  const v = $('#proxyUrl').value.trim().replace(/\/+$/,'');
-  const ok = saveProxy(v);
-  const r = $('#testResult');
-  r.className = 'test-result show '+(ok?'ok':'err');
-  r.textContent = ok ? (v?'Proxy adresi kaydedildi.':'Adres silindi.') : 'Kaydedilemedi.';
-};
-$('#testBtn').onclick = async () => {
-  const url = $('#proxyUrl').value.trim().replace(/\/+$/,'');
-  const r = $('#testResult');
-  if(!url){ r.className='test-result show err'; r.textContent='Önce adres gir.'; return; }
-  r.className='test-result show busy'; r.textContent='Test ediliyor…';
-  $('#testBtn').disabled=true;
-  const res = await testProxy(url);
-  $('#testBtn').disabled=false;
-  r.className='test-result show '+(res.ok?'ok':'err');
-  r.textContent=res.msg;
-};
-async function testProxy(url){
   try{
-    const d = await (await fetch(url+'/saglik',{signal:AbortSignal.timeout(6000)})).json();
-    if(d.durum==='ok'&&d.anahtar_tanimli) return {ok:true,msg:'✓ Proxy çalışıyor, anahtar tanımlı.'};
-    if(d.durum==='ok') return {ok:false,msg:'Proxy çalışıyor ama anahtar tanımlı değil.'};
-    return {ok:false,msg:'Beklenmeyen yanıt.'};
-  }catch(e){ return {ok:false,msg:'Proxy\'ye ulaşılamadı.'}; }
+    const s = localStorage.getItem(PROXY_STORE);
+    if(s !== null) return s.replace(/\/+$/, '');
+  }catch(e){}
+  if(location.protocol === 'http:' || location.protocol === 'https:')
+    return location.origin;
+  return '';
 }
 
-/* ---- Filtre ---- */
+/* Filtre */
 document.querySelectorAll('.fchip').forEach(c => {
   c.onclick = () => {
-    document.querySelectorAll('.fchip').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.fchip').forEach(x => x.classList.remove('active'));
     c.classList.add('active');
     currentTur = c.dataset.tur;
-    if(lastParams) doSearch(lastQuery, {...lastParams, tur:currentTur});
+    if(lastParams) doSearch(lastQuery, {...lastParams, tur: currentTur});
   };
 });
 
-/* ---- Sort ---- */
+/* Sort */
 document.querySelectorAll('.chip').forEach(c => {
   c.onclick = () => {
-    document.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.chip').forEach(x => x.classList.remove('active'));
     c.classList.add('active');
     currentSort = c.dataset.sort;
     if(lastList) render(lastList, lastQuery, lastLive);
   };
 });
 
-/* ---- Demo data ---- */
-const DEMO=[
-  {id:'',name:"Ocakbaşı Dede",cuisine:"Kebap & Ocakbaşı",addr:"Cumhuriyet Cad. No:12",rating:4.8,reviews:2143,price:'₺₺',summary:'',lat:39.97,lng:32.85,photo:''},
-  {id:'',name:"Köfteci Hacı Usta",cuisine:"Ev Yemekleri",addr:"İstasyon Mah. 3. Sok.",rating:4.7,reviews:1890,price:'₺',summary:'',lat:39.97,lng:32.85,photo:''},
-  {id:'',name:"Tarihi Tava Lokantası",cuisine:"Yöresel",addr:"Eski Çarşı içi",rating:4.6,reviews:3521,price:'₺',summary:'',lat:39.97,lng:32.85,photo:''},
-  {id:'',name:"Mangal Keyfi",cuisine:"Izgara",addr:"Park yanı No:8",rating:4.6,reviews:642,price:'₺₺',summary:'',lat:39.97,lng:32.85,photo:''},
-  {id:'',name:"Kahvaltı Bahçesi",cuisine:"Serpme Kahvaltı",addr:"Bağlar Mevkii",rating:4.5,reviews:1204,price:'₺₺',summary:'',lat:39.97,lng:32.85,photo:''},
-  {id:'',name:"Pideci Şükrü",cuisine:"Pide & Lahmacun",addr:"Merkez Meydanı",rating:4.5,reviews:980,price:'₺',summary:'',lat:39.97,lng:32.85,photo:''},
-  {id:'',name:"Balıkçı Liman",cuisine:"Balık & Meze",addr:"Sahil yolu No:4",rating:4.4,reviews:756,price:'₺₺₺',summary:'',lat:39.97,lng:32.85,photo:''},
-  {id:'',name:"Tatlıcı Nuri",cuisine:"Tatlı & Künefe",addr:"Çarşı Cad. No:21",rating:4.4,reviews:1530,price:'₺',summary:'',lat:39.97,lng:32.85,photo:''},
+/* Demo data */
+const DEMO = [
+  {id:'',name:"Ocakbaşı Dede",cuisine:"Kebap & Ocakbaşı",addr:"Cumhuriyet Cad. No:12",rating:4.8,reviews:2143,price:'₺₺',summary:'',lat:39.97,lng:32.85},
+  {id:'',name:"Köfteci Hacı Usta",cuisine:"Ev Yemekleri",addr:"İstasyon Mah. 3. Sok.",rating:4.7,reviews:1890,price:'₺',summary:'',lat:39.97,lng:32.85},
+  {id:'',name:"Tarihi Tava Lokantası",cuisine:"Yöresel",addr:"Eski Çarşı içi",rating:4.6,reviews:3521,price:'₺',summary:'',lat:39.97,lng:32.85},
+  {id:'',name:"Mangal Keyfi",cuisine:"Izgara",addr:"Park yanı No:8",rating:4.6,reviews:642,price:'₺₺',summary:'',lat:39.97,lng:32.85},
+  {id:'',name:"Kahvaltı Bahçesi",cuisine:"Serpme Kahvaltı",addr:"Bağlar Mevkii",rating:4.5,reviews:1204,price:'₺₺',summary:'',lat:39.97,lng:32.85},
+  {id:'',name:"Pideci Şükrü",cuisine:"Pide & Lahmacun",addr:"Merkez Meydanı",rating:4.5,reviews:980,price:'₺',summary:'',lat:39.97,lng:32.85},
+  {id:'',name:"Balıkçı Liman",cuisine:"Balık & Meze",addr:"Sahil yolu No:4",rating:4.4,reviews:756,price:'₺₺₺',summary:'',lat:39.97,lng:32.85},
+  {id:'',name:"Tatlıcı Nuri",cuisine:"Tatlı & Künefe",addr:"Çarşı Cad. No:21",rating:4.4,reviews:1530,price:'₺',summary:'',lat:39.97,lng:32.85},
 ];
 function demoFor(label){
   let h=0; for(const c of (label||'')) h=(h*31+c.charCodeAt(0))%9973;
-  return DEMO.map(r=>({...r,rating:Math.min(4.9,+(r.rating+((h%7)-3)*.02).toFixed(1)),reviews:r.reviews+(h%500)}));
+  return DEMO.map(r=>({...r, rating:Math.min(4.9,+(r.rating+((h%7)-3)*.02).toFixed(1)), reviews:r.reviews+(h%500)}));
 }
 
-/* ---- Ranking ---- */
+/* Ranking */
 function rank(list, sort){
-  const a=[...list];
-  if(sort==='rating') a.sort((x,y)=>y.rating-x.rating||y.reviews-x.reviews);
-  else{ const C=200,m=4.3,sc=r=>(r.reviews*r.rating+C*m)/(r.reviews+C); a.sort((x,y)=>sc(y)-sc(x)); }
+  const a = [...list];
+  if(sort === 'rating') a.sort((x,y) => y.rating-x.rating || y.reviews-x.reviews);
+  else { const C=200,m=4.3,sc=r=>(r.reviews*r.rating+C*m)/(r.reviews+C); a.sort((x,y)=>sc(y)-sc(x)); }
   return a;
 }
-function stars(r){ const f=Math.floor(r),h=r-f>=.5; return '★'.repeat(f)+(h?'½':''); }
+function stars(r){ return '★'.repeat(Math.floor(r)) + (r - Math.floor(r) >= .5 ? '½' : ''); }
 
-/* ---- Render ---- */
+/* Render */
 function render(list, label, live){
-  lastList=list; lastLive=live;
-  const ranked=rank(list,currentSort);
-  const el=$('#results');
-  el.innerHTML=`
+  lastList = list; lastLive = live;
+  const ranked = rank(list, currentSort);
+  $('#results').innerHTML = `
     <div class="meta">
       <span>${label} · ${ranked.length} sofra</span>
       <span class="src-tag ${live?'live':'demo'}">${live?'Canlı · Google':'Örnek veri'}</span>
     </div>
-    ${ranked.map((r,i)=>`
-      <div class="card" style="animation-delay:${i*35}ms" data-idx="${i}">
-        <div class="card-main" onclick="toggleAccordion(${i})">
+    ${ranked.map((r,i) => `
+      <div class="card" style="animation-delay:${i*35}ms">
+        <div class="card-main">
           <div class="rank">${i+1}</div>
           <div class="info">
             <div class="cname">${r.name}</div>
             <div class="ccuisine">${r.cuisine}</div>
             <div class="caddr">${r.addr}</div>
-            ${r.price?`<div class="cprice">${r.price}</div>`:''}
+            ${r.price ? `<div class="cprice">${r.price}</div>` : ''}
           </div>
           <div class="score">
             <div class="stars">${stars(r.rating)}</div>
@@ -356,110 +281,83 @@ function render(list, label, live){
         </div>
         <div class="card-actions">
           <button class="cact detail-btn" onclick="openModal(${i})">📋 Detay & Yorumlar</button>
-          ${r.lat&&r.lng?`<button class="cact map-btn" onclick="openMap(${r.lat},${r.lng},'${encodeURIComponent(r.name)}')">🗺️ Haritada Aç</button>`:''}
-        </div>
-        <div class="accordion" id="acc-${i}">
-          <div class="load-rev">Yorumlar için "Detay & Yorumlar"a tıkla.</div>
+          ${r.lat && r.lng ? `<button class="cact map-btn" onclick="openMap(${r.lat},${r.lng},'${encodeURIComponent(r.name)}')">🗺️ Haritada Aç</button>` : ''}
         </div>
       </div>`).join('')}`;
 }
 
-function showLoading(label){ $('#results').innerHTML=`<div class="empty"><span class="ico">🍳</span>${label} için sofralar getiriliyor…</div>`; }
-function showError(msg){ $('#results').innerHTML=`<div class="empty"><span class="ico">⚠️</span>${msg}</div>`; }
+function showLoading(label){ $('#results').innerHTML = `<div class="empty"><span class="ico">🍳</span>${label} için sofralar getiriliyor…</div>`; }
+function showError(msg){ $('#results').innerHTML = `<div class="empty"><span class="ico">⚠️</span>${msg}</div>`; }
 
-/* ---- Search ---- */
+/* Search */
 async function doSearch(label, params){
-  lastQuery=label; lastParams=params;
-  const proxy=loadProxy();
-  if(!proxy){ const l=demoFor(label); render(l,label,false); return; }
+  lastQuery = label; lastParams = params;
+  const proxy = loadProxy();
+  if(!proxy){ render(demoFor(label), label, false); return; }
   showLoading(label);
   try{
-    let url=proxy+'/api/restoranlar?';
-    if(params.metin) url+='metin='+encodeURIComponent(params.metin);
-    else if(params.lat) url+=`lat=${params.lat}&lng=${params.lng}&yaricap=2500`;
-    if(params.tur) url+='&tur='+encodeURIComponent(params.tur);
-    const data=await (await fetch(url,{signal:AbortSignal.timeout(15000)})).json();
-    if(data.hata){ showError('Hata: '+data.hata); return; }
-    const list=data.restoranlar||[];
-    if(!list.length){ showError('Bu bölgede sonuç bulunamadı. Daha geniş alan dene.'); return; }
-    render(list,label,true);
-  }catch(e){ showError('Proxy\'ye ulaşılamadı. Sunucu açık mı?'); }
+    let url = proxy + '/api/restoranlar?';
+    if(params.metin) url += 'metin=' + encodeURIComponent(params.metin);
+    else if(params.lat) url += `lat=${params.lat}&lng=${params.lng}&yaricap=2500`;
+    if(params.tur) url += '&tur=' + encodeURIComponent(params.tur);
+    const data = await (await fetch(url, {signal: AbortSignal.timeout(15000)})).json();
+    if(data.hata){ showError('Hata: ' + data.hata); return; }
+    const list = data.restoranlar || [];
+    if(!list.length){ showError('Bu bölgede sonuç bulunamadı.'); return; }
+    render(list, label, true);
+  }catch(e){ showError('Sunucuya ulaşılamadı. Bağlantını kontrol et.'); }
 }
 
 $('#searchBtn').onclick = () => {
-  const il=$('#il').value.trim(), ilce=$('#ilce').value.trim(), mah=$('#mah').value.trim();
-  if(!il&&!ilce&&!mah){ $('#il').focus(); return; }
-  const metin=[mah,ilce,il].filter(Boolean).join(' ');
-  const label=[mah,ilce,il].filter(Boolean).join(', ');
-  doSearch(label,{metin,tur:currentTur});
+  const il = $('#il').value.trim(), ilce = $('#ilce').value.trim(), mah = $('#mah').value.trim();
+  if(!il && !ilce && !mah){ $('#il').focus(); return; }
+  const metin = [mah,ilce,il].filter(Boolean).join(' ');
+  const label = [mah,ilce,il].filter(Boolean).join(', ');
+  doSearch(label, {metin, tur: currentTur});
 };
 
-/* ---- Geolocation ---- */
+/* Geolocation */
 $('#locBtn').onclick = () => {
-  const st=$('#locStatus'), msg=$('#locMsg');
-  msg.className='loc-msg';
-  if(location.protocol==='file:'){ st.value='Konum kullanılamıyor'; msg.className='loc-msg show err'; msg.textContent='file:// ile açıldı. https ortamında çalışır.'; return; }
+  const st = $('#locStatus'), msg = $('#locMsg');
+  msg.className = 'loc-msg';
+  if(location.protocol === 'file:'){ st.value='Konum kullanılamıyor'; msg.className='loc-msg show err'; msg.textContent='file:// ile açıldı. https gerekli.'; return; }
   if(!navigator.geolocation){ st.value='Desteklenmiyor'; msg.className='loc-msg show err'; msg.textContent='Tarayıcı konumu desteklemiyor.'; return; }
-  st.value='Konum alınıyor…';
+  st.value = 'Konum alınıyor…';
   navigator.geolocation.getCurrentPosition(
-    pos=>{
-      const {latitude:la,longitude:lo}=pos.coords;
-      st.value=`${la.toFixed(3)}, ${lo.toFixed(3)}`;
-      msg.className='loc-msg show ok'; msg.textContent='Konum alındı.';
-      doSearch('Yakınımdaki sofralar',{lat:la,lng:lo,tur:currentTur});
+    pos => {
+      const {latitude:la, longitude:lo} = pos.coords;
+      st.value = `${la.toFixed(3)}, ${lo.toFixed(3)}`;
+      msg.className = 'loc-msg show ok'; msg.textContent = 'Konum alındı.';
+      doSearch('Yakınımdaki sofralar', {lat:la, lng:lo, tur:currentTur});
     },
-    err=>{
-      let m='Konum alınamadı.';
-      if(err.code===1) m='Konum izni reddedildi. Tarayıcı ayarlarından izni ver.';
-      else if(err.code===2) m='Konum bilgisi alınamadı.';
-      else if(err.code===3) m='Zaman aşımı. Tekrar dene.';
-      st.value='Alınamadı'; msg.className='loc-msg show err'; msg.textContent=m;
-    },{timeout:8000,enableHighAccuracy:true}
+    err => {
+      const msgs = {1:'İzin reddedildi. Tarayıcı ayarlarından izni ver.', 2:'Konum alınamadı.', 3:'Zaman aşımı.'};
+      st.value = 'Alınamadı'; msg.className = 'loc-msg show err'; msg.textContent = msgs[err.code] || 'Konum hatası.';
+    },
+    {timeout:8000, enableHighAccuracy:true}
   );
 };
 
-/* ---- Accordion (mini önizleme) ---- */
-function toggleAccordion(idx){
-  const acc=$(`#acc-${idx}`);
-  acc.classList.toggle('open');
+/* Haritada aç */
+function openMap(lat, lng, name){
+  const apple  = `maps://maps.apple.com/?q=${name}&ll=${lat},${lng}`;
+  const google = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+  const a = document.createElement('a');
+  a.href = apple; a.style.display = 'none'; document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(() => window.open(google, '_blank'), 500);
 }
 
-/* ---- Haritada aç ---- */
-function openMap(lat,lng,name){
-  // iOS: Apple Maps önce dene
-  const appleUrl=`maps://maps.apple.com/?q=${name}&ll=${lat},${lng}`;
-  const googleUrl=`https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
-  // iOS'ta maps:// çalışır, diğerlerinde google maps'e düşer
-  const a=document.createElement('a');
-  a.href=appleUrl; a.style.display='none'; document.body.appendChild(a);
-  a.click(); document.body.removeChild(a);
-  // 500ms içinde uygulama açılmazsa Google Maps'e git
-  setTimeout(()=>{ window.open(googleUrl,'_blank'); },500);
-}
-
-/* ---- Modal: detay + yorumlar ---- */
-const modalBg=$('#modalBg');
-const modalContent=$('#modalContent');
-$('#modalClose').onclick=()=>{ modalBg.classList.remove('open'); };
-modalBg.onclick=(e)=>{ if(e.target===modalBg) modalBg.classList.remove('open'); };
+/* Modal */
+const modalBg = $('#modalBg');
+$('#modalClose').onclick = () => modalBg.classList.remove('open');
+modalBg.onclick = e => { if(e.target === modalBg) modalBg.classList.remove('open'); };
 
 async function openModal(idx){
-  if(!lastList||!lastList[idx]) return;
-  const r=rank(lastList,currentSort)[idx];
-  modalContent.innerHTML=renderModalShell(r);
-  modalBg.classList.add('open');
-  if(!r.id||!lastLive){ renderModalReviews([]); return; }
-  // Gerçek yorumları çek
-  try{
-    const proxy=loadProxy();
-    const data=await (await fetch(`${proxy}/api/detay/${r.id}`,{signal:AbortSignal.timeout(12000)})).json();
-    if(data.hata){ renderModalReviews([]); return; }
-    renderModalReviews(data.yorumlar||[],data);
-  }catch(e){ renderModalReviews([]); }
-}
-
-function renderModalShell(r){
-  return `
+  if(!lastList) return;
+  const ranked = rank(lastList, currentSort);
+  const r = ranked[idx];
+  if(!r) return;
+  $('#modalContent').innerHTML = `
     <h2>${r.name}</h2>
     <div class="mcuisine">${r.cuisine}${r.price?' · '+r.price:''}</div>
     <div class="mrating">
@@ -467,34 +365,29 @@ function renderModalShell(r){
       <div><div class="mstars">${stars(r.rating)}</div><div class="mcnt">${(r.reviews||0).toLocaleString('tr-TR')} yorum</div></div>
     </div>
     ${r.summary?`<p style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:10px">${r.summary}</p>`:''}
-    <div class="minfo-row"><span class="ico">📍</span><span>${r.addr}</span></div>
+    <div class="minfo-row">📍 <span>${r.addr}</span></div>
     <div id="modalExtra"></div>
     ${r.lat&&r.lng?`<button class="modal-map-btn" onclick="openMap(${r.lat},${r.lng},'${encodeURIComponent(r.name)}')">🗺️ Haritada Aç</button>`:''}
     <div class="section-title">Yorumlar</div>
-    <div id="modalRevs"><div class="load-rev">Yorumlar yükleniyor…</div></div>`;
-}
-
-function renderModalReviews(revs, extra){
-  if(extra){
-    const ex=$('#modalExtra');
-    let html='';
-    if(extra.acik_mi!==undefined) html+=`<span class="mbadge ${extra.acik_mi?'open':'closed'}">${extra.acik_mi?'✓ Açık':'✗ Kapalı'}</span>`;
-    if(extra.telefon) html+=`<div class="minfo-row"><span class="ico">📞</span><a href="tel:${extra.telefon}">${extra.telefon}</a></div>`;
-    if(extra.website) html+=`<div class="minfo-row"><span class="ico">🌐</span><a href="${extra.website}" target="_blank" rel="noopener">Web sitesi</a></div>`;
-    if(ex) ex.innerHTML=html;
-  }
-  const el=$('#modalRevs');
-  if(!el) return;
-  if(!revs||!revs.length){ el.innerHTML='<div class="no-rev">Yorum bulunamadı veya örnek veri modundasın.</div>'; return; }
-  el.innerHTML=revs.map(rv=>`
-    <div class="rev-item">
-      <div class="rev-author">${rv.author}</div>
-      <div class="rev-meta">
-        <span class="rev-stars">${'★'.repeat(Math.round(rv.rating))}</span>
-        <span class="rev-time">${rv.time}</span>
-      </div>
-      ${rv.text?`<div class="rev-text">${rv.text}</div>`:''}
-    </div>`).join('');
+    <div id="modalRevs"><div class="load-rev">Yükleniyor…</div></div>`;
+  modalBg.classList.add('open');
+  if(!r.id || !lastLive){ $('#modalRevs').innerHTML = '<div class="no-rev">Yorumlar için gerçek veri modu gerekli.</div>'; return; }
+  try{
+    const data = await (await fetch(`${loadProxy()}/api/detay/${r.id}`, {signal:AbortSignal.timeout(12000)})).json();
+    if(data.hata){ $('#modalRevs').innerHTML='<div class="no-rev">Yorum yüklenemedi.</div>'; return; }
+    const ex = $('#modalExtra');
+    if(ex){
+      let h = '';
+      if(data.acik_mi !== undefined) h += `<span class="mbadge ${data.acik_mi?'open':'closed'}">${data.acik_mi?'✓ Şu an açık':'✗ Şu an kapalı'}</span>`;
+      if(data.telefon) h += `<div class="minfo-row">📞 <a href="tel:${data.telefon}">${data.telefon}</a></div>`;
+      if(data.website) h += `<div class="minfo-row">🌐 <a href="${data.website}" target="_blank" rel="noopener">Web sitesi</a></div>`;
+      ex.innerHTML = h;
+    }
+    const revs = data.yorumlar || [];
+    $('#modalRevs').innerHTML = revs.length
+      ? revs.map(rv=>`<div class="rev-item"><div class="rev-author">${rv.author}</div><div class="rev-meta"><span class="rev-stars">${'★'.repeat(Math.round(rv.rating))}</span><span class="rev-time">${rv.time}</span></div>${rv.text?`<div class="rev-text">${rv.text}</div>`:''}</div>`).join('')
+      : '<div class="no-rev">Yorum bulunamadı.</div>';
+  }catch(e){ $('#modalRevs').innerHTML='<div class="no-rev">Yorum yüklenemedi.</div>'; }
 }
 </script>
 </body>

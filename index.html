@@ -167,10 +167,6 @@ footer strong{color:var(--muted);font-weight:600}
   <p class="tagline">Bulunduğun yerin en sevilen sofralarını keşfet.</p>
 </header>
 
-<div class="tabs">
-  <div class="tab active" data-view="search">Keşfet</div>
-  <div class="tab" data-view="settings">API Ayarı</div>
-  <div class="tab" data-view="guide">Nasıl Alınır?</div>
 </div>
 
 <!-- SEARCH VIEW -->
@@ -219,42 +215,6 @@ footer strong{color:var(--muted);font-weight:600}
   </div>
 </div>
 
-<!-- SETTINGS VIEW -->
-<div class="view" id="view-settings">
-  <div class="sect">
-    <h3>Proxy sunucu adresi</h3>
-    <p>Gerçek Google verisi için <code>app.py</code> proxy sunucusunu çalıştır, sonra adresini yaz. API anahtarın proxy'de durur, bu dosyada görünmez.</p>
-    <div class="key-row">
-      <input type="text" id="proxyUrl" placeholder="http://localhost:5000" autocomplete="off">
-      <button class="test-btn" id="testBtn">Test et</button>
-    </div>
-    <button class="save-btn" id="saveBtn">Bu cihaza kaydet</button>
-    <div class="test-result" id="testResult"></div>
-    <div class="note">Bilgisayardan: <code>http://localhost:5000</code> · Telefondan (Wi-Fi): <code>http://192.168.1.X:5000</code></div>
-  </div>
-  <div class="sect" style="margin-bottom:28px">
-    <h3>Proxy nasıl çalıştırılır?</h3>
-    <p>1) <code>pip install flask flask-cors requests gunicorn</code><br>
-       2) <code>set GOOGLE_API_KEY=AIza...</code><br>
-       3) <code>python app.py</code><br>
-       4) Adresi yukarı yaz, test et.</p>
-  </div>
-</div>
-
-<!-- GUIDE VIEW -->
-<div class="view" id="view-guide">
-  <div class="sect">
-    <h3>Google Places API — adım adım</h3>
-    <p>Google Haritalar verisini kullanmak için ücretsiz başlayan bir anahtar gerekir.</p>
-    <div class="step"><div class="step-num">1</div><div class="step-body"><h4>Google Cloud Console</h4><p><a href="https://console.cloud.google.com/" target="_blank">console.cloud.google.com</a> adresine Google hesabınla giriş yap.</p></div></div>
-    <div class="step"><div class="step-num">2</div><div class="step-body"><h4>Yeni proje oluştur</h4><p>Üst menüden proje seçici → <code>Yeni Proje</code> → isim ver.</p></div></div>
-    <div class="step"><div class="step-num">3</div><div class="step-body"><h4>Faturalandırmayı aç</h4><p>Sol menü → <code>Faturalandırma</code>. Kart istenir ama ücretsiz kredi verilir.</p></div></div>
-    <div class="step"><div class="step-num">4</div><div class="step-body"><h4>Places API'yi etkinleştir</h4><p><code>API'ler ve Hizmetler</code> → <code>Kitaplık</code> → "Places API (New)" ara → Etkinleştir.</p></div></div>
-    <div class="step"><div class="step-num">5</div><div class="step-body"><h4>Anahtar oluştur</h4><p><code>Kimlik Bilgileri</code> → <code>API anahtarı</code>. Çıkan <code>AIza...</code> anahtarı kopyala.</p></div></div>
-    <div class="step"><div class="step-num">6</div><div class="step-body"><h4>Render'a yükle</h4><p>Render → Environment Variables → <code>GOOGLE_API_KEY</code> = anahtarın.</p></div></div>
-    <div class="warn" style="margin-bottom:28px">⚠️ Anahtarını Google Cloud'da sadece Places API'ye kısıtla (restrict). Kötüye kullanımı önler.</div>
-  </div>
-</div>
 
 </div><!-- .app -->
 
@@ -268,7 +228,7 @@ footer strong{color:var(--muted);font-weight:600}
 </div>
 
 <footer>
-  Lezzet Rotası · Gerçek veriler için proxy + API anahtarı gerekir<br>
+  Lezzet Rotası<br>
   <strong>Geliştirici: Mehmet Emin KILIÇ</strong> — V3.0
 </footer>
 
@@ -282,15 +242,6 @@ let lastParams  = null;
 let lastList    = null;
 let lastLive    = false;
 
-/* ---- Tabs ---- */
-document.querySelectorAll('.tab').forEach(t => {
-  t.onclick = () => {
-    document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
-    document.querySelectorAll('.view').forEach(x => x.classList.remove('active'));
-    t.classList.add('active');
-    $('#view-' + t.dataset.view).classList.add('active');
-  };
-});
 
 /* ---- Proxy storage ---- */
 function defaultProxy(){

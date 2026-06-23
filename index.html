@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Lezzet Rotası</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#1c140f;
+    --surface:#271c15;
+    --surface-2:#33261d;
+    --cream:#f6ece0;
+    --muted:#b69f8c;
+    --ember:#e8703a;
+    --ember-soft:#f0915f;
+    --gold:#e9b04a;
+    --green:#7fa66a;
+    --red:#d8624a;
+    --line:rgba(246,236,224,.10);
+    --shadow:0 18px 50px -20px rgba(0,0,0,.7);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:'DM Sans',system-ui,sans-serif;
+    background:radial-gradient(120% 80% at 50% -10%, #3a281c 0%, var(--bg) 55%);
+    color:var(--cream);
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  .app{max-width:480px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;position:relative}
+
+  /* Header */
+  header{padding:26px 22px 14px;position:relative;overflow:hidden}
+  .eyebrow{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--ember-soft);font-weight:600;margin-bottom:6px}
+  h1{font-family:'Fraunces',serif;font-weight:600;font-size:34px;line-height:1.02;letter-spacing:-.01em}
+  h1 em{font-style:italic;color:var(--gold)}
+  .tagline{color:var(--muted);font-size:14px;margin-top:8px;max-width:30ch}
+
+  /* Tabs */
+  .tabs{display:flex;gap:6px;padding:6px 22px 0;position:sticky;top:0;z-index:5;
+    background:linear-gradient(180deg,var(--bg) 70%,transparent)}
+  .tab{flex:1;text-align:center;padding:11px 6px;font-size:12.5px;font-weight:600;color:var(--muted);
+    cursor:pointer;border-bottom:2px solid transparent;transition:all .15s ease}
+  .tab.active{color:var(--cream);border-bottom-color:var(--ember)}
+
+  .view{display:none;animation:fade .25s ease}
+  .view.active{display:block}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+
+  /* Search */
+  .panel{margin:16px 22px 0;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:16px;box-shadow:var(--shadow)}
+  .row{display:flex;gap:10px}
+  .loc-btn{flex:0 0 auto;display:flex;align-items:center;justify-content:center;gap:7px;background:var(--ember);
+    color:#1c140f;border:none;border-radius:13px;padding:0 15px;font-family:inherit;font-weight:700;font-size:13.5px;
+    cursor:pointer;transition:transform .12s ease, filter .12s ease;white-space:nowrap}
+  .loc-btn:hover{filter:brightness(1.06)}
+  .loc-btn:active{transform:scale(.97)}
+  .divider-or{text-align:center;color:var(--muted);font-size:11px;letter-spacing:.18em;text-transform:uppercase;margin:13px 0;position:relative}
+  .divider-or::before,.divider-or::after{content:"";position:absolute;top:50%;width:34%;height:1px;background:var(--line)}
+  .divider-or::before{left:0}.divider-or::after{right:0}
+  .field-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .field{display:flex;flex-direction:column;gap:5px}
+  .field.full{grid-column:1 / -1}
+  label{font-size:11px;letter-spacing:.04em;color:var(--muted);font-weight:600;padding-left:3px}
+  input{background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:12px 13px;
+    color:var(--cream);font-family:inherit;font-size:14.5px;transition:border-color .15s ease, background .15s ease;width:100%}
+  input::placeholder{color:#7d6c5d}
+  input:focus{outline:none;border-color:var(--ember);background:#3a2b20}
+  .go{margin-top:13px;width:100%;background:linear-gradient(135deg,var(--gold),var(--ember));color:#1c140f;border:none;
+    border-radius:14px;padding:14px;font-family:'Fraunces',serif;font-weight:600;font-size:16.5px;letter-spacing:.01em;
+    cursor:pointer;transition:transform .12s ease, filter .12s ease}
+  .go:hover{filter:brightness(1.05)}
+  .go:active{transform:scale(.985)}
+  .loc-msg{font-size:12px;margin:10px 3px 0;line-height:1.5;display:none}
+  .loc-msg.show{display:block}
+  .loc-msg.err{color:var(--red)}
+  .loc-msg.ok{color:var(--green)}
+
+  .sortbar{display:flex;gap:8px;margin:16px 22px 4px}
+  .chip{flex:1;text-align:center;background:var(--surface);border:1px solid var(--line);border-radius:11px;
+    padding:9px 8px;font-size:12.5px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .15s ease}
+  .chip.active{background:var(--surface-2);color:var(--cream);border-color:var(--ember)}
+
+  .results{padding:8px 22px 24px;flex:1}
+  .meta{color:var(--muted);font-size:12.5px;margin:14px 3px 10px;display:flex;justify-content:space-between;align-items:center}
+  .src-tag{font-size:10.5px;font-weight:700;letter-spacing:.05em;padding:3px 8px;border-radius:7px;text-transform:uppercase}
+  .src-tag.demo{background:rgba(233,176,74,.14);color:var(--gold)}
+  .src-tag.live{background:rgba(127,166,106,.16);color:var(--green)}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:15px;margin-bottom:12px;
+    display:flex;gap:14px;align-items:center;box-shadow:var(--shadow);position:relative;overflow:hidden;animation:rise .4s ease both}
+  @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .rank{flex:0 0 auto;width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:700;font-size:17px;background:var(--surface-2);color:var(--muted)}
+  .card:nth-child(2) .rank{background:linear-gradient(135deg,var(--gold),var(--ember));color:#1c140f}
+  .info{flex:1;min-width:0}
+  .name{font-family:'Fraunces',serif;font-weight:600;font-size:18px;line-height:1.15}
+  .cuisine{color:var(--ember-soft);font-size:12px;font-weight:600;margin-top:2px}
+  .addr{color:var(--muted);font-size:12px;margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .score{flex:0 0 auto;text-align:right}
+  .stars{color:var(--gold);font-size:13px;letter-spacing:1px}
+  .rating-num{font-family:'Fraunces',serif;font-weight:700;font-size:20px;line-height:1;margin-top:2px}
+  .reviews{color:var(--muted);font-size:11px;margin-top:3px}
+  .empty{text-align:center;color:var(--muted);padding:50px 20px;font-size:14px;line-height:1.6}
+  .empty .ico{font-size:36px;display:block;margin-bottom:12px}
+
+  /* Settings / API view */
+  .sect{margin:16px 22px 0;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:var(--shadow)}
+  .sect h3{font-family:'Fraunces',serif;font-weight:600;font-size:17px;margin-bottom:6px}
+  .sect p{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:12px}
+  .key-row{display:flex;gap:8px;margin-top:4px}
+  .key-row input{flex:1}
+  .test-btn{flex:0 0 auto;background:var(--surface-2);color:var(--cream);border:1px solid var(--line);
+    border-radius:12px;padding:0 16px;font-family:inherit;font-weight:700;font-size:13px;cursor:pointer;
+    transition:all .15s ease;white-space:nowrap}
+  .test-btn:hover{border-color:var(--ember);color:var(--gold)}
+  .test-btn:active{transform:scale(.97)}
+  .test-btn:disabled{opacity:.5;cursor:default}
+  .save-btn{margin-top:10px;width:100%;background:var(--surface-2);color:var(--cream);border:1px solid var(--line);
+    border-radius:12px;padding:11px;font-family:inherit;font-weight:700;font-size:13.5px;cursor:pointer;transition:all .15s ease}
+  .save-btn:hover{border-color:var(--green);color:var(--green)}
+  .test-result{font-size:12.5px;margin-top:11px;line-height:1.5;padding:10px 12px;border-radius:10px;display:none}
+  .test-result.show{display:block}
+  .test-result.ok{background:rgba(127,166,106,.12);color:var(--green);border:1px solid rgba(127,166,106,.3)}
+  .test-result.err{background:rgba(216,98,74,.12);color:var(--red);border:1px solid rgba(216,98,74,.3)}
+  .test-result.busy{background:var(--surface-2);color:var(--muted)}
+  .note{font-size:11.5px;color:#8a7766;line-height:1.6;margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
+
+  /* Guide steps */
+  .step{display:flex;gap:14px;margin-bottom:18px}
+  .step:last-child{margin-bottom:0}
+  .step-num{flex:0 0 auto;width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--gold),var(--ember));
+    color:#1c140f;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-weight:700;font-size:15px}
+  .step-body h4{font-size:14.5px;font-weight:700;margin-bottom:4px}
+  .step-body p{font-size:12.5px;color:var(--muted);line-height:1.6;margin:0}
+  .step-body a{color:var(--ember-soft);text-decoration:none;border-bottom:1px solid rgba(240,145,95,.4)}
+  .step-body code{background:var(--surface-2);padding:1px 6px;border-radius:5px;font-size:11.5px;color:var(--gold)}
+  .warn{background:rgba(233,176,74,.1);border:1px solid rgba(233,176,74,.25);border-radius:12px;
+    padding:12px 14px;font-size:12.5px;color:var(--gold);line-height:1.6;margin-top:4px}
+
+  footer{padding:24px 22px 28px;text-align:center;color:#6a5949;font-size:11.5px;line-height:1.7}
+  footer strong{color:var(--muted);font-weight:600}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="eyebrow">Şehir şehir, lokma lokma</div>
+    <h1>Lezzet <em>Rotası</em></h1>
+    <p class="tagline">Bulunduğun yerin en sevilen sofralarını keşfet. Konumunu kullan ya da gideceğin yeri yaz.</p>
+  </header>
+
+  <div class="tabs">
+    <div class="tab active" data-view="search">Keşfet</div>
+    <div class="tab" data-view="settings">API Ayarı</div>
+    <div class="tab" data-view="guide">Nasıl Alınır?</div>
+  </div>
+
+  <!-- ===== SEARCH VIEW ===== -->
+  <div class="view active" id="view-search">
+    <div class="panel">
+      <div class="row">
+        <button class="loc-btn" id="locBtn"><span>📍</span> Konumumu kullan</button>
+        <input type="text" id="locStatus" placeholder="Konum bekleniyor…" readonly style="flex:1;font-size:13px">
+      </div>
+      <div class="loc-msg" id="locMsg"></div>
+
+      <div class="divider-or">veya elle gir</div>
+
+      <div class="field-grid">
+        <div class="field"><label for="il">İl</label><input type="text" id="il" placeholder="Ankara"></div>
+        <div class="field"><label for="ilce">İlçe</label><input type="text" id="ilce" placeholder="Sincan"></div>
+        <div class="field full"><label for="mah">Mahalle (isteğe bağlı)</label><input type="text" id="mah" placeholder="Fatih Mahallesi"></div>
+      </div>
+      <button class="go" id="searchBtn">Sofraları getir</button>
+    </div>
+
+    <div class="sortbar">
+      <div class="chip active" data-sort="balanced">Puan + yorum dengesi</div>
+      <div class="chip" data-sort="rating">Sadece en yüksek puan</div>
+    </div>
+
+    <div class="results" id="results">
+      <div class="empty"><span class="ico">🍽️</span>Bir konum seç ya da il/ilçe gir,<br>en iyi sofraları sıralayalım.</div>
+    </div>
+  </div>
+
+  <!-- ===== SETTINGS VIEW ===== -->
+  <div class="view" id="view-settings">
+    <div class="sect">
+      <h3>Proxy sunucu adresi</h3>
+      <p>Gerçek Google verisi için <code>app.py</code> proxy sunucusunu çalıştır, sonra adresini buraya yaz. API anahtarın <strong>proxy'de</strong> durur, bu uygulamada veya paylaşılan dosyada hiç görünmez.</p>
+      <div class="key-row">
+        <input type="text" id="proxyUrl" placeholder="http://localhost:5000" autocomplete="off" spellcheck="false">
+        <button class="test-btn" id="testBtn">Test et</button>
+      </div>
+      <button class="save-btn" id="saveBtn">Bu cihaza kaydet</button>
+      <div class="test-result" id="testResult"></div>
+      <div class="note">Bilgisayardan: <code>http://localhost:5000</code><br>Telefondan (aynı Wi-Fi): <code>http://192.168.1.X:5000</code> — bilgisayarının IP'sini <code>ipconfig</code> ile öğren. Adres bu cihazın yerel hafızasında tutulur, boş bırakırsan örnek veri modu çalışır.</div>
+    </div>
+    <div class="sect">
+      <h3>Proxy nasıl çalıştırılır?</h3>
+      <p>1) <code>app.py</code> dosyasını bilgisayara al.<br>2) <code>pip install flask flask-cors requests</code><br>3) Anahtarı tanımla: <code>setx GOOGLE_API_KEY "AIza..."</code> (pencereyi yeniden aç)<br>4) <code>python app.py</code><br>5) Adresi yukarı yaz, "Test et"e bas.</p>
+    </div>
+  </div>
+
+  <!-- ===== GUIDE VIEW ===== -->
+  <div class="view" id="view-guide">
+    <div class="sect">
+      <h3>Google Places API anahtarı — adım adım</h3>
+      <p>Google Haritalar verisini kullanmak için ücretsiz başlayan bir anahtar gerekir. Aşağıdaki adımları sırayla izle.</p>
+
+      <div class="step"><div class="step-num">1</div><div class="step-body">
+        <h4>Google Cloud Console'a gir</h4>
+        <p><a href="https://console.cloud.google.com/" target="_blank" rel="noopener">console.cloud.google.com</a> adresine Google hesabınla giriş yap.</p>
+      </div></div>
+
+      <div class="step"><div class="step-num">2</div><div class="step-body">
+        <h4>Yeni proje oluştur</h4>
+        <p>Üst menüden proje seçiciye tıkla, <code>Yeni Proje</code> de ve bir isim ver (örn. "Lezzet Rotası").</p>
+      </div></div>
+
+      <div class="step"><div class="step-num">3</div><div class="step-body">
+        <h4>Faturalandırmayı aç</h4>
+        <p>Sol menü → <code>Faturalandırma</code>. Kredi kartı istenir ama Google aylık ücretsiz kullanım kredisi verir. Düşük kullanımda ücret çıkmaz.</p>
+      </div></div>
+
+      <div class="step"><div class="step-num">4</div><div class="step-body">
+        <h4>Places API'yi etkinleştir</h4>
+        <p>Sol menü → <code>API'ler ve Hizmetler</code> → <code>Kitaplık</code>. "Places API" ara ve <strong>Etkinleştir</strong>'e bas.</p>
+      </div></div>
+
+      <div class="step"><div class="step-num">5</div><div class="step-body">
+        <h4>Anahtarı oluştur</h4>
+        <p><code>API'ler ve Hizmetler</code> → <code>Kimlik Bilgileri</code> → <code>Kimlik bilgisi oluştur</code> → <code>API anahtarı</code>. Çıkan <code>AIza...</code> anahtarını kopyala.</p>
+      </div></div>
+
+      <div class="step"><div class="step-num">6</div><div class="step-body">
+        <h4>Uygulamaya yapıştır</h4>
+        <p>"API Ayarı" sekmesine geç, anahtarı yapıştır, <strong>Test et</strong>'e bas. Yeşil yanarsa hazırsın.</p>
+      </div></div>
+
+      <div class="warn">⚠️ Güvenlik: Anahtarını Google Cloud'da "kısıtla" (restrict). Sadece Places API'ye izin ver ve mümkünse adres/uygulama kısıtı koy. Böylece anahtarın kötüye kullanılmaz.</div>
+    </div>
+  </div>
+
+  <footer>
+    Örnek veri modu · Gerçek veriler için API anahtarı gerekir<br><br>
+    <strong>Geliştirici: Mehmet Emin KILIÇ</strong> — V2.3
+  </footer>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+const PROXY_STORE = 'lezzet_rotasi_proxy_url';
+let currentSort = 'balanced';
+let lastQuery = null;
+let lastList = null;   // son çekilen gerçek/örnek liste (sıralama değişince yeniden çizmek için)
+
+/* ---------- Tabs ---------- */
+document.querySelectorAll('.tab').forEach(tab=>{
+  tab.onclick = ()=>{
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    tab.classList.add('active');
+    $('#view-'+tab.dataset.view).classList.add('active');
+  };
+});
+
+/* ---------- Proxy address: stored only on THIS device ---------- */
+/* Uygulama bir sunucudan (http/https) açıldıysa, varsayılan olarak kendi
+   adresini proxy kabul eder — Render'a yüklenince arkadaşların hiç ayar
+   yapmadan kullanır. file:// ile açılırsa proxy yok, örnek veri çalışır. */
+function defaultProxy(){
+  if(location.protocol === 'http:' || location.protocol === 'https:')
+    return location.origin;
+  return '';
+}
+function loadProxy(){
+  try{
+    const saved = localStorage.getItem(PROXY_STORE);
+    if(saved !== null) return saved.replace(/\/+$/,'');
+  }catch(e){}
+  return defaultProxy();
+}
+function saveProxy(v){
+  try{
+    if(v) localStorage.setItem(PROXY_STORE, v);
+    else localStorage.removeItem(PROXY_STORE);
+    return true;
+  }catch(e){ return false; }
+}
+window.addEventListener('DOMContentLoaded', ()=>{ $('#proxyUrl').value = loadProxy(); });
+$('#saveBtn').onclick = ()=>{
+  const v = $('#proxyUrl').value.trim().replace(/\/+$/,'');
+  const ok = saveProxy(v);
+  const r = $('#testResult');
+  r.className = 'test-result show ' + (ok?'ok':'err');
+  r.textContent = ok ? (v ? 'Proxy adresi bu cihaza kaydedildi.' : 'Adres silindi. Örnek veri moduna dönüldü.') : 'Kaydedilemedi (tarayıcı depolamayı engelliyor).';
+};
+
+/* ---------- Proxy test (sağlık kontrolü) ---------- */
+$('#testBtn').onclick = async ()=>{
+  const url = $('#proxyUrl').value.trim().replace(/\/+$/,'');
+  const r = $('#testResult');
+  if(!url){
+    r.className = 'test-result show err';
+    r.textContent = 'Önce bir proxy adresi gir (örn. http://localhost:5000).';
+    return;
+  }
+  r.className = 'test-result show busy';
+  r.textContent = 'Proxy test ediliyor…';
+  $('#testBtn').disabled = true;
+  const res = await testProxy(url);
+  $('#testBtn').disabled = false;
+  r.className = 'test-result show ' + (res.ok?'ok':'err');
+  r.textContent = res.msg;
+};
+
+async function testProxy(url){
+  try{
+    const resp = await fetch(url + '/saglik', {signal: AbortSignal.timeout(6000)});
+    const data = await resp.json();
+    if(data.durum === 'ok' && data.anahtar_tanimli)
+      return {ok:true, msg:'✓ Proxy çalışıyor ve API anahtarı tanımlı. Gerçek veri modu hazır.'};
+    if(data.durum === 'ok' && !data.anahtar_tanimli)
+      return {ok:false, msg:'Proxy çalışıyor ama sunucuda GOOGLE_API_KEY tanımlı değil. Kurulum 3. adıma bak.'};
+    return {ok:false, msg:'✗ Beklenmeyen yanıt. Doğru adresi girdiğinden emin ol.'};
+  }catch(e){
+    return {ok:false, msg:'✗ Proxy\'ye ulaşılamadı. Sunucu çalışıyor mu, adres doğru mu, telefonsan aynı Wi-Fi\'da mısın kontrol et.'};
+  }
+}
+
+/* ---------- Demo data ---------- */
+const DEMO = [
+  {name:"Ocakbaşı Dede", cuisine:"Kebap & Ocakbaşı", addr:"Cumhuriyet Cad. No:12", rating:4.8, reviews:2143},
+  {name:"Köfteci Hacı Usta", cuisine:"Ev Yemekleri", addr:"İstasyon Mah. 3. Sok.", rating:4.7, reviews:1890},
+  {name:"Tarihi Tava Lokantası", cuisine:"Yöresel", addr:"Eski Çarşı içi", rating:4.6, reviews:3521},
+  {name:"Mangal Keyfi", cuisine:"Izgara", addr:"Park yanı, No:8", rating:4.6, reviews:642},
+  {name:"Kahvaltı Bahçesi", cuisine:"Serpme Kahvaltı", addr:"Bağlar Mevkii", rating:4.5, reviews:1204},
+  {name:"Pideci Şükrü", cuisine:"Pide & Lahmacun", addr:"Merkez Meydanı", rating:4.5, reviews:980},
+  {name:"Balıkçı Liman", cuisine:"Balık & Meze", addr:"Sahil yolu No:4", rating:4.4, reviews:756},
+  {name:"Tatlıcı Nuri", cuisine:"Tatlı & Künefe", addr:"Çarşı Cad. No:21", rating:4.4, reviews:1530},
+];
+function demoFor(label){
+  let h=0; for(const c of (label||'')) h=(h*31+c.charCodeAt(0))%9973;
+  return DEMO.map(r=>({...r,
+    rating: Math.min(4.9, +(r.rating + ((h%7)-3)*0.02).toFixed(1)),
+    reviews: r.reviews + (h%500)}));
+}
+
+/* ---------- Ranking ---------- */
+function rank(list, sort){
+  const arr=[...list];
+  if(sort==='rating'){ arr.sort((a,b)=> b.rating-a.rating || b.reviews-a.reviews); }
+  else { const C=200,m=4.3,score=r=>(r.reviews*r.rating+C*m)/(r.reviews+C);
+    arr.sort((a,b)=> score(b)-score(a)); }
+  return arr;
+}
+function stars(r){const f=Math.floor(r),h=r-f>=.5;return '★'.repeat(f)+(h?'½':'');}
+
+function render(list, label, live){
+  const ranked = rank(list, currentSort);
+  $('#results').innerHTML = `
+    <div class="meta">
+      <span>${label} · ${ranked.length} sofra</span>
+      <span class="src-tag ${live?'live':'demo'}">${live?'Canlı · Google':'Örnek veri'}</span>
+    </div>
+    ${ranked.map((r,i)=>`
+      <div class="card" style="animation-delay:${i*40}ms">
+        <div class="rank">${i+1}</div>
+        <div class="info">
+          <div class="name">${r.name}</div>
+          <div class="cuisine">${r.cuisine}</div>
+          <div class="addr">${r.addr}</div>
+        </div>
+        <div class="score">
+          <div class="stars">${stars(r.rating)}</div>
+          <div class="rating-num">${(r.rating||0).toFixed(1)}</div>
+          <div class="reviews">${(r.reviews||0).toLocaleString('tr-TR')} yorum</div>
+        </div>
+      </div>`).join('')}`;
+}
+
+function showLoading(label){
+  $('#results').innerHTML = `<div class="empty"><span class="ico">🍳</span>${label}<br>sofralar getiriliyor…</div>`;
+}
+function showError(msg){
+  $('#results').innerHTML = `<div class="empty"><span class="ico">⚠️</span>${msg}</div>`;
+}
+
+/* Gerçek (proxy) ya da örnek veriyle arama.
+   params: {metin} veya {lat,lng} */
+async function doSearch(label, params){
+  lastQuery = label;
+  const proxy = loadProxy();
+
+  // Proxy yoksa → örnek veri
+  if(!proxy){
+    const list = demoFor(label);
+    lastList = {list, live:false};
+    render(list, label, false);
+    return;
+  }
+
+  // Proxy var → gerçek veri çek
+  showLoading(label);
+  try{
+    let url = proxy + '/api/restoranlar?';
+    if(params && params.metin) url += 'metin=' + encodeURIComponent(params.metin);
+    else if(params && params.lat) url += `lat=${params.lat}&lng=${params.lng}&yaricap=2500`;
+    const resp = await fetch(url, {signal: AbortSignal.timeout(15000)});
+    const data = await resp.json();
+    if(data.hata){ showError('Proxy hatası: ' + data.hata); return; }
+    const list = data.restoranlar || [];
+    if(!list.length){ showError('Bu bölgede sonuç bulunamadı. Daha geniş bir alan dene.'); return; }
+    lastList = {list, live:true};
+    render(list, label, true);
+  }catch(e){
+    showError('Proxy\'ye ulaşılamadı. "API Ayarı" sekmesinden adresi test et. Sunucu açık mı?');
+  }
+}
+
+/* ---------- Search events ---------- */
+$('#searchBtn').onclick = ()=>{
+  const il=$('#il').value.trim(), ilce=$('#ilce').value.trim(), mah=$('#mah').value.trim();
+  if(!il && !ilce && !mah){ $('#il').focus(); $('#il').style.borderColor='var(--ember)'; return; }
+  const metin=[mah,ilce,il].filter(Boolean).join(' ');
+  const label=[mah,ilce,il].filter(Boolean).join(', ');
+  doSearch(label, {metin});
+};
+
+/* ---------- Geolocation with clear error reasons ---------- */
+$('#locBtn').onclick = ()=>{
+  const status=$('#locStatus'), msg=$('#locMsg');
+  msg.className='loc-msg';
+  if(!window.isSecureContext && location.protocol==='file:'){
+    status.value='Konum kullanılamıyor';
+    msg.className='loc-msg show err';
+    msg.innerHTML='Dosyayı doğrudan açtın (file://). Tarayıcılar konumu sadece güvenli bağlantıda (https) ya da telefonda verir. Bir web sunucusuna yükleyince çalışır.';
+    return;
+  }
+  if(!navigator.geolocation){
+    status.value='Desteklenmiyor';
+    msg.className='loc-msg show err';
+    msg.textContent='Bu tarayıcı konum özelliğini desteklemiyor.';
+    return;
+  }
+  status.value='Konum alınıyor…';
+  navigator.geolocation.getCurrentPosition(
+    pos=>{
+      const {latitude:la,longitude:lo}=pos.coords;
+      status.value=`Konum: ${la.toFixed(3)}, ${lo.toFixed(3)}`;
+      msg.className='loc-msg show ok';
+      msg.textContent='Konum alındı. Yakındaki sofralar sıralanıyor.';
+      doSearch('Yakınımdaki sofralar', {lat:la, lng:lo});
+    },
+    err=>{
+      let m='Konum alınamadı.';
+      if(err.code===1) m='Konum izni reddedildi. Tarayıcı adres çubuğundaki kilit simgesinden izni "İzin ver" yap.';
+      else if(err.code===2) m='Konum bilgisi alınamadı (sinyal/GPS yok).';
+      else if(err.code===3) m='Konum isteği zaman aşımına uğradı. Tekrar dene.';
+      status.value='Konum alınamadı';
+      msg.className='loc-msg show err';
+      msg.textContent=m;
+    },
+    {timeout:8000, enableHighAccuracy:true}
+  );
+};
+
+document.querySelectorAll('.chip').forEach(chip=>{
+  chip.onclick=()=>{
+    document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+    chip.classList.add('active');
+    currentSort=chip.dataset.sort;
+    if(lastList) render(lastList.list, lastQuery, lastList.live);
+  };
+});
+</script>
+</body>
+</html>

@@ -3,108 +3,171 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#1c140f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Lezzet Rotası">
+<link rel="manifest" href="/manifest.json">
 <title>Lezzet Rotası</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+/* ===== BÖLGE TEMAları ===== */
 :root{
   --bg:#1c140f;--surface:#271c15;--s2:#33261d;--s3:#3d2e22;
   --cream:#f6ece0;--muted:#b69f8c;--dim:#8a7766;
-  --ember:#e8703a;--embersoft:#f0915f;--gold:#e9b04a;
+  --accent:#e8703a;--accentsoft:#f0915f;--gold:#e9b04a;
   --green:#7fa66a;--red:#d8624a;--blue:#5b9bd5;
+  --grad1:#3a281c;--grad2:#1c140f;
   --line:rgba(246,236,224,.10);--shadow:0 18px 50px -20px rgba(0,0,0,.7);
 }
+[data-bolge="marmara"]{--bg:#0d1520;--surface:#131e2e;--s2:#1a2840;--s3:#223050;--cream:#e8eef8;--muted:#7a9abf;--dim:#4a6a8a;--accent:#3a7bd5;--accentsoft:#5a9be0;--gold:#c0d8f0;--grad1:#1a2840;--grad2:#0d1520;--line:rgba(200,220,255,.10)}
+[data-bolge="ege"]{--bg:#0a1a2e;--surface:#0f2340;--s2:#163058;--s3:#1e3d6e;--cream:#e0f0ff;--muted:#6ab0d8;--dim:#3a80a8;--accent:#1a9fd4;--accentsoft:#3abce8;--gold:#a0d8ef;--grad1:#0e2545;--grad2:#061525;--line:rgba(100,200,255,.10)}
+[data-bolge="akdeniz"]{--bg:#1a0d00;--surface:#281500;--s2:#3a1e00;--s3:#4a2600;--cream:#fff0d8;--muted:#c89050;--dim:#8a6030;--accent:#e8a020;--accentsoft:#f0b840;--gold:#ffd060;--grad1:#3a2000;--grad2:#1a0d00;--line:rgba(255,200,100,.10)}
+[data-bolge="karadeniz"]{--bg:#071a0a;--surface:#0d2410;--s2:#123018;--s3:#183d20;--cream:#d8f0dc;--muted:#60a868;--dim:#358040;--accent:#28a840;--accentsoft:#48c860;--gold:#80e090;--grad1:#0e2d12;--grad2:#071a0a;--line:rgba(80,200,100,.10)}
+[data-bolge="dogu"]{--bg:#150a1a;--surface:#200f28;--s2:#2d1538;--s3:#3a1c48;--cream:#f0e0f8;--muted:#a070c0;--dim:#704090;--accent:#9040d0;--accentsoft:#b060e8;--gold:#d0a0ff;--grad1:#2a1035;--grad2:#150a1a;--line:rgba(180,100,255,.10)}
+[data-bolge="guneydogu"]{--bg:#1a0800;--surface:#281000;--s2:#3a1800;--s3:#4e2200;--cream:#fff0e0;--muted:#c87840;--dim:#905020;--accent:#d84010;--accentsoft:#f05828;--gold:#f0a030;--grad1:#3a1200;--grad2:#1a0800;--line:rgba(255,150,50,.10)}
+
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;-webkit-tap-highlight-color:transparent}
-body{font-family:'DM Sans',system-ui,sans-serif;background:radial-gradient(120% 80% at 50% -10%,#3a281c,var(--bg) 55%);color:var(--cream);-webkit-font-smoothing:antialiased;min-height:100vh}
+body{font-family:'DM Sans',system-ui,sans-serif;background:radial-gradient(120% 80% at 50% -10%,var(--grad1),var(--grad2) 55%);color:var(--cream);-webkit-font-smoothing:antialiased;min-height:100vh;transition:background 1.2s ease,color .6s ease}
 .app{max-width:480px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column}
 
+/* Bölge rozeti */
+.bolge-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.07);border:1px solid var(--line);border-radius:20px;padding:4px 12px;font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.04em;margin-top:8px;transition:all .6s}
+.bolge-badge .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);display:inline-block;transition:background .6s}
+
 /* Header */
-header{padding:24px 22px 12px}
-.eyebrow{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--embersoft);font-weight:600;margin-bottom:5px}
+header{padding:24px 22px 10px}
+.eyebrow{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--accentsoft);font-weight:600;margin-bottom:5px;transition:color .6s}
 h1{font-family:'Fraunces',serif;font-weight:600;font-size:32px;line-height:1.02}
-h1 em{font-style:italic;color:var(--gold)}
-.tagline{color:var(--muted);font-size:13.5px;margin-top:7px}
+h1 em{font-style:italic;color:var(--gold);transition:color .6s}
+.tagline{color:var(--muted);font-size:13.5px;margin-top:6px;transition:color .6s}
 
 /* Panel */
-.panel{margin:14px 22px 0;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:15px;box-shadow:var(--shadow)}
+.panel{margin:14px 22px 0;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:15px;box-shadow:var(--shadow);transition:background .8s,border-color .8s}
 .row{display:flex;gap:10px}
-.loc-btn{flex:0 0 auto;display:flex;align-items:center;gap:6px;background:var(--ember);color:#1c140f;border:none;border-radius:12px;padding:0 14px;font-family:inherit;font-weight:700;font-size:13px;cursor:pointer;white-space:nowrap;transition:filter .12s}
-.loc-btn:active{filter:brightness(.95)}
-input[type=text]{background:var(--s2);border:1px solid var(--line);border-radius:11px;padding:11px 12px;color:var(--cream);font-family:inherit;font-size:14px;width:100%;transition:border-color .15s,background .15s}
-input::placeholder{color:#7d6c5d}
-input:focus{outline:none;border-color:var(--ember);background:var(--s3)}
+.loc-btn{flex:0 0 auto;display:flex;align-items:center;gap:6px;background:var(--accent);color:#fff;border:none;border-radius:12px;padding:0 14px;font-family:inherit;font-weight:700;font-size:13px;cursor:pointer;white-space:nowrap;transition:background .6s,filter .12s}
+.loc-btn:active{filter:brightness(.9)}
+input[type=text]{background:var(--s2);border:1px solid var(--line);border-radius:11px;padding:11px 12px;color:var(--cream);font-family:inherit;font-size:14px;width:100%;transition:border-color .15s,background .8s,color .6s}
+input::placeholder{color:var(--dim)}
+input:focus{outline:none;border-color:var(--accent);background:var(--s3)}
 .divider-or{text-align:center;color:var(--muted);font-size:11px;letter-spacing:.18em;text-transform:uppercase;margin:11px 0;position:relative}
 .divider-or::before,.divider-or::after{content:"";position:absolute;top:50%;width:34%;height:1px;background:var(--line)}
 .divider-or::before{left:0}.divider-or::after{right:0}
 .field-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.field{display:flex;flex-direction:column;gap:4px}
+.field{display:flex;flex-direction:column;gap:4px;position:relative}
 .field.full{grid-column:1/-1}
 label{font-size:11px;color:var(--muted);font-weight:600;padding-left:2px}
-.go{margin-top:12px;width:100%;background:linear-gradient(135deg,var(--gold),var(--ember));color:#1c140f;border:none;border-radius:13px;padding:13px;font-family:'Fraunces',serif;font-weight:600;font-size:16px;cursor:pointer;transition:filter .12s}
-.go:active{filter:brightness(.95)}
+.go{margin-top:12px;width:100%;background:linear-gradient(135deg,var(--gold),var(--accent));color:#fff;border:none;border-radius:13px;padding:13px;font-family:'Fraunces',serif;font-weight:600;font-size:16px;cursor:pointer;transition:background .6s,filter .12s}
+.go:active{filter:brightness(.9)}
 .loc-msg{font-size:12px;margin:9px 2px 0;line-height:1.5;display:none}
 .loc-msg.show{display:block}.loc-msg.err{color:var(--red)}.loc-msg.ok{color:var(--green)}
+
+/* Autocomplete dropdown */
+.autocomplete-list{position:absolute;top:100%;left:0;right:0;background:var(--s2);border:1px solid var(--accent);border-radius:0 0 11px 11px;z-index:50;max-height:180px;overflow-y:auto;display:none;box-shadow:var(--shadow)}
+.autocomplete-list.show{display:block}
+.ac-item{padding:10px 13px;font-size:13.5px;cursor:pointer;border-bottom:1px solid var(--line);transition:background .1s}
+.ac-item:last-child{border-bottom:none}
+.ac-item:hover,.ac-item.selected{background:var(--s3);color:var(--cream)}
+.ac-item mark{background:none;color:var(--accent);font-weight:700}
 
 /* Filtre */
 .filter-scroll{overflow-x:auto;display:flex;gap:7px;padding:12px 22px 4px;scrollbar-width:none}
 .filter-scroll::-webkit-scrollbar{display:none}
-.fchip{flex:0 0 auto;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:7px 14px;font-size:12.5px;font-weight:600;color:var(--muted);cursor:pointer;white-space:nowrap;transition:all .15s}
-.fchip.active{background:var(--s2);color:var(--cream);border-color:var(--ember)}
+.fchip{flex:0 0 auto;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:7px 14px;font-size:12.5px;font-weight:600;color:var(--muted);cursor:pointer;white-space:nowrap;transition:all .3s}
+.fchip.active{background:var(--s2);color:var(--cream);border-color:var(--accent)}
 
 /* Sort */
 .sortbar{display:flex;gap:8px;margin:8px 22px 4px}
-.chip{flex:1;text-align:center;background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:8px;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .15s}
-.chip.active{background:var(--s2);color:var(--cream);border-color:var(--ember)}
+.chip{flex:1;text-align:center;background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:8px;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .3s}
+.chip.active{background:var(--s2);color:var(--cream);border-color:var(--accent)}
 
 /* Results */
 .results{padding:4px 22px 28px;flex:1}
 .meta{color:var(--muted);font-size:12px;margin:12px 2px 8px;display:flex;justify-content:space-between;align-items:center}
 .src-tag{font-size:10px;font-weight:700;letter-spacing:.06em;padding:3px 8px;border-radius:6px;text-transform:uppercase}
-.src-tag.demo{background:rgba(233,176,74,.14);color:var(--gold)}
-.src-tag.live{background:rgba(127,166,106,.16);color:var(--green)}
+.src-tag.demo{background:rgba(255,200,80,.12);color:var(--gold)}
+.src-tag.live{background:rgba(80,200,100,.12);color:var(--green)}
 
 /* Card */
-.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;margin-bottom:10px;overflow:hidden;box-shadow:var(--shadow);animation:rise .35s ease both}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;margin-bottom:10px;overflow:hidden;box-shadow:var(--shadow);animation:rise .35s ease both;transition:background .8s,border-color .8s}
 @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-.card-main{display:flex;gap:12px;align-items:center;padding:13px;cursor:pointer}
-.rank{flex:0 0 auto;width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-weight:700;font-size:16px;background:var(--s2);color:var(--muted)}
-.card:first-child .rank{background:linear-gradient(135deg,var(--gold),var(--ember));color:#1c140f}
+.card-main{display:flex;gap:12px;align-items:center;padding:13px;position:relative}
+.rank{flex:0 0 auto;width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-weight:700;font-size:16px;background:var(--s2);color:var(--muted);transition:background .6s}
+.card:first-child .rank{background:linear-gradient(135deg,var(--gold),var(--accent));color:#fff}
 .info{flex:1;min-width:0}
 .cname{font-family:'Fraunces',serif;font-weight:600;font-size:17px;line-height:1.2}
-.ccuisine{color:var(--embersoft);font-size:11.5px;font-weight:600;margin-top:2px}
+.ccuisine{color:var(--accentsoft);font-size:11.5px;font-weight:600;margin-top:2px;transition:color .6s}
 .caddr{color:var(--muted);font-size:11.5px;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cprice{color:var(--green);font-size:11px;font-weight:700;margin-top:2px}
 .score{flex:0 0 auto;text-align:right}
-.stars{color:var(--gold);font-size:12px}
+.stars{color:var(--gold);font-size:12px;transition:color .6s}
 .rnum{font-family:'Fraunces',serif;font-weight:700;font-size:19px;line-height:1;margin-top:2px}
 .rcnt{color:var(--muted);font-size:10.5px;margin-top:2px}
+/* Favori kalp butonu */
+.fav-btn{position:absolute;top:10px;right:10px;background:none;border:none;font-size:20px;cursor:pointer;opacity:.4;transition:opacity .2s,transform .15s;line-height:1}
+.fav-btn.active{opacity:1;transform:scale(1.15)}
 .card-actions{display:flex;border-top:1px solid var(--line)}
 .cact{flex:1;display:flex;align-items:center;justify-content:center;gap:5px;padding:10px 4px;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .15s;border:none;background:none;font-family:inherit}
 .cact:not(:last-child){border-right:1px solid var(--line)}
 .cact:hover{color:var(--cream);background:var(--s2)}
 .cact.map-btn{color:var(--blue)}
-.cact.detail-btn{color:var(--embersoft)}
+.cact.detail-btn{color:var(--accentsoft)}
+.cact.rota-btn{color:var(--gold)}
+
+/* Son aramalar */
+.gecmis{margin:10px 22px 0;display:flex;flex-wrap:wrap;gap:6px}
+.gecmis-chip{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:6px 13px;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;display:flex;align-items:center;gap:6px;transition:all .15s}
+.gecmis-chip:hover{border-color:var(--accent);color:var(--cream)}
+.gecmis-chip .del{color:var(--dim);font-size:10px;padding:0 2px}
+.gecmis-chip .del:hover{color:var(--red)}
+
+/* Favoriler & Rota sekmeleri */
+.bottom-tabs{display:flex;border-top:1px solid var(--line);background:var(--bg);position:sticky;bottom:0;z-index:20;transition:background .8s}
+.btab{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 4px;font-size:10.5px;font-weight:600;color:var(--muted);cursor:pointer;border:none;background:none;font-family:inherit;transition:color .15s}
+.btab.active{color:var(--accent)}
+.btab .ico{font-size:20px}
+.badge-count{background:var(--accent);color:#fff;font-size:9px;font-weight:700;border-radius:10px;padding:1px 5px;min-width:16px;text-align:center;display:none}
+.badge-count.show{display:inline-block}
+
+/* Panel görünümleri */
+.panel-view{display:none;padding:14px 22px 28px;flex:1}
+.panel-view.active{display:block;animation:fade .2s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.pv-title{font-family:'Fraunces',serif;font-weight:600;font-size:20px;margin-bottom:14px}
+.fav-card,.rota-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:13px;margin-bottom:10px;display:flex;align-items:center;gap:12px;transition:background .8s}
+.fav-card .info,.rota-card .info{flex:1;min-width:0}
+.fav-card .cname,.rota-card .cname{font-family:'Fraunces',serif;font-weight:600;font-size:16px}
+.fav-card .caddr,.rota-card .caddr{color:var(--muted);font-size:11.5px;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fav-card .crating,.rota-card .crating{color:var(--gold);font-size:12px;margin-top:2px}
+.fav-del,.rota-del{background:none;border:none;font-size:18px;color:var(--dim);cursor:pointer;padding:4px;transition:color .15s}
+.fav-del:hover{color:var(--red)}
+.rota-del:hover{color:var(--red)}
+.rota-num{flex:0 0 auto;width:28px;height:28px;border-radius:8px;background:var(--s2);display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-weight:700;font-size:14px;color:var(--muted)}
+.rota-open-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:linear-gradient(135deg,var(--gold),var(--accent));color:#fff;border:none;border-radius:12px;padding:12px;font-family:'Fraunces',serif;font-weight:600;font-size:15px;cursor:pointer;margin-top:14px}
+.empty-pv{text-align:center;color:var(--muted);padding:40px 20px;font-size:13.5px;line-height:1.7}
+.empty-pv .ico{font-size:32px;display:block;margin-bottom:10px}
 
 /* Modal */
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:100;display:none;align-items:flex-end;justify-content:center}
 .modal-bg.open{display:flex}
-.modal{background:var(--surface);border-radius:22px 22px 0 0;width:100%;max-width:480px;max-height:88vh;overflow-y:auto;padding:20px;animation:slideup .28s ease}
+.modal{background:var(--surface);border-radius:22px 22px 0 0;width:100%;max-width:480px;max-height:88vh;overflow-y:auto;padding:20px;animation:slideup .28s ease;transition:background .8s}
 @keyframes slideup{from{opacity:0;transform:translateY(100%)}to{opacity:1;transform:none}}
 .modal-handle{width:36px;height:4px;background:var(--s2);border-radius:2px;margin:0 auto 16px}
 .modal-close{float:right;background:var(--s2);border:none;color:var(--muted);border-radius:8px;padding:4px 10px;font-size:13px;cursor:pointer;font-family:inherit}
 .modal h2{font-family:'Fraunces',serif;font-weight:600;font-size:22px;margin-bottom:4px;clear:both}
-.modal .mcuisine{color:var(--embersoft);font-size:12.5px;font-weight:600;margin-bottom:10px}
-.modal .mrating{display:flex;align-items:center;gap:10px;margin-bottom:12px}
-.modal .mrating .big{font-family:'Fraunces',serif;font-weight:700;font-size:28px}
-.modal .mrating .mstars{color:var(--gold);font-size:16px}
-.modal .mrating .mcnt{color:var(--muted);font-size:12px}
+.mcuisine{color:var(--accentsoft);font-size:12.5px;font-weight:600;margin-bottom:10px}
+.mrating{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.mrating .big{font-family:'Fraunces',serif;font-weight:700;font-size:28px}
+.mrating .mstars{color:var(--gold);font-size:16px}
+.mrating .mcnt{color:var(--muted);font-size:12px}
 .minfo-row{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;font-size:13px;color:var(--muted)}
-.minfo-row a{color:var(--embersoft);text-decoration:none}
+.minfo-row a{color:var(--accentsoft);text-decoration:none}
 .mbadge{display:inline-block;padding:3px 9px;border-radius:7px;font-size:11px;font-weight:700;margin-bottom:12px}
-.mbadge.open{background:rgba(127,166,106,.15);color:var(--green)}
+.mbadge.open{background:rgba(80,200,100,.15);color:var(--green)}
 .mbadge.closed{background:rgba(216,98,74,.12);color:var(--red)}
 .section-title{font-size:13px;font-weight:700;color:var(--cream);margin:14px 0 8px;letter-spacing:.02em;text-transform:uppercase}
-.modal-map-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:linear-gradient(135deg,var(--gold),var(--ember));color:#1c140f;border:none;border-radius:12px;padding:12px;font-family:'Fraunces',serif;font-weight:600;font-size:15px;cursor:pointer;margin-top:14px}
+.modal-map-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:linear-gradient(135deg,var(--gold),var(--accent));color:#fff;border:none;border-radius:12px;padding:12px;font-family:'Fraunces',serif;font-weight:600;font-size:15px;cursor:pointer;margin-top:14px;transition:background .6s}
 .rev-item{padding:9px 0;border-bottom:1px solid var(--line)}
 .rev-item:last-child{border-bottom:none;padding-bottom:0}
 .rev-author{font-weight:700;font-size:12.5px}
@@ -117,7 +180,7 @@ label{font-size:11px;color:var(--muted);font-weight:600;padding-left:2px}
 
 .empty{text-align:center;color:var(--muted);padding:45px 20px;font-size:14px;line-height:1.6}
 .empty .ico{font-size:34px;display:block;margin-bottom:10px}
-footer{padding:20px 22px 26px;text-align:center;color:var(--dim);font-size:11px;line-height:1.7}
+footer{padding:16px 22px 22px;text-align:center;color:var(--dim);font-size:11px;line-height:1.7;transition:color .6s}
 footer strong{color:var(--muted);font-weight:600}
 </style>
 </head>
@@ -128,51 +191,98 @@ footer strong{color:var(--muted);font-weight:600}
   <div class="eyebrow">Şehir şehir, lokma lokma</div>
   <h1>Lezzet <em>Rotası</em></h1>
   <p class="tagline">Bulunduğun yerin en sevilen sofralarını keşfet.</p>
+  <div class="bolge-badge" id="bolgeBadge" style="display:none">
+    <span class="dot"></span><span id="bolgeLabel">—</span>
+  </div>
 </header>
 
-<div class="panel">
-  <div class="row">
-    <button class="loc-btn" id="locBtn">📍 Konumumu kullan</button>
-    <input type="text" id="locStatus" placeholder="Konum bekleniyor…" readonly style="flex:1;font-size:13px">
+<!-- Ana arama paneli -->
+<div id="mainPanel">
+  <!-- Son aramalar -->
+  <div class="gecmis" id="gecmisBar"></div>
+
+  <div class="panel">
+    <div class="row">
+      <button class="loc-btn" id="locBtn">📍 Konumumu kullan</button>
+      <input type="text" id="locStatus" placeholder="Konum bekleniyor…" readonly style="flex:1;font-size:13px">
+    </div>
+    <div class="loc-msg" id="locMsg"></div>
+    <div class="divider-or">veya elle gir</div>
+    <div class="field-grid">
+      <div class="field">
+        <label>İl</label>
+        <input type="text" id="il" placeholder="Ankara" autocomplete="off">
+        <div class="autocomplete-list" id="ilAc"></div>
+      </div>
+      <div class="field">
+        <label>İlçe</label>
+        <input type="text" id="ilce" placeholder="Sincan" autocomplete="off">
+        <div class="autocomplete-list" id="ilceAc"></div>
+      </div>
+      <div class="field full">
+        <label>Mahalle (isteğe bağlı)</label>
+        <input type="text" id="mah" placeholder="Fatih Mahallesi">
+      </div>
+    </div>
+    <button class="go" id="searchBtn">Sofraları getir</button>
   </div>
-  <div class="loc-msg" id="locMsg"></div>
-  <div class="divider-or">veya elle gir</div>
-  <div class="field-grid">
-    <div class="field"><label>İl</label><input type="text" id="il" placeholder="Ankara"></div>
-    <div class="field"><label>İlçe</label><input type="text" id="ilce" placeholder="Sincan"></div>
-    <div class="field full"><label>Mahalle (isteğe bağlı)</label><input type="text" id="mah" placeholder="Fatih Mahallesi"></div>
+
+  <div class="filter-scroll">
+    <div class="fchip active" data-tur="">Tümü</div>
+    <div class="fchip" data-tur="kebap">🥩 Kebap</div>
+    <div class="fchip" data-tur="izgara">🔥 Izgara</div>
+    <div class="fchip" data-tur="pide lahmacun">🫓 Pide & Lahmacun</div>
+    <div class="fchip" data-tur="balık">🐟 Balık</div>
+    <div class="fchip" data-tur="meze meyhane">🍷 Meze & Meyhane</div>
+    <div class="fchip" data-tur="ev yemeği">🍲 Ev Yemeği</div>
+    <div class="fchip" data-tur="kahvaltı">🍳 Kahvaltı</div>
+    <div class="fchip" data-tur="kafe pastane">☕ Kafe & Pastane</div>
+    <div class="fchip" data-tur="döner">🌯 Döner</div>
+    <div class="fchip" data-tur="çorba">🥣 Çorba</div>
+    <div class="fchip" data-tur="tatlı künefe">🍮 Tatlı & Künefe</div>
+    <div class="fchip" data-tur="pizza">🍕 Pizza</div>
+    <div class="fchip" data-tur="fast food">🍔 Fast Food</div>
+    <div class="fchip" data-tur="vegan vejetaryen">🥗 Vegan & Vejetaryen</div>
   </div>
-  <button class="go" id="searchBtn">Sofraları getir</button>
+
+  <div class="sortbar">
+    <div class="chip active" data-sort="balanced">Puan + yorum dengesi</div>
+    <div class="chip" data-sort="rating">Sadece en yüksek puan</div>
+  </div>
+
+  <div class="results" id="results">
+    <div class="empty"><span class="ico">🍽️</span>Bir konum seç ya da il/ilçe gir,<br>en iyi sofraları sıralayalım.</div>
+  </div>
 </div>
 
-<div class="filter-scroll">
-  <div class="fchip active" data-tur="">Tümü</div>
-  <div class="fchip" data-tur="kebap">🥩 Kebap</div>
-  <div class="fchip" data-tur="izgara">🔥 Izgara</div>
-  <div class="fchip" data-tur="pide lahmacun">🫓 Pide & Lahmacun</div>
-  <div class="fchip" data-tur="balık">🐟 Balık</div>
-  <div class="fchip" data-tur="meze meyhane">🍷 Meze & Meyhane</div>
-  <div class="fchip" data-tur="ev yemeği">🍲 Ev Yemeği</div>
-  <div class="fchip" data-tur="kahvaltı">🍳 Kahvaltı</div>
-  <div class="fchip" data-tur="kafe pastane">☕ Kafe & Pastane</div>
-  <div class="fchip" data-tur="döner">🌯 Döner</div>
-  <div class="fchip" data-tur="çorba">🥣 Çorba</div>
-  <div class="fchip" data-tur="tatlı künefe">🍮 Tatlı & Künefe</div>
-  <div class="fchip" data-tur="pizza">🍕 Pizza</div>
-  <div class="fchip" data-tur="fast food">🍔 Fast Food</div>
-  <div class="fchip" data-tur="vegan vejetaryen">🥗 Vegan & Vejetaryen</div>
+<!-- Favoriler paneli -->
+<div class="panel-view" id="favPanel">
+  <div class="pv-title">❤️ Favorilerim</div>
+  <div id="favList"></div>
 </div>
 
-<div class="sortbar">
-  <div class="chip active" data-sort="balanced">Puan + yorum dengesi</div>
-  <div class="chip" data-sort="rating">Sadece en yüksek puan</div>
-</div>
-
-<div class="results" id="results">
-  <div class="empty"><span class="ico">🍽️</span>Bir konum seç ya da il/ilçe gir,<br>en iyi sofraları sıralayalım.</div>
+<!-- Rota paneli -->
+<div class="panel-view" id="rotaPanel">
+  <div class="pv-title">🗺️ Bugünkü Rotam</div>
+  <div id="rotaList"></div>
 </div>
 
 </div><!-- .app -->
+
+<!-- Alt navigasyon -->
+<div class="bottom-tabs">
+  <button class="btab active" data-panel="main" onclick="switchPanel('main')">
+    <span class="ico">🍽️</span><span>Keşfet</span>
+  </button>
+  <button class="btab" data-panel="fav" onclick="switchPanel('fav')">
+    <span class="ico">❤️</span><span>Favoriler</span>
+    <span class="badge-count" id="favCount"></span>
+  </button>
+  <button class="btab" data-panel="rota" onclick="switchPanel('rota')">
+    <span class="ico">🗺️</span><span>Rotam</span>
+    <span class="badge-count" id="rotaCount"></span>
+  </button>
+</div>
 
 <!-- MODAL -->
 <div class="modal-bg" id="modalBg">
@@ -185,12 +295,15 @@ footer strong{color:var(--muted);font-weight:600}
 
 <footer>
   Lezzet Rotası<br>
-  <strong>Geliştirici: Mehmet Emin KILIÇ</strong> — V3.0
+  <strong>Geliştirici: Mehmet Emin KILIÇ</strong> — V3.2
 </footer>
 
 <script>
 const $ = s => document.querySelector(s);
 const PROXY_STORE = 'lezzet_rotasi_proxy_url';
+const FAV_STORE   = 'lezzet_favoriler';
+const ROTA_STORE  = 'lezzet_rota';
+const GECMIS_STORE= 'lezzet_gecmis';
 let currentSort = 'balanced';
 let currentTur  = '';
 let lastQuery   = null;
@@ -198,39 +311,340 @@ let lastParams  = null;
 let lastList    = null;
 let lastLive    = false;
 
-/* Proxy: same-origin varsayılan, localStorage'dan override */
+/* =============================================
+   TÜRKİYE İL / İLÇE VERİSİ
+   ============================================= */
+const IL_ILCE = {
+  "Adana":["Aladağ","Ceyhan","Çukurova","Feke","İmamoğlu","Karaisalı","Karataş","Kozan","Pozantı","Saimbeyli","Sarıçam","Seyhan","Tufanbeyli","Yumurtalık","Yüreğir"],
+  "Adıyaman":["Besni","Çelikhan","Gerger","Gölbaşı","Kahta","Merkez","Samsat","Sincik","Tut"],
+  "Afyonkarahisar":["Başmakçı","Bayat","Bolvadin","Çay","Çobanlar","Dazkırı","Dinar","Emirdağ","Evciler","Hocalar","İhsaniye","İscehisar","Kızılören","Merkez","Sandıklı","Sinanpaşa","Sultandağı","Şuhut"],
+  "Ağrı":["Diyadin","Doğubayazıt","Eleşkirt","Hamur","Merkez","Patnos","Taşlıçay","Tutak"],
+  "Aksaray":["Ağaçören","Eskil","Gülağaç","Güzelyurt","Merkez","Ortaköy","Sarıyahşi","Sultanhanı"],
+  "Amasya":["Göynücek","Gümüşhacıköy","Hamamözü","Merkez","Merzifon","Suluova","Taşova"],
+  "Ankara":["Akyurt","Altındağ","Ayaş","Bala","Beypazarı","Çamlıdere","Çankaya","Çubuk","Elmadağ","Etimesgut","Evren","Gölbaşı","Güdül","Haymana","Kalecik","Kazan","Keçiören","Kızılcahamam","Mamak","Nallıhan","Polatlı","Pursaklar","Sincan","Şereflikoçhisar","Yenimahalle"],
+  "Antalya":["Akseki","Aksu","Alanya","Demre","Döşemealtı","Elmalı","Finike","Gazipaşa","Gündoğmuş","İbradı","Kaş","Kemer","Kepez","Konyaaltı","Korkuteli","Kumluca","Manavgat","Muratpaşa","Serik"],
+  "Ardahan":["Çıldır","Damal","Göle","Hanak","Merkez","Posof"],
+  "Artvin":["Ardanuç","Arhavi","Borçka","Hopa","Kemalpaşa","Merkez","Murgul","Şavşat","Yusufeli"],
+  "Aydın":["Bozdoğan","Buharkent","Çine","Didim","Efeler","Germencik","İncirliova","Karacasu","Karpuzlu","Koçarlı","Köşk","Kuşadası","Kuyucak","Nazilli","Söke","Sultanhisar","Yenipazar"],
+  "Balıkesir":["Altıeylül","Ayvalık","Balya","Bandırma","Bigadiç","Burhaniye","Dursunbey","Edremit","Erdek","Gömeç","Gönen","Havran","İvrindi","Karesi","Kepsut","Manyas","Marmara","Savaştepe","Sındırgı","Susurluk"],
+  "Bartın":["Amasra","Kurucaşile","Merkez","Ulus"],
+  "Batman":["Beşiri","Gercüş","Hasankeyf","Kozluk","Merkez","Sason"],
+  "Bayburt":["Aydıntepe","Demirözü","Merkez"],
+  "Bilecik":["Bozüyük","Gölpazarı","İnhisar","Merkez","Osmaneli","Pazaryeri","Söğüt","Yenipazar"],
+  "Bingöl":["Adaklı","Genç","Karlıova","Kiğı","Merkez","Solhan","Yayladere","Yedisu"],
+  "Bitlis":["Adilcevaz","Ahlat","Güroymak","Hizan","Merkez","Mutki","Tatvan"],
+  "Bolu":["Dörtdivan","Gerede","Göynük","Kıbrıscık","Mengen","Merkez","Mudurnu","Seben","Yeniçağa"],
+  "Burdur":["Ağlasun","Altınyayla","Bucak","Çavdır","Çeltikçi","Gölhisar","Karamanlı","Kemer","Merkez","Tefenni","Yeşilova"],
+  "Bursa":["Büyükorhan","Gemlik","Gürsu","Harmancık","İnegöl","İznik","Karacabey","Keles","Kestel","Mudanya","Mustafakemalpaşa","Nilüfer","Orhaneli","Orhangazi","Osmangazi","Yenişehir","Yıldırım"],
+  "Çanakkale":["Ayvacık","Bayramiç","Biga","Bozcaada","Çan","Eceabat","Ezine","Gelibolu","Gökçeada","Lapseki","Merkez","Yenice"],
+  "Çankırı":["Atkaracalar","Bayramören","Çerkeş","Eldivan","Ilgaz","Khanönü","Korgun","Kurşunlu","Merkez","Orta","Şabanözü","Yapraklı"],
+  "Çorum":["Alaca","Bayat","Boğazkale","Dodurga","İskilip","Kargı","Laçin","Mecitözü","Merkez","Oğuzlar","Ortaköy","Osmancık","Sungurlu","Uğurludağ"],
+  "Denizli":["Acıpayam","Babadağ","Baklan","Bekilli","Beyağaç","Bozkurt","Buldan","Çal","Çameli","Çardak","Çivril","Güney","Honaz","Kale","Merkez","Pamukkale","Sarayköy","Serinhisar","Tavas"],
+  "Diyarbakır":["Bağlar","Bismil","Çermik","Çınar","Çüngüş","Dicle","Eğil","Ergani","Hani","Hazro","Kayapınar","Kocaköy","Kulp","Lice","Merkez","Silvan","Sur","Yenişehir"],
+  "Düzce":["Akçakoca","Cumayeri","Çilimli","Gölyaka","Gümüşova","Kaynaşlı","Merkez","Yığılca"],
+  "Edirne":["Enez","Havsa","İpsala","Keşan","Lalapaşa","Meriç","Merkez","Süloğlu","Uzunköprü"],
+  "Elazığ":["Ağın","Alacakaya","Arıcak","Baskil","Karakoçan","Keban","Kovancılar","Maden","Merkez","Palu","Sivrice"],
+  "Erzincan":["Çayırlı","İliç","Kemah","Kemaliye","Merkez","Otlukbeli","Refahiye","Tercan","Üzümlü"],
+  "Erzurum":["Aşkale","Aziziye","Çat","Hinis","Horasan","İspir","Karaçoban","Karayazı","Köprüköy","Merkez","Narman","Oltu","Olur","Palandöken","Pasinler","Pazaryolu","Şenkaya","Tekman","Tortum","Uzundere","Yakutiye"],
+  "Eskişehir":["Alpu","Beylikova","Çifteler","Günyüzü","Han","İnönü","Mahmudiye","Mihalgazi","Mihalıçcık","Odunpazarı","Sarıcakaya","Seyitgazi","Sivrihisar","Tepebaşı"],
+  "Gaziantep":["Araban","İslahiye","Karkamış","Nizip","Nurdağı","Oğuzeli","Şahinbey","Şehitkamil","Yavuzeli"],
+  "Giresun":["Alucra","Bulancak","Çamoluk","Çanakçı","Dereli","Doğankent","Espiye","Eynesil","Görele","Güce","Keşap","Merkez","Piraziz","Şebinkarahisar","Tirebolu","Yağlıdere"],
+  "Gümüşhane":["Kelkit","Köse","Kürtün","Merkez","Şiran","Torul"],
+  "Hakkari":["Çukurca","Derecik","Merkez","Şemdinli","Yüksekova"],
+  "Hatay":["Altınözü","Antakya","Arsuz","Belen","Defne","Dörtyol","Erzin","Hassa","İskenderun","Kırıkhan","Kumlu","Payas","Reyhanlı","Samandağ","Yayladağı"],
+  "Iğdır":["Aralık","Karakoyunlu","Merkez","Tuzluca"],
+  "Isparta":["Aksu","Atabey","Eğirdir","Gelendost","Gönen","Keçiborlu","Merkez","Senirkent","Sütçüler","Şarkikaraağaç","Uluborlu","Yalvaç","Yenişarbademli"],
+  "İstanbul":["Adalar","Arnavutköy","Ataşehir","Avcılar","Bağcılar","Bahçelievler","Bakırköy","Başakşehir","Bayrampaşa","Beşiktaş","Beykoz","Beylikdüzü","Beyoğlu","Büyükçekmece","Çatalca","Çekmeköy","Esenler","Esenyurt","Eyüpsultan","Fatih","Gaziosmanpaşa","Güngören","Kadıköy","Kağıthane","Kartal","Küçükçekmece","Maltepe","Pendik","Sancaktepe","Sarıyer","Silivri","Sultanbeyli","Sultangazi","Şile","Şişli","Tuzla","Ümraniye","Üsküdar","Zeytinburnu"],
+  "İzmir":["Aliağa","Balçova","Bayındır","Bayraklı","Bergama","Beydağ","Bornova","Buca","Çeşme","Çiğli","Dikili","Foça","Gaziemir","Güzelbahçe","Karabağlar","Karaburun","Karşıyaka","Kemalpaşa","Kınık","Kiraz","Konak","Menderes","Menemen","Narlıdere","Ödemiş","Seferihisar","Selçuk","Tire","Torbalı","Urla"],
+  "Kahramanmaraş":["Afşin","Andırın","Çağlayancerit","Dulkadiroğlu","Ekinözü","Elbistan","Göksun","Merkez","Nurhak","Onikişubat","Pazarcık","Türkoğlu"],
+  "Karabük":["Eflani","Eskipazar","Merkez","Ovacık","Safranbolu","Yenice"],
+  "Karaman":["Ayrancı","Başyayla","Ermenek","Kazımkarabekir","Merkez","Sarıveliler"],
+  "Kars":["Akyaka","Arpaçay","Digor","Kağızman","Merkez","Sarıkamış","Selim","Susuz"],
+  "Kastamonu":["Abana","Ağlı","Araç","Azdavay","Bozkurt","Çatalzeytin","Çevre","Daday","Devrekani","Doğanyurt","Hanönü","İhsangazi","İnebolu","Küre","Merkez","Pınarbaşı","Seydiler","Şenpazar","Taşköprü","Tosya"],
+  "Kayseri":["Akkışla","Bünyan","Develi","Felahiye","Hacılar","İncesu","Kocasinan","Melikgazi","Özvatan","Pınarbaşı","Sarıoğlan","Sarız","Talas","Tomarza","Yahyalı","Yeşilhisar"],
+  "Kırıkkale":["Bahşili","Balışeyh","Çelebi","Delice","Karakeçili","Keskin","Merkez","Sulakyurt","Yahşihan"],
+  "Kırklareli":["Babaeski","Demirköy","Kofçaz","Lüleburgaz","Merkez","Pehlivanköy","Pınarhisar","Vize"],
+  "Kırşehir":["Akçakent","Akpınar","Boztepe","Çiçekdağı","Kaman","Merkez","Mucur"],
+  "Kilis":["Elbeyli","Merkez","Musabeyli","Polateli"],
+  "Kocaeli":["Başiskele","Çayırova","Darıca","Derince","Dilovası","Gebze","Gölcük","İzmit","Kandıra","Karamürsel","Kartepe","Körfez"],
+  "Konya":["Ahırlı","Akören","Akşehir","Altınekin","Beyşehir","Bozkır","Cihanbeyli","Çeltik","Çumra","Derbent","Derebucak","Doğanhisar","Emirgazi","Ereğli","Güneysınır","Hadim","Halkapınar","Hüyük","Ilgın","Kadınhanı","Karapınar","Karatay","Kulu","Meram","Sarayönü","Selçuklu","Seydişehir","Taşkent","Tuzlukçu","Yalıhüyük","Yunak"],
+  "Kütahya":["Altıntaş","Aslanapa","Çavdarhisar","Domaniç","Dumlupınar","Emet","Gediz","Hisarcık","Merkez","Pazarlar","Şaphane","Simav","Tavşanlı"],
+  "Malatya":["Akçadağ","Arapgir","Arguvan","Battalgazi","Darende","Doğanşehir","Doğanyol","Hekimhan","Kale","Kuluncak","Pütürge","Yazıhan","Yeşilyurt"],
+  "Manisa":["Ahmetli","Akhisar","Alaşehir","Demirci","Gölmarmara","Gördes","Kırkağaç","Köprübaşı","Kula","Merkez","Salihli","Sarıgöl","Saruhanlı","Selendi","Soma","Şehzadeler","Turgutlu","Yunusemre"],
+  "Mardin":["Artuklu","Dargeçit","Derik","Kızıltepe","Mazıdağı","Midyat","Nusaybin","Ömerli","Savur","Yeşilli"],
+  "Mersin":["Akdeniz","Anamur","Aydıncık","Bozyazı","Çamlıyayla","Erdemli","Gülnar","Mezitli","Mut","Silifke","Tarsus","Toroslar","Yenişehir"],
+  "Muğla":["Bodrum","Dalaman","Datça","Fethiye","Kavaklıdere","Köyceğiz","Marmaris","Menteşe","Milas","Ortaca","Seydikemer","Ula","Yatağan"],
+  "Muş":["Bulanık","Hasköy","Korkut","Malazgirt","Merkez","Varto"],
+  "Nevşehir":["Acıgöl","Avanos","Derinkuyu","Gülşehir","Hacıbektaş","Kozaklı","Merkez","Ürgüp"],
+  "Niğde":["Altunhisar","Bor","Çamardı","Çiftlik","Merkez","Ulukışla"],
+  "Ordu":["Akkuş","Altınordu","Aybastı","Çamaş","Çatalpınar","Çaybaşı","Fatsa","Gölköy","Gülyalı","Gürgentepe","İkizce","Kabadüz","Kabataş","Korgan","Kumru","Mesudiye","Perşembe","Ulubey","Ünye"],
+  "Osmaniye":["Bahçe","Düziçi","Hasanbeyli","Kadirli","Merkez","Sumbas","Toprakkale"],
+  "Rize":["Ardeşen","Çamlıhemşin","Çayeli","Derepazarı","Fındıklı","Güneysu","Hemşin","İkizdere","İyidere","Kalkandere","Merkez","Pazar"],
+  "Sakarya":["Adapazarı","Akyazı","Arifiye","Erenler","Ferizli","Geyve","Hendek","Karapürçek","Karasu","Kaynarca","Kocaali","Mithatpaşa","Pamukova","Sapanca","Serdivan","Söğütlü","Taraklı"],
+  "Samsun":["19 Mayıs","Alaçam","Asarcık","Atakum","Ayvacık","Bafra","Canik","Çarşamba","İlkadım","Kavak","Ladik","Salıpazarı","Tekkeköy","Terme","Vezirköprü","Yakakent"],
+  "Siirt":["Baykan","Eruh","Kurtalan","Merkez","Pervari","Şirvan","Tillo"],
+  "Sinop":["Ayancık","Boyabat","Dikmen","Durağan","Erfelek","Gerze","Merkez","Saraydüzü","Türkeli"],
+  "Sivas":["Akıncılar","Altınyayla","Divriği","Doğanşar","Gemerek","Gölova","Gürun","Hafik","İmranlı","Kangal","Koyulhisar","Merkez","Suşehri","Şarkışla","Ulaş","Yıldızeli","Zara"],
+  "Şanlıurfa":["Akçakale","Birecik","Bozova","Ceylanpınar","Eyyübiye","Halfeti","Haliliye","Harran","Hilvan","Karaköprü","Merkez","Siverek","Suruç","Viranşehir"],
+  "Şırnak":["Beytüşşebap","Cizre","Güçlükonak","İdil","Merkez","Silopi","Uludere"],
+  "Tekirdağ":["Çerkezköy","Çorlu","Ergene","Hayrabolu","Kapaklı","Malkara","Marmaraereğlisi","Merkez","Muratlı","Saray","Süleymanpaşa","Şarköy"],
+  "Tokat":["Almus","Artova","Başçiftlik","Erbaa","Merkez","Niksar","Pazar","Reşadiye","Sulusaray","Turhal","Yeşilyurt","Zile"],
+  "Trabzon":["Akçaabat","Araklı","Arsin","Beşikdüzü","Çarşıbaşı","Çaykara","Dernekpazarı","Düzköy","Hayrat","Köprübaşı","Maçka","Of","Ortahisar","Sürmene","Şalpazarı","Tonya","Vakfıkebir","Yomra"],
+  "Tunceli":["Çemişgezek","Hozat","Mazgirt","Merkez","Nazımiye","Ovacık","Pertek","Pülümür"],
+  "Uşak":["Banaz","Eşme","Karahallı","Merkez","Sivaslı","Ulubey"],
+  "Van":["Bahçesaray","Başkale","Çaldıran","Çatak","Edremit","Erciş","Gevaş","Gürpınar","İpekyolu","Merkez","Muradiye","Özalp","Saray","Tuşba"],
+  "Yalova":["Altınova","Armutlu","Çiftlikköy","Çınarcık","Merkez","Termal"],
+  "Yozgat":["Akdağmadeni","Aydıncık","Boğazlıyan","Çandır","Çayıralan","Çekerek","Kadışehri","Merkez","Saraykent","Sarıkaya","Şefaatli","Sorgun","Yenifakılı","Yerköy"],
+  "Zonguldak":["Alapli","Çaycuma","Devrek","Ereğli","Gökçebey","Kilimli","Kozlu","Merkez"],
+};
+const IL_LISTESI = Object.keys(IL_ILCE).sort();
+
+/* =============================================
+   BÖLGE TESPİTİ
+   ============================================= */
+const BOLGELER = [
+  {id:'marmara',ad:'Marmara Bölgesi',emoji:'🌊',sehirler:['istanbul','tekirdağ','edirne','kırklareli','çanakkale','balıkesir','bursa','yalova','kocaeli','sakarya','düzce','bolu','bilecik'],latMin:39.5,latMax:42.0,lngMin:26.0,lngMax:31.5},
+  {id:'ege',ad:'Ege Bölgesi',emoji:'🏖️',sehirler:['izmir','manisa','aydın','denizli','muğla','uşak','afyonkarahisar','kütahya'],latMin:36.5,latMax:39.8,lngMin:26.5,lngMax:30.5},
+  {id:'akdeniz',ad:'Akdeniz Bölgesi',emoji:'☀️',sehirler:['antalya','isparta','burdur','mersin','adana','osmaniye','hatay','kahramanmaraş'],latMin:36.0,latMax:38.5,lngMin:29.5,lngMax:37.0},
+  {id:'karadeniz',ad:'Karadeniz Bölgesi',emoji:'🌲',sehirler:['zonguldak','bartın','karabük','kastamonu','sinop','samsun','ordu','giresun','trabzon','rize','artvin','gümüşhane','bayburt','amasya','tokat','çorum'],latMin:40.5,latMax:42.2,lngMin:31.0,lngMax:42.0},
+  {id:'dogu',ad:'Doğu Anadolu Bölgesi',emoji:'🏔️',sehirler:['erzurum','erzincan','kars','ardahan','iğdır','ağrı','van','bitlis','muş','bingöl','elazığ','malatya','tunceli','hakkari'],latMin:37.5,latMax:41.5,lngMin:38.5,lngMax:44.8},
+  {id:'guneydogu',ad:'Güneydoğu Anadolu Bölgesi',emoji:'🌶️',sehirler:['gaziantep','adıyaman','şanlıurfa','diyarbakır','mardin','batman','şırnak','siirt','kilis'],latMin:36.5,latMax:38.5,lngMin:36.5,lngMax:43.0},
+  {id:'ic_anadolu',ad:'İç Anadolu Bölgesi',emoji:'🌾',sehirler:['ankara','konya','eskişehir','kayseri','sivas','yozgat','kırıkkale','kırşehir','nevşehir','niğde','aksaray','karaman'],latMin:37.5,latMax:41.0,lngMin:30.0,lngMax:38.5},
+];
+
+function bolgedenKoordinate(lat,lng){
+  const sira=['karadeniz','ege','akdeniz','marmara','dogu','guneydogu','ic_anadolu'];
+  for(const id of sira){
+    const b=BOLGELER.find(x=>x.id===id);
+    if(lat>=b.latMin&&lat<=b.latMax&&lng>=b.lngMin&&lng<=b.lngMax) return b;
+  }
+  return BOLGELER.find(b=>b.id==='ic_anadolu');
+}
+function norm(s){ return (s||'').toLowerCase().replace(/ğ/g,'g').replace(/ü/g,'u').replace(/ş/g,'s').replace(/ı/g,'i').replace(/ö/g,'o').replace(/ç/g,'c'); }
+function bolgedenSehir(metin){
+  const k=norm(metin);
+  for(const b of BOLGELER) for(const s of b.sehirler) if(k.includes(norm(s))) return b;
+  return null;
+}
+function temaUygula(bolge){
+  document.documentElement.removeAttribute('data-bolge');
+  if(!bolge) return;
+  const MAP={marmara:'marmara',ege:'ege',akdeniz:'akdeniz',karadeniz:'karadeniz',dogu:'dogu',guneydogu:'guneydogu',ic_anadolu:null};
+  const attr=MAP[bolge.id];
+  if(attr) document.documentElement.setAttribute('data-bolge',attr);
+  $('#bolgeBadge').style.display='inline-flex';
+  $('#bolgeLabel').textContent=bolge.emoji+' '+bolge.ad;
+}
+
+/* =============================================
+   OTOKOMPLETİ (İL/İLÇE)
+   ============================================= */
+function acItemHtml(metin,query){
+  if(!query) return metin;
+  const k=norm(query), m=norm(metin);
+  const i=m.indexOf(norm(k));
+  if(i<0) return metin;
+  return metin.slice(0,i)+'<mark>'+metin.slice(i,i+query.length)+'</mark>'+metin.slice(i+query.length);
+}
+
+function setupAutoComplete(inputId, listId, getItems, onSelect){
+  const inp=$('#'+inputId), list=$('#'+listId);
+  let sel=-1;
+  inp.addEventListener('input',()=>{
+    const q=inp.value.trim();
+    if(!q){ list.classList.remove('show'); return; }
+    const items=getItems(q).slice(0,8);
+    if(!items.length){ list.classList.remove('show'); return; }
+    sel=-1;
+    list.innerHTML=items.map((it,i)=>`<div class="ac-item" data-i="${i}" data-val="${it}">${acItemHtml(it,q)}</div>`).join('');
+    list.classList.add('show');
+    list.querySelectorAll('.ac-item').forEach(el=>{
+      el.onclick=()=>{ onSelect(el.dataset.val); list.classList.remove('show'); };
+    });
+  });
+  inp.addEventListener('keydown',e=>{
+    const items=list.querySelectorAll('.ac-item');
+    if(!items.length) return;
+    if(e.key==='ArrowDown'){ e.preventDefault(); sel=Math.min(sel+1,items.length-1); items.forEach((x,i)=>x.classList.toggle('selected',i===sel)); }
+    else if(e.key==='ArrowUp'){ e.preventDefault(); sel=Math.max(sel-1,0); items.forEach((x,i)=>x.classList.toggle('selected',i===sel)); }
+    else if(e.key==='Enter'&&sel>=0){ items[sel].click(); }
+    else if(e.key==='Escape'){ list.classList.remove('show'); }
+  });
+  document.addEventListener('click',e=>{ if(!inp.contains(e.target)&&!list.contains(e.target)) list.classList.remove('show'); });
+}
+
+setupAutoComplete('il','ilAc',
+  q => IL_LISTESI.filter(il => norm(il).includes(norm(q))),
+  val => { $('#il').value=val; $('#ilce').value=''; $('#ilce').focus(); }
+);
+setupAutoComplete('ilce','ilceAc',
+  q => {
+    const il=$('#il').value.trim();
+    const kaynak = il && IL_ILCE[il] ? IL_ILCE[il] : Object.values(IL_ILCE).flat();
+    return kaynak.filter(ilce=>norm(ilce).includes(norm(q)));
+  },
+  val => { $('#ilce').value=val; }
+);
+
+/* =============================================
+   SON ARAMALAR GEÇMİŞİ
+   ============================================= */
+function gecmisYukle(){ try{ return JSON.parse(localStorage.getItem(GECMIS_STORE)||'[]'); }catch(e){ return []; } }
+function gecmisKaydet(label,params){
+  let g=gecmisYukle().filter(x=>x.label!==label);
+  g.unshift({label,params}); g=g.slice(0,5);
+  try{ localStorage.setItem(GECMIS_STORE,JSON.stringify(g)); }catch(e){}
+  renderGecmis();
+}
+function gecmisSil(label){
+  const g=gecmisYukle().filter(x=>x.label!==label);
+  try{ localStorage.setItem(GECMIS_STORE,JSON.stringify(g)); }catch(e){}
+  renderGecmis();
+}
+function renderGecmis(){
+  const g=gecmisYukle();
+  const bar=$('#gecmisBar');
+  if(!g.length){ bar.innerHTML=''; return; }
+  bar.innerHTML=g.map(x=>`
+    <div class="gecmis-chip" onclick="doSearch('${x.label}',${JSON.stringify(x.params).replace(/"/g,'&quot;')})">
+      🕐 ${x.label}
+      <span class="del" onclick="event.stopPropagation();gecmisSil('${x.label}')">✕</span>
+    </div>`).join('');
+}
+renderGecmis();
+
+/* =============================================
+   FAVORİLER
+   ============================================= */
+function favYukle(){ try{ return JSON.parse(localStorage.getItem(FAV_STORE)||'[]'); }catch(e){ return []; } }
+function favKaydet(r){
+  const favs=favYukle();
+  const idx=favs.findIndex(x=>x.name===r.name&&x.addr===r.addr);
+  if(idx>=0) favs.splice(idx,1); else favs.unshift(r);
+  try{ localStorage.setItem(FAV_STORE,JSON.stringify(favs.slice(0,50))); }catch(e){}
+  updateFavBadge(); renderFavPanel();
+  return idx<0; // true=eklendi false=çıkarıldı
+}
+function favMi(r){ return favYukle().some(x=>x.name===r.name&&x.addr===r.addr); }
+function updateFavBadge(){
+  const n=favYukle().length;
+  const el=$('#favCount');
+  el.textContent=n||''; el.classList.toggle('show',n>0);
+}
+function renderFavPanel(){
+  const favs=favYukle();
+  const el=$('#favList');
+  if(!favs.length){ el.innerHTML='<div class="empty-pv"><span class="ico">❤️</span>Henüz favori eklemedin.<br>Restoran kartındaki ❤️ ikonuna tıkla.</div>'; return; }
+  el.innerHTML=favs.map((r,i)=>`
+    <div class="fav-card">
+      <div class="info">
+        <div class="cname">${r.name}</div>
+        <div class="caddr">${r.addr}</div>
+        <div class="crating">${'★'.repeat(Math.floor(r.rating||0))} ${(r.rating||0).toFixed(1)} · ${(r.reviews||0).toLocaleString('tr-TR')} yorum</div>
+      </div>
+      ${r.lat&&r.lng?`<button class="cact map-btn" style="flex:0 0 auto;padding:8px" onclick="openMap(${r.lat},${r.lng},'${encodeURIComponent(r.name)}')">🗺️</button>`:''}
+      <button class="fav-del" onclick="favSilIdx(${i})">🗑️</button>
+    </div>`).join('');
+}
+function favSilIdx(i){
+  const favs=favYukle(); favs.splice(i,1);
+  try{ localStorage.setItem(FAV_STORE,JSON.stringify(favs)); }catch(e){}
+  updateFavBadge(); renderFavPanel();
+}
+updateFavBadge(); renderFavPanel();
+
+/* =============================================
+   ROTA
+   ============================================= */
+function rotaYukle(){ try{ return JSON.parse(localStorage.getItem(ROTA_STORE)||'[]'); }catch(e){ return []; } }
+function rotaEkle(r){
+  const rota=rotaYukle();
+  if(rota.find(x=>x.name===r.name&&x.addr===r.addr)) return false;
+  rota.push(r);
+  try{ localStorage.setItem(ROTA_STORE,JSON.stringify(rota.slice(0,10))); }catch(e){}
+  updateRotaBadge(); renderRotaPanel(); return true;
+}
+function rotaSil(i){
+  const rota=rotaYukle(); rota.splice(i,1);
+  try{ localStorage.setItem(ROTA_STORE,JSON.stringify(rota)); }catch(e){}
+  updateRotaBadge(); renderRotaPanel();
+}
+function rotaMi(r){ return rotaYukle().some(x=>x.name===r.name&&x.addr===r.addr); }
+function updateRotaBadge(){
+  const n=rotaYukle().length;
+  const el=$('#rotaCount');
+  el.textContent=n||''; el.classList.toggle('show',n>0);
+}
+function renderRotaPanel(){
+  const rota=rotaYukle();
+  const el=$('#rotaList');
+  if(!rota.length){ el.innerHTML='<div class="empty-pv"><span class="ico">🗺️</span>Rotana henüz yer eklemedin.<br>Restoran kartındaki 🗺️+ butonuna tıkla.</div>'; return; }
+  el.innerHTML=rota.map((r,i)=>`
+    <div class="rota-card">
+      <div class="rota-num">${i+1}</div>
+      <div class="info">
+        <div class="cname">${r.name}</div>
+        <div class="caddr">${r.addr}</div>
+        <div class="crating">${'★'.repeat(Math.floor(r.rating||0))} ${(r.rating||0).toFixed(1)}</div>
+      </div>
+      ${r.lat&&r.lng?`<button class="cact map-btn" style="flex:0 0 auto;padding:8px" onclick="openMap(${r.lat},${r.lng},'${encodeURIComponent(r.name)}')">🗺️</button>`:''}
+      <button class="rota-del" onclick="rotaSil(${i})">🗑️</button>
+    </div>`).join('')
+  + (rota.length>1&&rota.some(x=>x.lat)
+    ? `<button class="rota-open-btn" onclick="rotaTumAc()">🗺️ Tüm Rotayı Haritada Aç</button>` : '');
+}
+function rotaTumAc(){
+  const rota=rotaYukle().filter(r=>r.lat&&r.lng);
+  if(!rota.length) return;
+  const waypoints=rota.slice(1,-1).map(r=>`${r.lat},${r.lng}`).join('|');
+  const origin=`${rota[0].lat},${rota[0].lng}`;
+  const dest=`${rota[rota.length-1].lat},${rota[rota.length-1].lng}`;
+  const url=`https://www.google.com/maps/dir/${origin}/${waypoints?waypoints+'/':''}${dest}`;
+  window.open(url,'_blank');
+}
+updateRotaBadge(); renderRotaPanel();
+
+/* =============================================
+   PANEL SWITCH
+   ============================================= */
+function switchPanel(panel){
+  $('#mainPanel').style.display = panel==='main' ? 'block' : 'none';
+  $('#favPanel').classList.toggle('active', panel==='fav');
+  $('#rotaPanel').classList.toggle('active', panel==='rota');
+  document.querySelectorAll('.btab').forEach(b=>b.classList.toggle('active',b.dataset.panel===panel));
+}
+
+/* =============================================
+   PROXY
+   ============================================= */
 function loadProxy(){
-  try{
-    const s = localStorage.getItem(PROXY_STORE);
-    if(s !== null) return s.replace(/\/+$/, '');
-  }catch(e){}
-  if(location.protocol === 'http:' || location.protocol === 'https:')
-    return location.origin;
+  try{ const s=localStorage.getItem(PROXY_STORE); if(s!==null) return s.replace(/\/+$/,''); }catch(e){}
+  if(location.protocol==='http:'||location.protocol==='https:') return location.origin;
   return '';
 }
 
-/* Filtre */
-document.querySelectorAll('.fchip').forEach(c => {
-  c.onclick = () => {
-    document.querySelectorAll('.fchip').forEach(x => x.classList.remove('active'));
-    c.classList.add('active');
-    currentTur = c.dataset.tur;
-    if(lastParams) doSearch(lastQuery, {...lastParams, tur: currentTur});
+/* =============================================
+   FİLTRE & SORT
+   ============================================= */
+document.querySelectorAll('.fchip').forEach(c=>{
+  c.onclick=()=>{
+    document.querySelectorAll('.fchip').forEach(x=>x.classList.remove('active'));
+    c.classList.add('active'); currentTur=c.dataset.tur;
+    if(lastParams) doSearch(lastQuery,{...lastParams,tur:currentTur});
+  };
+});
+document.querySelectorAll('.chip').forEach(c=>{
+  c.onclick=()=>{
+    document.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));
+    c.classList.add('active'); currentSort=c.dataset.sort;
+    if(lastList) render(lastList,lastQuery,lastLive);
   };
 });
 
-/* Sort */
-document.querySelectorAll('.chip').forEach(c => {
-  c.onclick = () => {
-    document.querySelectorAll('.chip').forEach(x => x.classList.remove('active'));
-    c.classList.add('active');
-    currentSort = c.dataset.sort;
-    if(lastList) render(lastList, lastQuery, lastLive);
-  };
-});
-
-/* Demo data */
-const DEMO = [
+/* =============================================
+   DEMO VERİ
+   ============================================= */
+const DEMO=[
   {id:'',name:"Ocakbaşı Dede",cuisine:"Kebap & Ocakbaşı",addr:"Cumhuriyet Cad. No:12",rating:4.8,reviews:2143,price:'₺₺',summary:'',lat:39.97,lng:32.85},
   {id:'',name:"Köfteci Hacı Usta",cuisine:"Ev Yemekleri",addr:"İstasyon Mah. 3. Sok.",rating:4.7,reviews:1890,price:'₺',summary:'',lat:39.97,lng:32.85},
   {id:'',name:"Tarihi Tava Lokantası",cuisine:"Yöresel",addr:"Eski Çarşı içi",rating:4.6,reviews:3521,price:'₺',summary:'',lat:39.97,lng:32.85},
@@ -242,28 +656,32 @@ const DEMO = [
 ];
 function demoFor(label){
   let h=0; for(const c of (label||'')) h=(h*31+c.charCodeAt(0))%9973;
-  return DEMO.map(r=>({...r, rating:Math.min(4.9,+(r.rating+((h%7)-3)*.02).toFixed(1)), reviews:r.reviews+(h%500)}));
+  return DEMO.map(r=>({...r,rating:Math.min(4.9,+(r.rating+((h%7)-3)*.02).toFixed(1)),reviews:r.reviews+(h%500)}));
 }
 
-/* Ranking */
-function rank(list, sort){
-  const a = [...list];
-  if(sort === 'rating') a.sort((x,y) => y.rating-x.rating || y.reviews-x.reviews);
-  else { const C=200,m=4.3,sc=r=>(r.reviews*r.rating+C*m)/(r.reviews+C); a.sort((x,y)=>sc(y)-sc(x)); }
+/* =============================================
+   SIRALAMA
+   ============================================= */
+function rank(list,sort){
+  const a=[...list];
+  if(sort==='rating') a.sort((x,y)=>y.rating-x.rating||y.reviews-x.reviews);
+  else{ const C=200,m=4.3,sc=r=>(r.reviews*r.rating+C*m)/(r.reviews+C); a.sort((x,y)=>sc(y)-sc(x)); }
   return a;
 }
-function stars(r){ return '★'.repeat(Math.floor(r)) + (r - Math.floor(r) >= .5 ? '½' : ''); }
+function stars(r){ return '★'.repeat(Math.floor(r))+(r-Math.floor(r)>=.5?'½':''); }
 
-/* Render */
-function render(list, label, live){
-  lastList = list; lastLive = live;
-  const ranked = rank(list, currentSort);
-  $('#results').innerHTML = `
+/* =============================================
+   RENDER
+   ============================================= */
+function render(list,label,live){
+  lastList=list; lastLive=live;
+  const ranked=rank(list,currentSort);
+  $('#results').innerHTML=`
     <div class="meta">
       <span>${label} · ${ranked.length} sofra</span>
       <span class="src-tag ${live?'live':'demo'}">${live?'Canlı · Google':'Örnek veri'}</span>
     </div>
-    ${ranked.map((r,i) => `
+    ${ranked.map((r,i)=>`
       <div class="card" style="animation-delay:${i*35}ms">
         <div class="card-main">
           <div class="rank">${i+1}</div>
@@ -271,93 +689,123 @@ function render(list, label, live){
             <div class="cname">${r.name}</div>
             <div class="ccuisine">${r.cuisine}</div>
             <div class="caddr">${r.addr}</div>
-            ${r.price ? `<div class="cprice">${r.price}</div>` : ''}
+            ${r.price?`<div class="cprice">${r.price}</div>`:''}
           </div>
           <div class="score">
             <div class="stars">${stars(r.rating)}</div>
             <div class="rnum">${(r.rating||0).toFixed(1)}</div>
             <div class="rcnt">${(r.reviews||0).toLocaleString('tr-TR')} yorum</div>
           </div>
+          <button class="fav-btn ${favMi(r)?'active':''}" onclick="toggleFav(event,${i})" title="Favorilere ekle">❤️</button>
         </div>
         <div class="card-actions">
           <button class="cact detail-btn" onclick="openModal(${i})">📋 Detay & Yorumlar</button>
-          ${r.lat && r.lng ? `<button class="cact map-btn" onclick="openMap(${r.lat},${r.lng},'${encodeURIComponent(r.name)}')">🗺️ Haritada Aç</button>` : ''}
+          <button class="cact rota-btn ${rotaMi(r)?'active':''}" onclick="toggleRota(event,${i})">🗺️${rotaMi(r)?'+ Rotada':'+ Rotaya'}</button>
+          ${r.lat&&r.lng?`<button class="cact map-btn" onclick="openMap(${r.lat},${r.lng},'${encodeURIComponent(r.name)}')">📍 Git</button>`:''}
         </div>
       </div>`).join('')}`;
 }
 
-function showLoading(label){ $('#results').innerHTML = `<div class="empty"><span class="ico">🍳</span>${label} için sofralar getiriliyor…</div>`; }
-function showError(msg){ $('#results').innerHTML = `<div class="empty"><span class="ico">⚠️</span>${msg}</div>`; }
+function showLoading(label){ $('#results').innerHTML=`<div class="empty"><span class="ico">🍳</span>${label} için sofralar getiriliyor…</div>`; }
+function showError(msg){ $('#results').innerHTML=`<div class="empty"><span class="ico">⚠️</span>${msg}</div>`; }
 
-/* Search */
-async function doSearch(label, params){
-  lastQuery = label; lastParams = params;
-  const proxy = loadProxy();
-  if(!proxy){ render(demoFor(label), label, false); return; }
-  showLoading(label);
-  try{
-    let url = proxy + '/api/restoranlar?';
-    if(params.metin) url += 'metin=' + encodeURIComponent(params.metin);
-    else if(params.lat) url += `lat=${params.lat}&lng=${params.lng}&yaricap=2500`;
-    if(params.tur) url += '&tur=' + encodeURIComponent(params.tur);
-    const data = await (await fetch(url, {signal: AbortSignal.timeout(15000)})).json();
-    if(data.hata){ showError('Hata: ' + data.hata); return; }
-    const list = data.restoranlar || [];
-    if(!list.length){ showError('Bu bölgede sonuç bulunamadı.'); return; }
-    render(list, label, true);
-  }catch(e){ showError('Sunucuya ulaşılamadı. Bağlantını kontrol et.'); }
+function toggleFav(e,idx){
+  e.stopPropagation();
+  const ranked=rank(lastList,currentSort);
+  const r=ranked[idx]; if(!r) return;
+  const eklendi=favKaydet(r);
+  e.currentTarget.classList.toggle('active',eklendi);
+}
+function toggleRota(e,idx){
+  e.stopPropagation();
+  const ranked=rank(lastList,currentSort);
+  const r=ranked[idx]; if(!r) return;
+  const eklendi=rotaEkle(r);
+  if(!eklendi){ alert('Bu restoran zaten rotanda!'); return; }
+  e.currentTarget.textContent='🗺️+ Rotada';
+  e.currentTarget.classList.add('active');
 }
 
-$('#searchBtn').onclick = () => {
-  const il = $('#il').value.trim(), ilce = $('#ilce').value.trim(), mah = $('#mah').value.trim();
-  if(!il && !ilce && !mah){ $('#il').focus(); return; }
-  const metin = [mah,ilce,il].filter(Boolean).join(' ');
-  const label = [mah,ilce,il].filter(Boolean).join(', ');
-  doSearch(label, {metin, tur: currentTur});
+/* =============================================
+   SEARCH
+   ============================================= */
+async function doSearch(label,params){
+  lastQuery=label; lastParams=params;
+  if(params.lat&&params.lng) temaUygula(bolgedenKoordinate(params.lat,params.lng));
+  else if(params.metin){ const b=bolgedenSehir(params.metin); if(b) temaUygula(b); }
+  gecmisKaydet(label,params);
+  switchPanel('main');
+  const proxy=loadProxy();
+  if(!proxy){ render(demoFor(label),label,false); return; }
+  showLoading(label);
+  try{
+    let url=proxy+'/api/restoranlar?';
+    if(params.metin) url+='metin='+encodeURIComponent(params.metin);
+    else if(params.lat) url+=`lat=${params.lat}&lng=${params.lng}&yaricap=2500`;
+    if(params.tur) url+='&tur='+encodeURIComponent(params.tur);
+    const data=await (await fetch(url,{signal:AbortSignal.timeout(15000)})).json();
+    if(data.hata){ showError('Hata: '+data.hata); return; }
+    const list=data.restoranlar||[];
+    if(!list.length){ showError('Bu bölgede sonuç bulunamadı.'); return; }
+    render(list,label,true);
+  }catch(e){ showError('Sunucuya ulaşılamadı.'); }
+}
+
+$('#searchBtn').onclick=()=>{
+  const il=$('#il').value.trim(),ilce=$('#ilce').value.trim(),mah=$('#mah').value.trim();
+  if(!il&&!ilce&&!mah){ $('#il').focus(); return; }
+  const metin=[mah,ilce,il].filter(Boolean).join(' ');
+  const label=[mah,ilce,il].filter(Boolean).join(', ');
+  doSearch(label,{metin,tur:currentTur});
 };
 
-/* Geolocation */
-$('#locBtn').onclick = () => {
-  const st = $('#locStatus'), msg = $('#locMsg');
-  msg.className = 'loc-msg';
-  if(location.protocol === 'file:'){ st.value='Konum kullanılamıyor'; msg.className='loc-msg show err'; msg.textContent='file:// ile açıldı. https gerekli.'; return; }
+/* =============================================
+   KONUM
+   ============================================= */
+$('#locBtn').onclick=()=>{
+  const st=$('#locStatus'),msg=$('#locMsg');
+  msg.className='loc-msg';
+  if(location.protocol==='file:'){ st.value='Konum kullanılamıyor'; msg.className='loc-msg show err'; msg.textContent='file:// ile açıldı.'; return; }
   if(!navigator.geolocation){ st.value='Desteklenmiyor'; msg.className='loc-msg show err'; msg.textContent='Tarayıcı konumu desteklemiyor.'; return; }
-  st.value = 'Konum alınıyor…';
+  st.value='Konum alınıyor…';
   navigator.geolocation.getCurrentPosition(
-    pos => {
-      const {latitude:la, longitude:lo} = pos.coords;
-      st.value = `${la.toFixed(3)}, ${lo.toFixed(3)}`;
-      msg.className = 'loc-msg show ok'; msg.textContent = 'Konum alındı.';
-      doSearch('Yakınımdaki sofralar', {lat:la, lng:lo, tur:currentTur});
+    pos=>{
+      const {latitude:la,longitude:lo}=pos.coords;
+      st.value=`${la.toFixed(3)}, ${lo.toFixed(3)}`;
+      msg.className='loc-msg show ok'; msg.textContent='Konum alındı.';
+      doSearch('Yakınımdaki sofralar',{lat:la,lng:lo,tur:currentTur});
     },
-    err => {
-      const msgs = {1:'İzin reddedildi. Tarayıcı ayarlarından izni ver.', 2:'Konum alınamadı.', 3:'Zaman aşımı.'};
-      st.value = 'Alınamadı'; msg.className = 'loc-msg show err'; msg.textContent = msgs[err.code] || 'Konum hatası.';
+    err=>{
+      const msgs={1:'İzin reddedildi.',2:'Konum alınamadı.',3:'Zaman aşımı.'};
+      st.value='Alınamadı'; msg.className='loc-msg show err'; msg.textContent=msgs[err.code]||'Konum hatası.';
     },
-    {timeout:8000, enableHighAccuracy:true}
+    {timeout:8000,enableHighAccuracy:true}
   );
 };
 
-/* Haritada aç */
-function openMap(lat, lng, name){
-  const apple  = `maps://maps.apple.com/?q=${name}&ll=${lat},${lng}`;
-  const google = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
-  const a = document.createElement('a');
-  a.href = apple; a.style.display = 'none'; document.body.appendChild(a); a.click(); document.body.removeChild(a);
-  setTimeout(() => window.open(google, '_blank'), 500);
+/* =============================================
+   HARİTADA AÇ
+   ============================================= */
+function openMap(lat,lng,name){
+  const apple=`maps://maps.apple.com/?q=${name}&ll=${lat},${lng}`;
+  const google=`https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+  const a=document.createElement('a'); a.href=apple; a.style.display='none';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(()=>window.open(google,'_blank'),500);
 }
 
-/* Modal */
-const modalBg = $('#modalBg');
-$('#modalClose').onclick = () => modalBg.classList.remove('open');
-modalBg.onclick = e => { if(e.target === modalBg) modalBg.classList.remove('open'); };
+/* =============================================
+   MODAL
+   ============================================= */
+const modalBg=$('#modalBg');
+$('#modalClose').onclick=()=>modalBg.classList.remove('open');
+modalBg.onclick=e=>{ if(e.target===modalBg) modalBg.classList.remove('open'); };
 
 async function openModal(idx){
   if(!lastList) return;
-  const ranked = rank(lastList, currentSort);
-  const r = ranked[idx];
-  if(!r) return;
-  $('#modalContent').innerHTML = `
+  const ranked=rank(lastList,currentSort);
+  const r=ranked[idx]; if(!r) return;
+  $('#modalContent').innerHTML=`
     <h2>${r.name}</h2>
     <div class="mcuisine">${r.cuisine}${r.price?' · '+r.price:''}</div>
     <div class="mrating">
@@ -371,23 +819,30 @@ async function openModal(idx){
     <div class="section-title">Yorumlar</div>
     <div id="modalRevs"><div class="load-rev">Yükleniyor…</div></div>`;
   modalBg.classList.add('open');
-  if(!r.id || !lastLive){ $('#modalRevs').innerHTML = '<div class="no-rev">Yorumlar için gerçek veri modu gerekli.</div>'; return; }
+  if(!r.id||!lastLive){ $('#modalRevs').innerHTML='<div class="no-rev">Yorumlar için gerçek veri modu gerekli.</div>'; return; }
   try{
-    const data = await (await fetch(`${loadProxy()}/api/detay/${r.id}`, {signal:AbortSignal.timeout(12000)})).json();
+    const data=await (await fetch(`${loadProxy()}/api/detay/${r.id}`,{signal:AbortSignal.timeout(12000)})).json();
     if(data.hata){ $('#modalRevs').innerHTML='<div class="no-rev">Yorum yüklenemedi.</div>'; return; }
-    const ex = $('#modalExtra');
+    const ex=$('#modalExtra');
     if(ex){
-      let h = '';
-      if(data.acik_mi !== undefined) h += `<span class="mbadge ${data.acik_mi?'open':'closed'}">${data.acik_mi?'✓ Şu an açık':'✗ Şu an kapalı'}</span>`;
-      if(data.telefon) h += `<div class="minfo-row">📞 <a href="tel:${data.telefon}">${data.telefon}</a></div>`;
-      if(data.website) h += `<div class="minfo-row">🌐 <a href="${data.website}" target="_blank" rel="noopener">Web sitesi</a></div>`;
-      ex.innerHTML = h;
+      let h='';
+      if(data.acik_mi!==undefined) h+=`<span class="mbadge ${data.acik_mi?'open':'closed'}">${data.acik_mi?'✓ Şu an açık':'✗ Şu an kapalı'}</span>`;
+      if(data.telefon) h+=`<div class="minfo-row">📞 <a href="tel:${data.telefon}">${data.telefon}</a></div>`;
+      if(data.website) h+=`<div class="minfo-row">🌐 <a href="${data.website}" target="_blank" rel="noopener">Web sitesi</a></div>`;
+      ex.innerHTML=h;
     }
-    const revs = data.yorumlar || [];
-    $('#modalRevs').innerHTML = revs.length
+    const revs=data.yorumlar||[];
+    $('#modalRevs').innerHTML=revs.length
       ? revs.map(rv=>`<div class="rev-item"><div class="rev-author">${rv.author}</div><div class="rev-meta"><span class="rev-stars">${'★'.repeat(Math.round(rv.rating))}</span><span class="rev-time">${rv.time}</span></div>${rv.text?`<div class="rev-text">${rv.text}</div>`:''}</div>`).join('')
       : '<div class="no-rev">Yorum bulunamadı.</div>';
   }catch(e){ $('#modalRevs').innerHTML='<div class="no-rev">Yorum yüklenemedi.</div>'; }
+}
+
+/* =============================================
+   PWA SERVICE WORKER
+   ============================================= */
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('/sw.js').catch(()=>{});
 }
 </script>
 </body>

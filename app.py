@@ -112,6 +112,22 @@ def anasayfa():
         return "index.html bulunamadı.", 404
 
 
+@app.route("/manifest.json")
+def manifest():
+    try:
+        with open(os.path.join(os.path.dirname(__file__), "manifest.json"), encoding="utf-8") as f:
+            return f.read(), 200, {"Content-Type": "application/manifest+json"}
+    except FileNotFoundError:
+        return "{}", 404
+
+@app.route("/sw.js")
+def service_worker():
+    try:
+        with open(os.path.join(os.path.dirname(__file__), "sw.js"), encoding="utf-8") as f:
+            return f.read(), 200, {"Content-Type": "application/javascript", "Service-Worker-Allowed": "/"}
+    except FileNotFoundError:
+        return "", 404
+
 @app.route("/saglik")
 def saglik():
     return jsonify({"durum": "ok", "anahtar_tanimli": bool(API_KEY)})

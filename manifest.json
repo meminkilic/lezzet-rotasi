@@ -1,0 +1,14 @@
+{
+  "name": "Lezzet Rotası",
+  "short_name": "Lezzet",
+  "description": "Şehir şehir, lokma lokma — Türkiye'nin en iyi sofralarını keşfet",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1c140f",
+  "theme_color": "#1c140f",
+  "orientation": "portrait",
+  "icons": [
+    {"src": "/icon-192.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "/icon-512.png", "sizes": "512x512", "type": "image/png"}
+  ]
+}

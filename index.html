@@ -756,11 +756,19 @@ updateRotaBadge(); renderRotaPanel();
    PANEL SWITCH
    ============================================= */
 function switchPanel(panel){
+  // mainPanel
   $('#mainPanel').style.display = panel==='main' ? 'block' : 'none';
-  $('#favPanel').classList.toggle('active', panel==='fav');
-  $('#rotaPanel').classList.toggle('active', panel==='rota');
-  $('#ziyaretPanel').classList.toggle('active', panel==='ziyaret');
-  $('#rehberPanel').classList.toggle('active', panel==='rehber');
+  // Tüm panel-view'ları gizle
+  ['favPanel','rotaPanel','ziyaretPanel','rehberPanel'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.style.display = 'none';
+  });
+  // Seçilen paneli göster
+  const panelMap = {fav:'favPanel',rota:'rotaPanel',ziyaret:'ziyaretPanel',rehber:'rehberPanel'};
+  if(panelMap[panel]){
+    const el = document.getElementById(panelMap[panel]);
+    if(el){ el.style.display='block'; el.style.flex='1'; }
+  }
   document.querySelectorAll('.btab').forEach(b=>b.classList.toggle('active',b.dataset.panel===panel));
 }
 

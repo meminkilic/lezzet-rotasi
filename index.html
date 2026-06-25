@@ -95,7 +95,7 @@ label{font-size:11px;color:var(--muted);font-weight:600;padding-left:2px}
 .card-foto-wrap{position:relative;overflow:hidden;border-radius:14px 14px 0 0}
 .card-foto-wrap .foto-overlay{position:absolute;bottom:0;left:0;right:0;height:60px;background:linear-gradient(transparent,var(--surface))}
 /* Card */
-.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;margin-bottom:10px;overflow:hidden;box-shadow:var(--shadow);animation:rise .35s ease both;transition:background .8s,border-color .8s}
+.card{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:16px;margin-bottom:10px;overflow:hidden;box-shadow:var(--shadow);animation:rise .35s ease both;transition:background .8s,border-color .8s}
 @keyframes bounce{0%,100%{transform:translateX(0)}50%{transform:translateX(4px)}}
 @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 .card-main{display:flex;gap:12px;align-items:center;padding:13px;position:relative}
@@ -111,8 +111,9 @@ label{font-size:11px;color:var(--muted);font-weight:600;padding-left:2px}
 .rnum{font-family:'Fraunces',serif;font-weight:700;font-size:19px;line-height:1;margin-top:2px}
 .rcnt{color:var(--muted);font-size:10.5px;margin-top:2px}
 /* Favori kalp butonu */
-.fav-btn{position:absolute;top:10px;right:10px;background:none;border:none;font-size:20px;cursor:pointer;opacity:.4;transition:opacity .2s,transform .15s;line-height:1}
-.fav-btn.active{opacity:1;transform:scale(1.15)}
+.fav-btn{position:absolute;top:9px;right:9px;z-index:5;background:rgba(0,0,0,.42);backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,.14);width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;cursor:pointer;opacity:.92;transition:opacity .2s,transform .15s;line-height:1;padding:0}
+.fav-btn.active{opacity:1;transform:scale(1.12)}
+.fav-btn:active{transform:scale(.92)}
 .card-actions{display:flex;border-top:1px solid var(--line)}
 .cact{flex:1;display:flex;align-items:center;justify-content:center;gap:5px;padding:10px 4px;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .15s;border:none;background:none;font-family:inherit}
 .cact:not(:last-child){border-right:1px solid var(--line)}
@@ -120,6 +121,7 @@ label{font-size:11px;color:var(--muted);font-weight:600;padding-left:2px}
 .cact.map-btn{color:var(--blue)}
 .cact.detail-btn{color:var(--accentsoft)}
 .cact.rota-btn{color:var(--gold)}
+.cact.icon-act{flex:0 0 auto;padding:10px 11px;font-size:15px}
 
 /* Son aramalar */
 .gecmis{margin:10px 22px 0;display:flex;flex-wrap:wrap;gap:6px}
@@ -736,8 +738,14 @@ function rotaTumAc(){
   const waypoints=rota.slice(1,-1).map(r=>`${r.lat},${r.lng}`).join('|');
   const origin=`${rota[0].lat},${rota[0].lng}`;
   const dest=`${rota[rota.length-1].lat},${rota[rota.length-1].lng}`;
-  const url=`https://www.google.com/maps/dir/${origin}/${waypoints?waypoints+'/':''}${dest}`;
-  window.open(url,'_blank');
+  const googleUrl=`https://www.google.com/maps/dir/${origin}/${waypoints?waypoints+'/':''}${dest}`;
+  // Yandex çoklu duraklı rota: rtext=lat,lng~lat,lng~...
+  const yandexPts=rota.map(r=>`${r.lat},${r.lng}`).join('~');
+  const yandexUrl=`https://yandex.com/maps/?rtext=${yandexPts}&rtt=auto`;
+  mapChooser([
+    {ad:'Google Maps', ico:'🟢', url:googleUrl},
+    {ad:'Yandex Navi', ico:'🔴', url:yandexUrl}
+  ]);
 }
 updateRotaBadge(); renderRotaPanel();
 
@@ -829,6 +837,7 @@ function render(list,label,live){
     </div>
     ${ranked.map((r,i)=>`
       <div class="card" style="animation-delay:${i*35}ms">
+        <button class="fav-btn ${favMi(r)?'active':''}" onclick="toggleFav(event,${i})" title="Favorilere ekle">❤️</button>
         ${r.photoRef && lastLive ? `<div class="card-foto-wrap"><img class="card-foto" src="${fotoUrl(r.photoRef)}" alt="${r.name}" loading="lazy" onerror="this.parentElement.style.display='none'"><div class="foto-overlay"></div></div>` : ''}
         <div class="card-main">
           <div class="rank">${i+1}</div>
@@ -843,13 +852,14 @@ function render(list,label,live){
             <div class="rnum">${(r.rating||0).toFixed(1)}</div>
             <div class="rcnt">${(r.reviews||0).toLocaleString('tr-TR')} yorum</div>
           </div>
-          <button class="fav-btn ${favMi(r)?'active':''}" onclick="toggleFav(event,${i})" title="Favorilere ekle">❤️</button>
         </div>
         <div class="card-actions">
           <button class="cact detail-btn" onclick="openModal(${i})">📋 Detay</button>
           <button class="cact rota-btn" onclick="toggleRota(event,${i})">${rotaMi(r)?'🗺️ Rotada':'🗺️+ Rota'}</button>
           <button class="cact ${ziyaretMi(r)?'active':''}" style="color:var(--green)" onclick="toggleZiyaret(event,${i})">${ziyaretMi(r)?'✅ Gittim':'✅ Gittim?'}</button>
-          <button class="cact" style="color:var(--blue)" onclick="paylasIdx(${i})">📤</button>
+          ${r.id?`<button class="cact icon-act" style="color:var(--gold)" onclick="acYorumlar('${r.id}')" title="Google yorumları">💬</button>`:''}
+          <button class="cact icon-act" style="color:var(--accentsoft)" onclick="acMenu('${encodeURIComponent(r.name)}')" title="Menü ara">🍽️</button>
+          <button class="cact icon-act" style="color:var(--blue)" onclick="paylasIdx(${i})">📤</button>
         </div>
       </div>`).join('')}`;
 }
@@ -941,15 +951,62 @@ $('#locBtn').onclick=()=>{
   );
 };
 
+/* Google Maps yorumlar sayfası (place_id ile) */
+function acYorumlar(placeId){
+  if(!placeId) return;
+  window.open(`https://www.google.com/maps/place/?q=place_id:${placeId}`,'_blank','noopener');
+}
+
+/* Google'da '[restoran adı] menü' araması */
+function acMenu(nameEnc){
+  let nm=nameEnc; try{ nm=decodeURIComponent(nameEnc); }catch(e){}
+  const q=encodeURIComponent(nm+' menü');
+  window.open(`https://www.google.com/search?q=${q}`,'_blank','noopener');
+}
+
 /* =============================================
    HARİTADA AÇ
    ============================================= */
 function openMap(lat,lng,name){
-  const apple=`maps://maps.apple.com/?q=${name}&ll=${lat},${lng}`;
+  // name encode'lu gelebilir; sağlama al
+  let nm=name; try{ nm=decodeURIComponent(name); }catch(e){}
+  const q=encodeURIComponent(nm);
   const google=`https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
-  const a=document.createElement('a'); a.href=apple; a.style.display='none';
-  document.body.appendChild(a); a.click(); document.body.removeChild(a);
-  setTimeout(()=>window.open(google,'_blank'),500);
+  const yandex=`https://yandex.com/maps/?rtext=~${lat},${lng}&rtt=auto`;
+  const apple=`https://maps.apple.com/?q=${q}&ll=${lat},${lng}`;
+  mapChooser([
+    {ad:'Google Maps', ico:'🟢', url:google},
+    {ad:'Yandex Navi', ico:'🔴', url:yandex},
+    {ad:'Apple Haritalar', ico:'⚪', url:apple}
+  ]);
+}
+
+/* Harita seçim popup'ı (tek harita açılır, çift açılma yok) */
+function mapChooser(opts){
+  let bg=document.getElementById('mapChooserBg');
+  if(bg) bg.remove();
+  bg=document.createElement('div');
+  bg.id='mapChooserBg';
+  bg.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(3px);z-index:500;display:flex;align-items:flex-end;justify-content:center;animation:rise .2s ease both';
+  const sheet=document.createElement('div');
+  sheet.style.cssText='background:var(--surface);border:1px solid var(--line);border-radius:20px 20px 0 0;width:100%;max-width:480px;padding:18px 16px calc(18px + env(safe-area-inset-bottom));box-shadow:0 -18px 50px -20px rgba(0,0,0,.7)';
+  sheet.innerHTML=`<div style="font-family:'Fraunces',serif;font-weight:600;font-size:17px;color:var(--cream);text-align:center;margin-bottom:4px">Haritada Aç</div>
+    <div style="font-size:12px;color:var(--muted);text-align:center;margin-bottom:14px">Hangi uygulamada açmak istersin?</div>`;
+  opts.forEach(o=>{
+    const b=document.createElement('button');
+    b.style.cssText='display:flex;align-items:center;gap:12px;width:100%;background:var(--s2);border:1px solid var(--line);color:var(--cream);border-radius:13px;padding:13px 15px;font-family:inherit;font-weight:600;font-size:14.5px;cursor:pointer;margin-bottom:9px';
+    b.innerHTML=`<span style="font-size:18px">${o.ico}</span><span>${o.ad}</span><span style="margin-left:auto;color:var(--dim)">›</span>`;
+    b.onclick=()=>{ window.open(o.url,'_blank','noopener'); bg.remove(); };
+    sheet.appendChild(b);
+  });
+  const cancel=document.createElement('button');
+  cancel.textContent='Vazgeç';
+  cancel.style.cssText='width:100%;background:none;border:none;color:var(--dim);font-family:inherit;font-weight:600;font-size:13.5px;padding:10px;cursor:pointer;margin-top:2px';
+  cancel.onclick=()=>bg.remove();
+  sheet.appendChild(cancel);
+  bg.appendChild(sheet);
+  bg.onclick=e=>{ if(e.target===bg) bg.remove(); };
+  document.body.appendChild(bg);
 }
 
 /* =============================================

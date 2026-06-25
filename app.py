@@ -4,13 +4,13 @@ Lezzet Rotası — Proxy Sunucusu
 Geliştirici: Mehmet Emin KILIÇ — V3.3
 """
 import os, requests
-from flask import Flask, request, jsonify, send_file
+from flask import Flask, request, jsonify, send_file, Response
 from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
 
-API_KEY    = os.environ.get("GOOGLE_API_KEY", "").strip()
+API_KEY = os.environ.get("GOOGLE_API_KEY", "").strip()
 PLACES_BASE = "https://places.googleapis.com/v1/places"
 
 FIELD_MASK_LIST = ",".join([
@@ -52,16 +52,11 @@ def _fmt_reviews(reviews):
     out = []
     for r in (reviews or []):
         metin = ""
-        # Türkçe yorumu bulmaya çalış, yoksa ilk dili al
         texts = r.get("text", {})
         if isinstance(texts, dict):
             metin = texts.get("text", "")
         elif isinstance(texts, str):
             metin = texts
-        # translatedText varsa onu kullan (Google bazen çeviriyor)
-        trans = r.get("originalText", {})
-        if isinstance(trans, dict) and trans.get("text"):
-            metin = trans.get("text", metin)
         out.append({
             "author": (r.get("authorAttribution") or {}).get("displayName","Anonim"),
             "rating": r.get("rating",0),
@@ -73,7 +68,6 @@ def _fmt_reviews(reviews):
 def _hata(mesaj, kod=400):
     return jsonify({"hata": mesaj}), kod
 
-# ---------- Statik dosyalar ----------
 BASE_DIR = os.path.dirname(__file__)
 
 def _serve_file(filename, mimetype):
@@ -96,10 +90,12 @@ def manifest():
 
 @app.route("/sw.js")
 def sw():
-    resp = _serve_file("sw.js","application/javascript")
-    if hasattr(resp, "headers"):
-        resp.headers["Service-Worker-Allowed"] = "/"
-    return resp
+    path = os.path.join(BASE_DIR, "sw.js")
+    if os.path.exists(path):
+        with open(path, encoding="utf-8") as f:
+            content = f.read()
+        return content, 200, {"Content-Type":"application/javascript","Service-Worker-Allowed":"/"}
+    return "", 404
 
 @app.route("/icon-192.png")
 def icon192():
@@ -113,21 +109,18 @@ def icon512():
 def apple_icon():
     return _serve_file("apple-touch-icon.png","image/png")
 
-# ---------- API ----------
 @app.route("/saglik")
 def saglik():
     return jsonify({"durum":"ok","anahtar_tanimli":bool(API_KEY)})
 
 @app.route("/api/foto/<path:photo_name>")
 def foto(photo_name):
-    """Google Places fotoğraf proxy'si."""
     if not API_KEY:
         return _hata("API anahtarı yok.", 500)
     try:
         url = f"https://places.googleapis.com/v1/{photo_name}/media"
         r = requests.get(url, params={"maxWidthPx":400,"key":API_KEY}, timeout=10, allow_redirects=True)
         if r.status_code == 200:
-            from flask import Response
             return Response(r.content, content_type=r.headers.get("content-type","image/jpeg"))
         return _hata("Fotoğraf alınamadı.", r.status_code)
     except Exception as e:
@@ -137,10 +130,10 @@ def foto(photo_name):
 def restoranlar():
     if not API_KEY:
         return _hata("Sunucuda GOOGLE_API_KEY tanımlı değil.", 500)
-    metin  = (request.args.get("metin") or "").strip()
-    lat    = request.args.get("lat")
-    lng    = request.args.get("lng")
-    tur    = (request.args.get("tur") or "").strip()
+    metin = (request.args.get("metin") or "").strip()
+    lat   = request.args.get("lat")
+    lng   = request.args.get("lng")
+    tur   = (request.args.get("tur") or "").strip()
     try:
         if metin:
             sorgu = f"{metin} {tur} restoran" if tur else f"{metin} restoran"
@@ -151,7 +144,7 @@ def restoranlar():
         elif lat and lng:
             try: yaricap = float(request.args.get("yaricap",2500))
             except: yaricap = 2500.0
-            yaricap = max(50.0,min(yaricap,50000.0))
+            yaricap = max(50.0, min(yaricap, 50000.0))
             if tur:
                 r = requests.post(f"{PLACES_BASE}:searchText",
                     headers=_headers(FIELD_MASK_LIST),
@@ -167,10 +160,8 @@ def restoranlar():
         else:
             return _hata("'metin' veya 'lat'+'lng' gerekli.")
         if r.status_code != 200:
-            try: detay = r.json().get("error",{}).get("message",r.text[:500])
-            except: detay = r.text[:500]
-            print(f"[GOOGLE HATA] {r.status_code}: {detay}", flush=True)
-            print(f"[GOOGLE HATA] KEY prefix: {API_KEY[:10]}...", flush=True)
+            try: detay = r.json().get("error",{}).get("message",r.text[:300])
+            except: detay = r.text[:300]
             return _hata(f"Google API hatası ({r.status_code}): {detay}", r.status_code)
         data = r.json()
         return jsonify({"kaynak":"google","sayi":len(data.get("places",[])),"restoranlar":[_fmt_place(p) for p in data.get("places",[])]})
@@ -186,13 +177,10 @@ def detay(place_id):
     if not place_id or not place_id.startswith("ChI"):
         return _hata("Geçersiz place_id.", 400)
     try:
-        # Türkçe yorum için languageCode'u header yerine query param olarak da gönder
         headers = _headers(FIELD_MASK_DETAIL)
         headers["Accept-Language"] = "tr"
         r = requests.get(f"{PLACES_BASE}/{place_id}",
-            headers=headers,
-            params={"languageCode":"tr"},
-            timeout=12)
+            headers=headers, params={"languageCode":"tr"}, timeout=12)
         if r.status_code != 200:
             try: msg = r.json().get("error",{}).get("message",r.text[:300])
             except: msg = r.text[:300]
@@ -217,5 +205,4 @@ if __name__ == "__main__":
     else:
         print("\n[OK] API anahtarı yüklendi.\n")
     port = int(os.environ.get("PORT", 5000))
-    print(f"Sunucu: http://localhost:{port}")
     app.run(host="0.0.0.0", port=port, debug=False)

@@ -222,7 +222,7 @@ footer strong{color:var(--muted);font-weight:600}
 </header>
 
 <!-- Ana arama paneli -->
-<div id="mainPanel">
+<div id="mainPanel" style="display:none">
   <!-- Son aramalar -->
   <div class="gecmis" id="gecmisBar"></div>
 
@@ -299,109 +299,6 @@ footer strong{color:var(--muted);font-weight:600}
   <div id="ziyaretList"></div>
 </div>
 
-<!-- Rehber paneli -->
-<div class="panel-view" id="rehberPanel" style="padding:0 0 28px">
-  <div class="pv-title" style="padding:14px 22px 0">💡 Nasıl Kullanılır?</div>
-  <div class="rehber-list">
-
-    <div class="rehber-item">
-      <span class="ri-ico">📍</span>
-      <div class="ri-body">
-        <div class="ri-title">Konumunla ara</div>
-        <div class="ri-desc">"Konumumu kullan"a bas, çevrendeki en iyi restoranlar sıralanır.</div>
-      </div>
-    </div>
-
-    <div class="rehber-item">
-      <span class="ri-ico">🏙️</span>
-      <div class="ri-body">
-        <div class="ri-title">Şehir veya ilçe yaz</div>
-        <div class="ri-desc">Gideceğin yeri yaz — öneriler çıkar, seç ve ara.</div>
-      </div>
-    </div>
-
-    <div class="rehber-item">
-      <span class="ri-ico">🎨</span>
-      <div class="ri-body">
-        <div class="ri-title">Renkler bölgeyi anlatır</div>
-        <div class="ri-desc">Ege'deysen mavi, Karadeniz'deysen yeşil — uygulama nerede olduğunu hisseder.</div>
-      </div>
-    </div>
-
-    <div class="rehber-item">
-      <span class="ri-ico">🥩</span>
-      <div class="ri-body">
-        <div class="ri-title">Mutfak türüne göre filtrele</div>
-        <div class="ri-desc">Kebap, balık, kahvaltı... istediğin türü seç, liste ona göre gelir.</div>
-      </div>
-    </div>
-
-    <div class="rehber-item">
-      <span class="ri-ico">⭐</span>
-      <div class="ri-body">
-        <div class="ri-title">Akıllı sıralama</div>
-        <div class="ri-desc">"Puan + yorum dengesi" ile hem puanı hem popülerliği yüksek yerler öne çıkar.</div>
-      </div>
-    </div>
-
-    <div class="rehber-item">
-      <span class="ri-ico">📋</span>
-      <div class="ri-body">
-        <div class="ri-title">Detay ve yorumlar</div>
-        <div class="ri-desc">Karta bas, restoranın saatleri, telefonu ve Google yorumlarını gör.</div>
-      </div>
-    </div>
-
-    <div class="rehber-item">
-      <span class="ri-ico">🗺️</span>
-      <div class="ri-body">
-        <div class="ri-title">Haritada aç</div>
-        <div class="ri-desc">"Haritada Aç"a bas, Apple veya Google Maps'te yol tarifi al.</div>
-      </div>
-    </div>
-
-    <div class="rehber-item">
-      <span class="ri-ico">❤️</span>
-      <div class="ri-body">
-        <div class="ri-title">Favorilere ekle</div>
-        <div class="ri-desc">Kalp ikonuna bas, beğendiğin restoranı kaydet. Favoriler sekmesinde bulursun.</div>
-      </div>
-    </div>
-
-    <div class="rehber-item">
-      <span class="ri-ico">🗺️➕</span>
-      <div class="ri-body">
-        <div class="ri-title">Gün rotası oluştur</div>
-        <div class="ri-desc">Birkaç restoranı rotana ekle, "Tüm Rotayı Haritada Aç" ile sıralı yol tarifi al.</div>
-      </div>
-    </div>
-
-    <div class="rehber-item">
-      <span class="ri-ico">✅</span>
-      <div class="ri-body">
-        <div class="ri-title">Ziyaret ettim</div>
-        <div class="ri-desc">Gittiğin restoranı işaretle, ziyaret geçmişin oluşsun.</div>
-      </div>
-    </div>
-
-    <div class="rehber-item">
-      <span class="ri-ico">📤</span>
-      <div class="ri-body">
-        <div class="ri-title">Arkadaşına paylaş</div>
-        <div class="ri-desc">Beğendiğin restoranı tek tıkla WhatsApp'a veya panoya gönder.</div>
-      </div>
-    </div>
-
-    <div class="rehber-item">
-      <span class="ri-ico">📱</span>
-      <div class="ri-body">
-        <div class="ri-title">Ana ekrana ekle</div>
-        <div class="ri-desc">Safari'de "Paylaş → Ana Ekrana Ekle" de — uygulama gibi simge olur.</div>
-      </div>
-    </div>
-
-  </div>
-</div>
 
 </div><!-- .app -->
 
@@ -433,6 +330,90 @@ footer strong{color:var(--muted);font-weight:600}
     <div class="modal-handle"></div>
     <button class="modal-close" id="modalClose">✕ Kapat</button>
     <div id="modalContent"></div>
+  </div>
+</div>
+
+
+<!-- Rehber overlay - JS gerektirmez, position fixed -->
+<div id="rehberPanel" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg);z-index:50;overflow-y:auto;max-width:480px;margin:0 auto">
+  <div style="padding:56px 0 100px">
+    <div style="padding:18px 22px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(246,236,224,.10)">
+      <div style="font-family:'Fraunces',serif;font-weight:600;font-size:22px;color:#f6ece0">💡 Nasıl Kullanılır?</div>
+      <button onclick="switchPanel('main')" style="background:rgba(255,255,255,.1);border:none;color:#f6ece0;border-radius:8px;padding:6px 12px;font-size:13px;cursor:pointer;font-family:inherit">✕ Kapat</button>
+    </div>
+
+    <div style="display:flex;align-items:flex-start;gap:14px;padding:16px 22px;border-bottom:1px solid rgba(246,236,224,.08)">
+      <span style="font-size:28px;flex:0 0 36px;text-align:center">📍</span>
+      <div><div style="font-family:'Fraunces',serif;font-weight:600;font-size:16px;color:#f6ece0;margin-bottom:4px">Konumunla ara</div>
+      <div style="font-size:13px;color:#b69f8c;line-height:1.6">"Konumumu kullan"a bas, çevrendeki en iyi restoranlar sıralanır.</div></div>
+    </div>
+
+    <div style="display:flex;align-items:flex-start;gap:14px;padding:16px 22px;border-bottom:1px solid rgba(246,236,224,.08)">
+      <span style="font-size:28px;flex:0 0 36px;text-align:center">🏙️</span>
+      <div><div style="font-family:'Fraunces',serif;font-weight:600;font-size:16px;color:#f6ece0;margin-bottom:4px">Şehir veya ilçe yaz</div>
+      <div style="font-size:13px;color:#b69f8c;line-height:1.6">Gideceğin yeri yaz — öneriler çıkar, seç ve ara.</div></div>
+    </div>
+
+    <div style="display:flex;align-items:flex-start;gap:14px;padding:16px 22px;border-bottom:1px solid rgba(246,236,224,.08)">
+      <span style="font-size:28px;flex:0 0 36px;text-align:center">🎨</span>
+      <div><div style="font-family:'Fraunces',serif;font-weight:600;font-size:16px;color:#f6ece0;margin-bottom:4px">Renkler bölgeyi anlatır</div>
+      <div style="font-size:13px;color:#b69f8c;line-height:1.6">Ege'deysen mavi, Karadeniz'deysen yeşil — uygulama nerede olduğunu hisseder.</div></div>
+    </div>
+
+    <div style="display:flex;align-items:flex-start;gap:14px;padding:16px 22px;border-bottom:1px solid rgba(246,236,224,.08)">
+      <span style="font-size:28px;flex:0 0 36px;text-align:center">🥩</span>
+      <div><div style="font-family:'Fraunces',serif;font-weight:600;font-size:16px;color:#f6ece0;margin-bottom:4px">Mutfak türüne göre filtrele</div>
+      <div style="font-size:13px;color:#b69f8c;line-height:1.6">Kebap, balık, kahvaltı... istediğin türü seç, liste ona göre gelir.</div></div>
+    </div>
+
+    <div style="display:flex;align-items:flex-start;gap:14px;padding:16px 22px;border-bottom:1px solid rgba(246,236,224,.08)">
+      <span style="font-size:28px;flex:0 0 36px;text-align:center">⭐</span>
+      <div><div style="font-family:'Fraunces',serif;font-weight:600;font-size:16px;color:#f6ece0;margin-bottom:4px">Akıllı sıralama</div>
+      <div style="font-size:13px;color:#b69f8c;line-height:1.6">"Puan + yorum dengesi" ile hem puanı hem popülerliği yüksek yerler öne çıkar.</div></div>
+    </div>
+
+    <div style="display:flex;align-items:flex-start;gap:14px;padding:16px 22px;border-bottom:1px solid rgba(246,236,224,.08)">
+      <span style="font-size:28px;flex:0 0 36px;text-align:center">📋</span>
+      <div><div style="font-family:'Fraunces',serif;font-weight:600;font-size:16px;color:#f6ece0;margin-bottom:4px">Detay ve yorumlar</div>
+      <div style="font-size:13px;color:#b69f8c;line-height:1.6">Karta bas, restoranın saatleri, telefonu ve Google yorumlarını gör.</div></div>
+    </div>
+
+    <div style="display:flex;align-items:flex-start;gap:14px;padding:16px 22px;border-bottom:1px solid rgba(246,236,224,.08)">
+      <span style="font-size:28px;flex:0 0 36px;text-align:center">🗺️</span>
+      <div><div style="font-family:'Fraunces',serif;font-weight:600;font-size:16px;color:#f6ece0;margin-bottom:4px">Haritada aç</div>
+      <div style="font-size:13px;color:#b69f8c;line-height:1.6">"Haritada Aç"a bas, Apple veya Google Maps'te yol tarifi al.</div></div>
+    </div>
+
+    <div style="display:flex;align-items:flex-start;gap:14px;padding:16px 22px;border-bottom:1px solid rgba(246,236,224,.08)">
+      <span style="font-size:28px;flex:0 0 36px;text-align:center">❤️</span>
+      <div><div style="font-family:'Fraunces',serif;font-weight:600;font-size:16px;color:#f6ece0;margin-bottom:4px">Favorilere ekle</div>
+      <div style="font-size:13px;color:#b69f8c;line-height:1.6">Kalp ikonuna bas, beğendiğin restoranı kaydet. Favoriler sekmesinde bulursun.</div></div>
+    </div>
+
+    <div style="display:flex;align-items:flex-start;gap:14px;padding:16px 22px;border-bottom:1px solid rgba(246,236,224,.08)">
+      <span style="font-size:28px;flex:0 0 36px;text-align:center">🗺️➕</span>
+      <div><div style="font-family:'Fraunces',serif;font-weight:600;font-size:16px;color:#f6ece0;margin-bottom:4px">Gün rotası oluştur</div>
+      <div style="font-size:13px;color:#b69f8c;line-height:1.6">Birkaç restoranı rotana ekle, "Tüm Rotayı Haritada Aç" ile sıralı yol tarifi al.</div></div>
+    </div>
+
+    <div style="display:flex;align-items:flex-start;gap:14px;padding:16px 22px;border-bottom:1px solid rgba(246,236,224,.08)">
+      <span style="font-size:28px;flex:0 0 36px;text-align:center">✅</span>
+      <div><div style="font-family:'Fraunces',serif;font-weight:600;font-size:16px;color:#f6ece0;margin-bottom:4px">Ziyaret ettim</div>
+      <div style="font-size:13px;color:#b69f8c;line-height:1.6">Gittiğin restoranı işaretle, ziyaret geçmişin oluşsun.</div></div>
+    </div>
+
+    <div style="display:flex;align-items:flex-start;gap:14px;padding:16px 22px;border-bottom:1px solid rgba(246,236,224,.08)">
+      <span style="font-size:28px;flex:0 0 36px;text-align:center">📤</span>
+      <div><div style="font-family:'Fraunces',serif;font-weight:600;font-size:16px;color:#f6ece0;margin-bottom:4px">Arkadaşına paylaş</div>
+      <div style="font-size:13px;color:#b69f8c;line-height:1.6">Beğendiğin restoranı tek tıkla WhatsApp veya panoya gönder.</div></div>
+    </div>
+
+    <div style="display:flex;align-items:flex-start;gap:14px;padding:16px 22px">
+      <span style="font-size:28px;flex:0 0 36px;text-align:center">📱</span>
+      <div><div style="font-family:'Fraunces',serif;font-weight:600;font-size:16px;color:#f6ece0;margin-bottom:4px">Ana ekrana ekle</div>
+      <div style="font-size:13px;color:#b69f8c;line-height:1.6">Safari'de "Paylaş → Ana Ekrana Ekle" de — uygulama gibi simge olur.</div></div>
+    </div>
+
   </div>
 </div>
 
@@ -657,7 +638,15 @@ function renderGecmis(){
     <div class="gecmis-chip" onclick="doSearch('${x.label}',${JSON.stringify(x.params).replace(/"/g,'&quot;')})">
       🕐 ${x.label}
       <span class="del" onclick="event.stopPropagation();gecmisSil('${x.label}')">✕</span>
-    </div>`).join('');
+    </div>`).join('')
+  + `<div class="gecmis-chip" onclick="gecmisTumunuSil()" style="border-color:var(--red);color:var(--red)">
+      🗑️ Temizle
+    </div>`;
+}
+function gecmisTumunuSil(){
+  try{ localStorage.removeItem(GECMIS_STORE); }catch(e){}
+  renderGecmis();
+  showToast('Arama geçmişi temizlendi.');
 }
 renderGecmis();
 
@@ -756,18 +745,17 @@ updateRotaBadge(); renderRotaPanel();
    PANEL SWITCH
    ============================================= */
 function switchPanel(panel){
-  // mainPanel
+  // Ana panel
   $('#mainPanel').style.display = panel==='main' ? 'block' : 'none';
-  // Tüm panel-view'ları gizle
+  // Overlay paneller (fixed position)
   ['favPanel','rotaPanel','ziyaretPanel','rehberPanel'].forEach(id=>{
-    const el = document.getElementById(id);
-    if(el) el.style.display = 'none';
+    const el=document.getElementById(id);
+    if(el) el.style.display='none';
   });
-  // Seçilen paneli göster
-  const panelMap = {fav:'favPanel',rota:'rotaPanel',ziyaret:'ziyaretPanel',rehber:'rehberPanel'};
+  const panelMap={fav:'favPanel',rota:'rotaPanel',ziyaret:'ziyaretPanel',rehber:'rehberPanel'};
   if(panelMap[panel]){
-    const el = document.getElementById(panelMap[panel]);
-    if(el){ el.style.display='block'; el.style.flex='1'; }
+    const el=document.getElementById(panelMap[panel]);
+    if(el) el.style.display='block';
   }
   document.querySelectorAll('.btab').forEach(b=>b.classList.toggle('active',b.dataset.panel===panel));
 }
@@ -1101,6 +1089,10 @@ if(filterScroll && scrollHint){
     scrollHint.style.opacity = atEnd ? '0' : '1';
   });
 }
+
+// Başlangıçta mainPanel göster, diğerlerini gizle
+document.getElementById('mainPanel').style.display='block';
+['favPanel','rotaPanel','ziyaretPanel','rehberPanel'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});
 
 if('serviceWorker' in navigator){
   navigator.serviceWorker.register('/sw.js').catch(()=>{});

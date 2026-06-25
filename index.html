@@ -421,7 +421,8 @@ footer strong{color:var(--muted);font-weight:600}
 
 <footer>
   Lezzet Rotası<br>
-  <strong>Geliştirici: Mehmet Emin KILIÇ</strong> — V3.3
+  <strong>Geliştirici: Mehmet Emin KILIÇ</strong> — V1.1.3<br>
+  İletişim: <a href="mailto:meminkilic@ymail.com" style="color:var(--accentsoft);text-decoration:none">meminkilic@ymail.com</a>
 </footer>
 
 <script>
@@ -765,6 +766,9 @@ function switchPanel(panel){
     const el=document.getElementById(panelMap[panel]);
     if(el) el.style.display='block';
   }
+  if(panel==='fav'    && typeof renderFavPanel==='function')    renderFavPanel();
+  if(panel==='rota'   && typeof renderRotaPanel==='function')   renderRotaPanel();
+  if(panel==='ziyaret'&& typeof renderZiyaretPanel==='function')renderZiyaretPanel();
   document.querySelectorAll('.btab').forEach(b=>b.classList.toggle('active',b.dataset.panel===panel));
 }
 
@@ -857,7 +861,7 @@ function render(list,label,live){
           <button class="cact detail-btn" onclick="openModal(${i})">📋 Detay</button>
           <button class="cact rota-btn" onclick="toggleRota(event,${i})">${rotaMi(r)?'🗺️ Rotada':'🗺️+ Rota'}</button>
           <button class="cact ${ziyaretMi(r)?'active':''}" style="color:var(--green)" onclick="toggleZiyaret(event,${i})">${ziyaretMi(r)?'✅ Gittim':'✅ Gittim?'}</button>
-          ${r.id?`<button class="cact icon-act" style="color:var(--gold)" onclick="acYorumlar('${r.id}')" title="Google yorumları">💬</button>`:''}
+          <button class="cact icon-act" style="color:var(--gold)" onclick="acYorumlar('${encodeURIComponent(r.name)}')" title="Google yorumları">💬</button>
           <button class="cact icon-act" style="color:var(--accentsoft)" onclick="acMenu('${encodeURIComponent(r.name)}')" title="Menü ara">🍽️</button>
           <button class="cact icon-act" style="color:var(--blue)" onclick="paylasIdx(${i})">📤</button>
         </div>
@@ -952,9 +956,10 @@ $('#locBtn').onclick=()=>{
 };
 
 /* Google Maps yorumlar sayfası (place_id ile) */
-function acYorumlar(placeId){
-  if(!placeId) return;
-  window.open(`https://www.google.com/maps/place/?q=place_id:${placeId}`,'_blank','noopener');
+function acYorumlar(nameEnc){
+  let nm=nameEnc; try{ nm=decodeURIComponent(nameEnc); }catch(e){}
+  const q=encodeURIComponent(nm+' yorumlar');
+  window.open(`https://www.google.com/search?q=${q}`,'_blank','noopener');
 }
 
 /* Google'da '[restoran adı] menü' araması */

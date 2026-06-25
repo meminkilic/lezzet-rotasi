@@ -167,8 +167,10 @@ def restoranlar():
         else:
             return _hata("'metin' veya 'lat'+'lng' gerekli.")
         if r.status_code != 200:
-            try: detay = r.json().get("error",{}).get("message",r.text[:300])
-            except: detay = r.text[:300]
+            try: detay = r.json().get("error",{}).get("message",r.text[:500])
+            except: detay = r.text[:500]
+            print(f"[GOOGLE HATA] {r.status_code}: {detay}", flush=True)
+            print(f"[GOOGLE HATA] KEY prefix: {API_KEY[:10]}...", flush=True)
             return _hata(f"Google API hatası ({r.status_code}): {detay}", r.status_code)
         data = r.json()
         return jsonify({"kaynak":"google","sayi":len(data.get("places",[])),"restoranlar":[_fmt_place(p) for p in data.get("places",[])]})

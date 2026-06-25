@@ -109,6 +109,31 @@ def icon512():
 def apple_icon():
     return _serve_file("apple-touch-icon.png","image/png")
 
+@app.route("/test")
+def test():
+    """Google bağlantı testi."""
+    import socket
+    results = {}
+    # DNS çözümleme testi
+    for host in ["places.googleapis.com", "maps.googleapis.com", "google.com"]:
+        try:
+            ip = socket.gethostbyname(host)
+            results[host] = f"DNS OK: {ip}"
+        except Exception as e:
+            results[f"{host}_dns"] = f"DNS HATA: {e}"
+    # HTTP bağlantı testi
+    try:
+        r = requests.get("https://google.com", timeout=5)
+        results["google_http"] = f"HTTP OK: {r.status_code}"
+    except Exception as e:
+        results["google_http"] = f"HTTP HATA: {e}"
+    try:
+        r = requests.get("https://places.googleapis.com", timeout=5)
+        results["places_http"] = f"HTTP: {r.status_code}"
+    except Exception as e:
+        results["places_http"] = f"HTTP HATA: {e}"
+    return jsonify(results)
+
 @app.route("/saglik")
 def saglik():
     return jsonify({"durum":"ok","anahtar_tanimli":bool(API_KEY)})

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Lezzet Rotası — Proxy Sunucusu
-Geliştirici: Mehmet Emin KILIÇ — V3.3
+Geliştirici: Mehmet Emin KILIÇ — V1.1.6
 """
 import os, requests
 from flask import Flask, request, jsonify, send_file, Response
@@ -22,6 +22,7 @@ FIELD_MASK_DETAIL = ",".join([
     "id","displayName","formattedAddress","rating","userRatingCount",
     "primaryTypeDisplayName","location","priceLevel","editorialSummary",
     "reviews","regularOpeningHours","internationalPhoneNumber","websiteUri","photos",
+    "servesBeer","servesWine","servesCocktails",
 ])
 PRICE_MAP = {
     "PRICE_LEVEL_FREE":"Ücretsiz","PRICE_LEVEL_INEXPENSIVE":"₺",
@@ -218,6 +219,17 @@ def detay(place_id):
         result["saatler"]  = hours.get("weekdayDescriptions",[])
         result["telefon"]  = p.get("internationalPhoneNumber","")
         result["website"]  = p.get("websiteUri","")
+        # Alkol servisi (Google'ın resmi verisi)
+        bira  = p.get("servesBeer")
+        sarap = p.get("servesWine")
+        kokteyl = p.get("servesCocktails")
+        # Üçü de None ise Google bu mekan için bilgi vermemiş = belirsiz
+        if bira is None and sarap is None and kokteyl is None:
+            result["alkol"] = None        # bilgi yok
+        elif bira or sarap or kokteyl:
+            result["alkol"] = True         # alkol servisi var
+        else:
+            result["alkol"] = False        # alkol servisi yok
         return jsonify(result)
     except requests.exceptions.Timeout:
         return _hata("Zaman aşımı.", 504)

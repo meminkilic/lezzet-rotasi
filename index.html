@@ -179,6 +179,8 @@ label{font-size:11px;color:var(--muted);font-weight:600;padding-left:2px}
 .mbadge{display:inline-block;padding:3px 9px;border-radius:7px;font-size:11px;font-weight:700;margin-bottom:12px}
 .mbadge.open{background:rgba(80,200,100,.15);color:var(--green)}
 .mbadge.closed{background:rgba(216,98,74,.12);color:var(--red)}
+.mbadge.alkollu{background:rgba(233,176,74,.15);color:var(--gold);margin-left:6px}
+.mbadge.alkolsuz{background:rgba(91,155,213,.15);color:var(--blue);margin-left:6px}
 .section-title{font-size:13px;font-weight:700;color:var(--cream);margin:14px 0 8px;letter-spacing:.02em;text-transform:uppercase}
 .modal-map-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:linear-gradient(135deg,var(--gold),var(--accent));color:#fff;border:none;border-radius:12px;padding:12px;font-family:'Fraunces',serif;font-weight:600;font-size:15px;cursor:pointer;margin-top:14px;transition:background .6s}
 .rev-item{padding:9px 0;border-bottom:1px solid var(--line)}
@@ -426,7 +428,7 @@ footer strong{color:var(--muted);font-weight:600}
 
 <footer>
   Lezzet Rotası<br>
-  <strong>Geliştirici: Mehmet Emin KILIÇ</strong> — V1.1.5<br>
+  <strong>Geliştirici: Mehmet Emin KILIÇ</strong> — V1.1.6<br>
   İletişim: <a href="mailto:meminkilic@ymail.com" style="color:var(--accentsoft);text-decoration:none">meminkilic@ymail.com</a>
 </footer>
 
@@ -1056,6 +1058,8 @@ async function openModal(idx){
     if(ex){
       let h='';
       if(data.acik_mi!==undefined) h+=`<span class="mbadge ${data.acik_mi?'open':'closed'}">${data.acik_mi?'✓ Şu an açık':'✗ Şu an kapalı'}</span>`;
+      if(data.alkol===true) h+=`<span class="mbadge alkollu">🍺 Alkol servisi var</span>`;
+      else if(data.alkol===false) h+=`<span class="mbadge alkolsuz">🚫 Alkolsüz mekân</span>`;
       if(data.telefon) h+=`<div class="minfo-row">📞 <a href="tel:${data.telefon}">${data.telefon}</a></div>`;
       if(data.website) h+=`<div class="minfo-row">🌐 <a href="${data.website}" target="_blank" rel="noopener">Web sitesi</a></div>`;
       ex.innerHTML=h;
@@ -1166,7 +1170,31 @@ document.getElementById('mainPanel').style.display='block';
 ['favPanel','rotaPanel','ziyaretPanel','rehberPanel'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});
 
 if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('/sw.js').catch(()=>{});
+  navigator.serviceWorker.register('/sw.js').then(reg=>{
+    // Her açılışta güncelleme var mı kontrol et
+    reg.update();
+    // Yeni service worker bulununca otomatik devreye al
+    reg.addEventListener('updatefound',()=>{
+      const yeni=reg.installing;
+      if(!yeni) return;
+      yeni.addEventListener('statechange',()=>{
+        if(yeni.state==='installed' && navigator.serviceWorker.controller){
+          // Yeni sürüm hazır: eski cache'leri temizle ve sayfayı yenile
+          yeni.postMessage&&yeni.postMessage({type:'SKIP_WAITING'});
+          window.location.reload();
+        }
+      });
+    });
+  }).catch(()=>{});
+  // Eski tüm önbellekleri temizle (cache adı ne olursa olsun)
+  if('caches' in window){
+    caches.keys().then(adlar=>{
+      adlar.forEach(ad=>{
+        // Bu sürümün cache'i dışındakileri sil
+        if(ad && ad.indexOf('lezzet-v1.1.6')===-1) caches.delete(ad);
+      });
+    }).catch(()=>{});
+  }
 }
 </script>
 </body>

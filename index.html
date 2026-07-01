@@ -148,6 +148,21 @@ label{font-size:11px;color:var(--muted);font-weight:600;padding-left:2px}
 .pv-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
 .pv-head .pv-title{margin-bottom:0}
 .pv-close{background:var(--s2);border:1px solid var(--line);color:var(--cream);width:34px;height:34px;border-radius:50%;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.auth-btn{width:100%;padding:13px;border-radius:12px;border:none;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;margin-bottom:10px;display:flex;align-items:center;justify-content:center;transition:opacity .2s}
+.auth-btn:active{opacity:.8}
+.google-btn{background:#fff;color:#444}
+.primary-btn{background:var(--accent);color:#fff}
+.secondary-btn{background:var(--s2);color:var(--cream);border:1px solid var(--line)}
+.danger-btn{background:rgba(216,98,74,.15);color:var(--red);border:1px solid rgba(216,98,74,.3)}
+.auth-input{width:100%;padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:var(--s2);color:var(--cream);font-size:14px;font-family:inherit;margin-bottom:10px;box-sizing:border-box}
+.auth-input::placeholder{color:var(--dim)}
+.auth-divider{text-align:center;color:var(--dim);font-size:12px;margin:4px 0 14px;position:relative}
+.auth-divider::before,.auth-divider::after{content:'';position:absolute;top:50%;width:42%;height:1px;background:var(--line)}
+.auth-divider::before{left:0}.auth-divider::after{right:0}
+.stat-box{background:var(--s2);border:1px solid var(--line);border-radius:12px;padding:14px 8px;text-align:center;cursor:pointer;transition:background .15s}
+.stat-box:active{background:var(--s3)}
+.stat-num{font-family:'Fraunces',serif;font-size:24px;font-weight:700;color:var(--accent)}
+.stat-lbl{font-size:11px;color:var(--muted);margin-top:3px}
 .fav-card,.rota-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:13px;margin-bottom:10px;display:flex;align-items:center;gap:12px;transition:background .8s}
 .fav-card .info,.rota-card .info{flex:1;min-width:0}
 .fav-card .cname,.rota-card .cname{font-family:'Fraunces',serif;font-weight:600;font-size:16px}
@@ -214,6 +229,7 @@ label{font-size:11px;color:var(--muted);font-weight:600;padding-left:2px}
 footer{padding:16px 22px 22px;text-align:center;color:var(--dim);font-size:11px;line-height:1.7;transition:color .6s}
 footer strong{color:var(--muted);font-weight:600}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body>
 <div class="app">
@@ -305,6 +321,62 @@ footer strong{color:var(--muted);font-weight:600}
   <div id="ziyaretList"></div>
 </div>
 
+<!-- Profil paneli -->
+<div class="panel-view" id="profilPanel">
+  <div class="pv-head"><div class="pv-title">👤 Profilim</div><button class="pv-close" onclick="switchPanel('main')">✕</button></div>
+  <div id="profilContent">
+    <!-- Giriş yapılmamışsa -->
+    <div id="authBox">
+      <div style="text-align:center;padding:32px 0 24px">
+        <div style="font-size:56px;margin-bottom:12px">🍽️</div>
+        <p style="color:var(--cream);font-size:16px;font-weight:600;margin-bottom:6px">Rotaste'ye Hoş Geldin!</p>
+        <p style="color:var(--muted);font-size:13px;margin-bottom:28px">Favorilerini ve ziyaretlerini kaydet,<br>tavsiyelerini paylaş.</p>
+        <button class="auth-btn google-btn" onclick="girisGoogle()">
+          <svg width="18" height="18" viewBox="0 0 18 18" style="margin-right:8px"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z"/><path fill="#FBBC05" d="M3.964 10.71c-.18-.54-.282-1.117-.282-1.71s.102-1.17.282-1.71V4.958H.957C.347 6.173 0 7.548 0 9s.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/></svg>
+          Google ile Giriş Yap
+        </button>
+        <div class="auth-divider"><span>veya</span></div>
+        <input type="email" id="authEmail" placeholder="E-posta adresi" class="auth-input">
+        <input type="password" id="authPass" placeholder="Şifre (min. 6 karakter)" class="auth-input">
+        <button class="auth-btn primary-btn" onclick="girisEmail()">Giriş Yap</button>
+        <button class="auth-btn secondary-btn" onclick="kayitEmail()">Yeni Hesap Oluştur</button>
+        <div id="authMsg" style="color:var(--red);font-size:12px;margin-top:10px;text-align:center"></div>
+      </div>
+    </div>
+    <!-- Giriş yapılmışsa -->
+    <div id="userBox" style="display:none">
+      <div style="display:flex;align-items:center;gap:14px;padding:16px 0 20px;border-bottom:1px solid var(--line)">
+        <img id="userAvatar" src="" alt="" style="width:52px;height:52px;border-radius:50%;object-fit:cover;background:var(--s2);display:none">
+        <div style="font-size:40px;display:none" id="userAvatarEmoji">👤</div>
+        <div>
+          <div id="userName" style="color:var(--cream);font-weight:600;font-size:16px"></div>
+          <div id="userEmail" style="color:var(--muted);font-size:12px;margin-top:2px"></div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:20px 0">
+        <div class="stat-box" onclick="switchPanel('fav')">
+          <div class="stat-num" id="statFav">0</div>
+          <div class="stat-lbl">❤️ Favori</div>
+        </div>
+        <div class="stat-box" onclick="switchPanel('ziyaret')">
+          <div class="stat-num" id="statZiyaret">0</div>
+          <div class="stat-lbl">✅ Ziyaret</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num" id="statTavsiye">0</div>
+          <div class="stat-lbl">💬 Tavsiye</div>
+        </div>
+      </div>
+      <div style="margin-top:8px">
+        <p style="color:var(--muted);font-size:12px;margin-bottom:14px">Verilerini buluta kaydet / yükle:</p>
+        <button class="auth-btn primary-btn" onclick="bulutaYukle()">☁️ Buluta Kaydet</button>
+        <button class="auth-btn secondary-btn" onclick="buluttanIndir()">📥 Buluttan Yükle</button>
+      </div>
+      <button class="auth-btn danger-btn" style="margin-top:24px" onclick="cikisYap()">Çıkış Yap</button>
+    </div>
+  </div>
+</div>
+
 
 </div><!-- .app -->
 
@@ -327,6 +399,9 @@ footer strong{color:var(--muted);font-weight:600}
   </button>
   <button class="btab" data-panel="rehber" onclick="switchPanel('rehber')">
     <span class="ico">💡</span><span>Rehber</span>
+  </button>
+  <button class="btab" data-panel="profil" onclick="switchPanel('profil')" id="profilTab">
+    <span class="ico" id="profilIco">👤</span><span>Profil</span>
   </button>
 </div>
 
@@ -430,6 +505,170 @@ footer strong{color:var(--muted);font-weight:600}
 </footer>
 
 <script>
+/* =============================================
+   SUPABASE — Auth & DB
+   ============================================= */
+const SUPA_URL = 'https://rtkwqemvbfezywitiacx.supabase.co';
+const SUPA_KEY = 'sb_publishable_tHKq0jcN5-UfmOZvOg-oug_zvy0UjA1';
+const supa = supabase.createClient(SUPA_URL, SUPA_KEY);
+
+let supaUser = null; // aktif kullanıcı
+
+// Sayfa yüklenince oturumu kontrol et
+(async () => {
+  const { data: { session } } = await supa.auth.getSession();
+  if (session) await oturumAc(session.user);
+  supa.auth.onAuthStateChange(async (_e, session) => {
+    if (session) await oturumAc(session.user);
+    else oturumKapat();
+  });
+})();
+
+async function oturumAc(user) {
+  supaUser = user;
+  const meta = user.user_metadata || {};
+  // Profil ikonunu güncelle
+  const ico = document.getElementById('profilIco');
+  if (ico) ico.textContent = meta.avatar_url ? '' : '👤';
+  // UI
+  const avatar = document.getElementById('userAvatar');
+  const avatarEmoji = document.getElementById('userAvatarEmoji');
+  if (meta.avatar_url && avatar) {
+    avatar.src = meta.avatar_url;
+    avatar.style.display = 'block';
+    if (avatarEmoji) avatarEmoji.style.display = 'none';
+  } else {
+    if (avatar) avatar.style.display = 'none';
+    if (avatarEmoji) avatarEmoji.style.display = 'block';
+  }
+  const nameEl = document.getElementById('userName');
+  const emailEl = document.getElementById('userEmail');
+  if (nameEl) nameEl.textContent = meta.full_name || meta.name || user.email.split('@')[0];
+  if (emailEl) emailEl.textContent = user.email;
+  document.getElementById('authBox').style.display = 'none';
+  document.getElementById('userBox').style.display = 'block';
+  await profilIstatistik();
+}
+
+function oturumKapat() {
+  supaUser = null;
+  const ico = document.getElementById('profilIco');
+  if (ico) ico.textContent = '👤';
+  document.getElementById('authBox').style.display = 'block';
+  document.getElementById('userBox').style.display = 'none';
+}
+
+async function girisGoogle() {
+  const { error } = await supa.auth.signInWithOAuth({
+    provider: 'google',
+    options: { redirectTo: window.location.origin }
+  });
+  if (error) authMesaj('Google girişi başarısız: ' + error.message);
+}
+
+async function girisEmail() {
+  const email = document.getElementById('authEmail').value.trim();
+  const pass = document.getElementById('authPass').value;
+  if (!email || !pass) return authMesaj('E-posta ve şifre gerekli');
+  authMesaj('');
+  const { error } = await supa.auth.signInWithPassword({ email, password: pass });
+  if (error) authMesaj('Giriş hatası: ' + error.message);
+}
+
+async function kayitEmail() {
+  const email = document.getElementById('authEmail').value.trim();
+  const pass = document.getElementById('authPass').value;
+  if (!email || !pass) return authMesaj('E-posta ve şifre gerekli');
+  if (pass.length < 6) return authMesaj('Şifre en az 6 karakter olmalı');
+  authMesaj('');
+  const { error } = await supa.auth.signUp({ email, password: pass });
+  if (error) authMesaj('Kayıt hatası: ' + error.message);
+  else authMesaj('✅ Doğrulama e-postası gönderildi, kontrol et!');
+}
+
+async function cikisYap() {
+  await supa.auth.signOut();
+  showToast('Çıkış yapıldı');
+}
+
+function authMesaj(msg) {
+  const el = document.getElementById('authMsg');
+  if (el) el.textContent = msg;
+}
+
+async function profilIstatistik() {
+  if (!supaUser) return;
+  try {
+    const [f, z, t] = await Promise.all([
+      supa.from('favoriler').select('id', { count: 'exact', head: true }).eq('user_id', supaUser.id),
+      supa.from('ziyaretler').select('id', { count: 'exact', head: true }).eq('user_id', supaUser.id),
+      supa.from('tavsiyeler').select('id', { count: 'exact', head: true }).eq('user_id', supaUser.id),
+    ]);
+    document.getElementById('statFav').textContent = f.count || 0;
+    document.getElementById('statZiyaret').textContent = z.count || 0;
+    document.getElementById('statTavsiye').textContent = t.count || 0;
+  } catch(e) {}
+}
+
+// Buluta kaydet — localStorage'daki verileri Supabase'e gönder
+async function bulutaYukle() {
+  if (!supaUser) return;
+  showToast('Yükleniyor...');
+  try {
+    const favs = favYukle();
+    const ziyaretler = ziyaretYukle();
+    // Favoriler
+    if (favs.length > 0) {
+      const rows = favs.map(r => ({
+        user_id: supaUser.id, place_id: r.id||r.name, name: r.name,
+        addr: r.addr, rating: r.rating, reviews: r.reviews,
+        cuisine: r.cuisine, lat: r.lat, lng: r.lng, photo_ref: r.photoRef
+      }));
+      await supa.from('favoriler').upsert(rows, { onConflict: 'user_id,place_id', ignoreDuplicates: true });
+    }
+    // Ziyaretler
+    if (ziyaretler.length > 0) {
+      const rows = ziyaretler.map(r => ({
+        user_id: supaUser.id, place_id: r.id||r.name, name: r.name,
+        addr: r.addr, rating: r.rating, cuisine: r.cuisine, lat: r.lat, lng: r.lng
+      }));
+      await supa.from('ziyaretler').upsert(rows, { onConflict: 'user_id,place_id', ignoreDuplicates: true });
+    }
+    await profilIstatistik();
+    showToast('✅ Veriler buluta kaydedildi!');
+  } catch(e) { showToast('Hata: ' + e.message); }
+}
+
+// Buluttan indir — Supabase'den verileri localStorage'a yaz
+async function buluttanIndir() {
+  if (!supaUser) return;
+  showToast('İndiriliyor...');
+  try {
+    const { data: favs } = await supa.from('favoriler').select('*').eq('user_id', supaUser.id);
+    const { data: ziyaretler } = await supa.from('ziyaretler').select('*').eq('user_id', supaUser.id);
+    if (favs && favs.length > 0) {
+      const mapped = favs.map(r => ({
+        id: r.place_id, name: r.name, addr: r.addr, rating: r.rating,
+        reviews: r.reviews, cuisine: r.cuisine, lat: r.lat, lng: r.lng, photoRef: r.photo_ref
+      }));
+      localStorage.setItem(FAV_STORE, JSON.stringify(mapped));
+      updateFavBadge(); renderFavPanel();
+    }
+    if (ziyaretler && ziyaretler.length > 0) {
+      const mapped = ziyaretler.map(r => ({
+        id: r.place_id, name: r.name, addr: r.addr, rating: r.rating,
+        cuisine: r.cuisine, lat: r.lat, lng: r.lng
+      }));
+      localStorage.setItem(ZIYARET_STORE, JSON.stringify(mapped));
+      renderZiyaretPanel();
+    }
+    showToast('✅ Veriler indirildi!');
+  } catch(e) { showToast('Hata: ' + e.message); }
+}
+
+/* =============================================
+   SUPABASE — Auth & DB sonu
+   ============================================= */
 const $ = s => document.querySelector(s);
 const PROXY_STORE = 'lezzet_rotasi_proxy_url';
 const FAV_STORE   = 'lezzet_favoriler';
@@ -761,11 +1000,11 @@ function switchPanel(panel){
   // Ana panel
   $('#mainPanel').style.display = panel==='main' ? 'block' : 'none';
   // Overlay paneller (fixed position)
-  ['favPanel','rotaPanel','ziyaretPanel','rehberPanel'].forEach(id=>{
+  ['favPanel','rotaPanel','ziyaretPanel','rehberPanel','profilPanel'].forEach(id=>{
     const el=document.getElementById(id);
     if(el) el.style.display='none';
   });
-  const panelMap={fav:'favPanel',rota:'rotaPanel',ziyaret:'ziyaretPanel',rehber:'rehberPanel'};
+  const panelMap={fav:'favPanel',rota:'rotaPanel',ziyaret:'ziyaretPanel',rehber:'rehberPanel',profil:'profilPanel'};
   if(panelMap[panel]){
     const el=document.getElementById(panelMap[panel]);
     if(el) el.style.display='block';
@@ -773,6 +1012,7 @@ function switchPanel(panel){
   if(panel==='fav'    && typeof renderFavPanel==='function')    renderFavPanel();
   if(panel==='rota'   && typeof renderRotaPanel==='function')   renderRotaPanel();
   if(panel==='ziyaret'&& typeof renderZiyaretPanel==='function')renderZiyaretPanel();
+  if(panel==='profil' && typeof profilIstatistik==='function')  profilIstatistik();
   document.querySelectorAll('.btab').forEach(b=>b.classList.toggle('active',b.dataset.panel===panel));
 }
 

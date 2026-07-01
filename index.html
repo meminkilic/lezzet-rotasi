@@ -370,9 +370,7 @@ footer strong{color:var(--muted);font-weight:600}
         </div>
       </div>
       <div style="margin-top:8px">
-        <p style="color:var(--muted);font-size:12px;margin-bottom:14px">Verilerini buluta kaydet / yükle:</p>
-        <button class="auth-btn primary-btn" onclick="bulutaYukle()">☁️ Buluta Kaydet</button>
-        <button class="auth-btn secondary-btn" onclick="buluttanIndir()">📥 Buluttan Yükle</button>
+        <p style="color:var(--muted);font-size:12px;text-align:center;display:flex;align-items:center;justify-content:center;gap:6px"><span style="color:var(--accent)">☁️</span> Favorilerin ve ziyaretlerin otomatik olarak buluta kaydediliyor</p>
       </div>
       <button class="auth-btn danger-btn" style="margin-top:24px" onclick="cikisYap()">Çıkış Yap</button>
     </div>
@@ -501,7 +499,7 @@ footer strong{color:var(--muted);font-weight:600}
 
 <footer>
   Rotaste<br>
-  <strong>Geliştirici: Mehmet Emin KILIÇ</strong> — V1.2.4<br>
+  <strong>Geliştirici: Mehmet Emin KILIÇ</strong> — V1.3.0<br>
   İletişim: <a href="mailto:rotaste@hotmail.com" style="color:var(--accentsoft);text-decoration:none">rotaste@hotmail.com</a>
 </footer>
 
@@ -563,6 +561,7 @@ async function oturumAc(user) {
   if (emailEl) emailEl.textContent = user.email;
   document.getElementById('authBox').style.display = 'none';
   document.getElementById('userBox').style.display = 'block';
+  await otomatikSenkronize();
   await profilIstatistik();
   // Giriş yapıldı, panelleri yenile (uyarı kalksın, liste gelsin)
   if(typeof renderFavPanel==='function') renderFavPanel();
@@ -622,6 +621,81 @@ async function cikisYap() {
 function authMesaj(msg) {
   const el = document.getElementById('authMsg');
   if (el) el.textContent = msg;
+}
+
+/* =============================================
+   OTOMATİK BULUT SENKRONİZASYONU
+   Giriş yapılmışsa favori/ziyaret ekleme-çıkarma
+   otomatik olarak Supabase'e de yansır.
+   ============================================= */
+async function supaFavYaz(r){
+  if(!supa || !supaUser) return;
+  try{
+    await supa.from('favoriler').upsert({
+      user_id: supaUser.id, place_id: r.id||r.name, name: r.name,
+      addr: r.addr, rating: r.rating, reviews: r.reviews,
+      cuisine: r.cuisine, lat: r.lat, lng: r.lng, photo_ref: r.photoRef
+    }, { onConflict: 'user_id,place_id' });
+  }catch(e){ console.warn('Favori bulut yazma hatası:', e); }
+}
+async function supaFavSil(r){
+  if(!supa || !supaUser) return;
+  try{
+    await supa.from('favoriler').delete()
+      .eq('user_id', supaUser.id).eq('place_id', r.id||r.name);
+  }catch(e){ console.warn('Favori bulut silme hatası:', e); }
+}
+async function supaZiyaretYaz(r){
+  if(!supa || !supaUser) return;
+  try{
+    await supa.from('ziyaretler').upsert({
+      user_id: supaUser.id, place_id: r.id||r.name, name: r.name,
+      addr: r.addr, rating: r.rating, cuisine: r.cuisine, lat: r.lat, lng: r.lng
+    }, { onConflict: 'user_id,place_id' });
+  }catch(e){ console.warn('Ziyaret bulut yazma hatası:', e); }
+}
+async function supaZiyaretSil(r){
+  if(!supa || !supaUser) return;
+  try{
+    await supa.from('ziyaretler').delete()
+      .eq('user_id', supaUser.id).eq('place_id', r.id||r.name);
+  }catch(e){ console.warn('Ziyaret bulut silme hatası:', e); }
+}
+
+// Girişte tek seferlik birleştirme: local + bulut verilerini birleştir
+async function otomatikSenkronize(){
+  if(!supa || !supaUser) return;
+  try{
+    // 1) Buluttaki favorileri çek, local'e olmayanları ekle
+    const { data: bulutFav } = await supa.from('favoriler').select('*').eq('user_id', supaUser.id);
+    const localFav = favYukle();
+    if(bulutFav){
+      bulutFav.forEach(bf=>{
+        if(!localFav.find(lf=>(lf.id||lf.name)===bf.place_id)){
+          localFav.unshift({ id:bf.place_id, name:bf.name, addr:bf.addr, rating:bf.rating, reviews:bf.reviews, cuisine:bf.cuisine, lat:bf.lat, lng:bf.lng, photoRef:bf.photo_ref });
+        }
+      });
+      localStorage.setItem(FAV_STORE, JSON.stringify(localFav.slice(0,50)));
+    }
+    // 2) Local'deki (bulutta olmayan) favorileri buluta yaz
+    for(const r of favYukle()) await supaFavYaz(r);
+
+    // 3) Aynısını ziyaretler için yap
+    const { data: bulutZiy } = await supa.from('ziyaretler').select('*').eq('user_id', supaUser.id);
+    const localZiy = ziyaretYukle();
+    if(bulutZiy){
+      bulutZiy.forEach(bz=>{
+        if(!localZiy.find(lz=>(lz.id||lz.name)===bz.place_id)){
+          localZiy.unshift({ id:bz.place_id, name:bz.name, addr:bz.addr, rating:bz.rating, cuisine:bz.cuisine, lat:bz.lat, lng:bz.lng });
+        }
+      });
+      localStorage.setItem(ZIYARET_STORE, JSON.stringify(localZiy.slice(0,100)));
+    }
+    for(const r of ziyaretYukle()) await supaZiyaretYaz(r);
+
+    updateFavBadge(); updateZiyaretBadge();
+    renderFavPanel(); renderZiyaretPanel();
+  }catch(e){ console.warn('Otomatik senkron hatası:', e); }
 }
 
 async function profilIstatistik() {
@@ -948,6 +1022,7 @@ function favKaydet(r){
   if(idx>=0) favs.splice(idx,1); else favs.unshift(r);
   try{ localStorage.setItem(FAV_STORE,JSON.stringify(favs.slice(0,50))); }catch(e){}
   updateFavBadge(); renderFavPanel();
+  if(idx<0) supaFavYaz(r); else supaFavSil(r);
   return idx<0; // true=eklendi false=çıkarıldı
 }
 function favMi(r){ return favYukle().some(x=>x.name===r.name&&x.addr===r.addr); }
@@ -973,9 +1048,10 @@ function renderFavPanel(){
     </div>`).join('');
 }
 function favSilIdx(i){
-  const favs=favYukle(); favs.splice(i,1);
+  const favs=favYukle(); const r=favs[i]; favs.splice(i,1);
   try{ localStorage.setItem(FAV_STORE,JSON.stringify(favs)); }catch(e){}
   updateFavBadge(); renderFavPanel();
+  if(r) supaFavSil(r);
 }
 updateFavBadge(); renderFavPanel();
 
@@ -1378,7 +1454,9 @@ function ziyaretEkle(r){
   if(list.find(x=>x.name===r.name&&x.addr===r.addr)) return false;
   list.unshift({...r, tarih: new Date().toLocaleDateString('tr-TR')});
   try{ localStorage.setItem(ZIYARET_STORE,JSON.stringify(list.slice(0,100))); }catch(e){}
-  updateZiyaretBadge(); renderZiyaretPanel(); return true;
+  updateZiyaretBadge(); renderZiyaretPanel();
+  supaZiyaretYaz(r);
+  return true;
 }
 function ziyaretMi(r){ return ziyaretYukle().some(x=>x.name===r.name&&x.addr===r.addr); }
 function updateZiyaretBadge(){
@@ -1406,9 +1484,10 @@ function renderZiyaretPanel(){
     </div>`).join('');
 }
 function ziyaretSil(i){
-  const list=ziyaretYukle(); list.splice(i,1);
+  const list=ziyaretYukle(); const r=list[i]; list.splice(i,1);
   try{ localStorage.setItem(ZIYARET_STORE,JSON.stringify(list)); }catch(e){}
   updateZiyaretBadge(); renderZiyaretPanel();
+  if(r) supaZiyaretSil(r);
 }
 updateZiyaretBadge(); renderZiyaretPanel();
 
@@ -1488,7 +1567,7 @@ if('serviceWorker' in navigator){
     caches.keys().then(adlar=>{
       adlar.forEach(ad=>{
         // Bu sürümün cache'i dışındakileri sil
-        if(ad && ad.indexOf('lezzet-v1.2.4')===-1) caches.delete(ad);
+        if(ad && ad.indexOf('lezzet-v1.3.0')===-1) caches.delete(ad);
       });
     }).catch(()=>{});
   }

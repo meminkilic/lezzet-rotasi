@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Lezzet Rotası — Proxy Sunucusu
+Rotaste — Proxy Sunucusu
 Geliştirici: Mehmet Emin KILIÇ — V1.1.6
 """
 import os, requests

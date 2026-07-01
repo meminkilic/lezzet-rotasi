@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Rotaste — Proxy Sunucusu
-Geliştirici: Mehmet Emin KILIÇ — V1.2.3
+Geliştirici: Mehmet Emin KILIÇ — V1.2.4
 """
 import os, requests
 from flask import Flask, request, jsonify, send_file, Response

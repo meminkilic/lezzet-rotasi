@@ -501,7 +501,7 @@ footer strong{color:var(--muted);font-weight:600}
 
 <footer>
   Rotaste<br>
-  <strong>Geliştirici: Mehmet Emin KILIÇ</strong> — V1.2.3<br>
+  <strong>Geliştirici: Mehmet Emin KILIÇ</strong> — V1.2.4<br>
   İletişim: <a href="mailto:rotaste@hotmail.com" style="color:var(--accentsoft);text-decoration:none">rotaste@hotmail.com</a>
 </footer>
 
@@ -655,6 +655,7 @@ async function bulutaYukle() {
   try {
     const favs = favYukle();
     const ziyaretler = ziyaretYukle();
+    let hataVar = false;
     // Favoriler
     if (favs.length > 0) {
       const rows = favs.map(r => ({
@@ -662,7 +663,8 @@ async function bulutaYukle() {
         addr: r.addr, rating: r.rating, reviews: r.reviews,
         cuisine: r.cuisine, lat: r.lat, lng: r.lng, photo_ref: r.photoRef
       }));
-      await supa.from('favoriler').upsert(rows, { onConflict: 'user_id,place_id', ignoreDuplicates: true });
+      const { error } = await supa.from('favoriler').upsert(rows, { onConflict: 'user_id,place_id' });
+      if (error) { console.error('Favori kaydetme hatası:', error); hataVar = true; }
     }
     // Ziyaretler
     if (ziyaretler.length > 0) {
@@ -670,11 +672,13 @@ async function bulutaYukle() {
         user_id: supaUser.id, place_id: r.id||r.name, name: r.name,
         addr: r.addr, rating: r.rating, cuisine: r.cuisine, lat: r.lat, lng: r.lng
       }));
-      await supa.from('ziyaretler').upsert(rows, { onConflict: 'user_id,place_id', ignoreDuplicates: true });
+      const { error } = await supa.from('ziyaretler').upsert(rows, { onConflict: 'user_id,place_id' });
+      if (error) { console.error('Ziyaret kaydetme hatası:', error); hataVar = true; }
     }
     await profilIstatistik();
-    showToast('✅ Veriler buluta kaydedildi!');
-  } catch(e) { showToast('Hata: ' + e.message); }
+    if (hataVar) showToast('⚠️ Bazı veriler kaydedilemedi, console\'u kontrol et');
+    else showToast('✅ Veriler buluta kaydedildi!');
+  } catch(e) { showToast('Hata: ' + e.message); console.error(e); }
 }
 
 // Buluttan indir — Supabase'den verileri localStorage'a yaz
@@ -1484,7 +1488,7 @@ if('serviceWorker' in navigator){
     caches.keys().then(adlar=>{
       adlar.forEach(ad=>{
         // Bu sürümün cache'i dışındakileri sil
-        if(ad && ad.indexOf('lezzet-v1.2.3')===-1) caches.delete(ad);
+        if(ad && ad.indexOf('lezzet-v1.2.4')===-1) caches.delete(ad);
       });
     }).catch(()=>{});
   }

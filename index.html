@@ -501,7 +501,7 @@ footer strong{color:var(--muted);font-weight:600}
 
 <footer>
   Rotaste<br>
-  <strong>Geliştirici: Mehmet Emin KILIÇ</strong> — V1.2.2<br>
+  <strong>Geliştirici: Mehmet Emin KILIÇ</strong> — V1.2.3<br>
   İletişim: <a href="mailto:rotaste@hotmail.com" style="color:var(--accentsoft);text-decoration:none">rotaste@hotmail.com</a>
 </footer>
 
@@ -625,6 +625,16 @@ function authMesaj(msg) {
 }
 
 async function profilIstatistik() {
+  // Önce localStorage'daki gerçek sayıları göster (buluta kaydetmeden de görünsün)
+  const localFav = favYukle().length;
+  const localZiyaret = ziyaretYukle().length;
+  const fEl=document.getElementById('statFav');
+  const zEl=document.getElementById('statZiyaret');
+  const tEl=document.getElementById('statTavsiye');
+  if(fEl) fEl.textContent = localFav;
+  if(zEl) zEl.textContent = localZiyaret;
+  if(tEl) tEl.textContent = 0;
+  // Sonra Supabase'deki sayılarla karşılaştır, büyük olanı göster
   if (!supa || !supaUser) return;
   try {
     const [f, z, t] = await Promise.all([
@@ -632,9 +642,9 @@ async function profilIstatistik() {
       supa.from('ziyaretler').select('id', { count: 'exact', head: true }).eq('user_id', supaUser.id),
       supa.from('tavsiyeler').select('id', { count: 'exact', head: true }).eq('user_id', supaUser.id),
     ]);
-    document.getElementById('statFav').textContent = f.count || 0;
-    document.getElementById('statZiyaret').textContent = z.count || 0;
-    document.getElementById('statTavsiye').textContent = t.count || 0;
+    if(fEl) fEl.textContent = Math.max(localFav, f.count || 0);
+    if(zEl) zEl.textContent = Math.max(localZiyaret, z.count || 0);
+    if(tEl) tEl.textContent = t.count || 0;
   } catch(e) {}
 }
 
@@ -1474,7 +1484,7 @@ if('serviceWorker' in navigator){
     caches.keys().then(adlar=>{
       adlar.forEach(ad=>{
         // Bu sürümün cache'i dışındakileri sil
-        if(ad && ad.indexOf('lezzet-v1.2.2')===-1) caches.delete(ad);
+        if(ad && ad.indexOf('lezzet-v1.2.3')===-1) caches.delete(ad);
       });
     }).catch(()=>{});
   }

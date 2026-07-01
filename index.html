@@ -510,19 +510,34 @@ footer strong{color:var(--muted);font-weight:600}
    ============================================= */
 const SUPA_URL = 'https://rtkwqemvbfezywitiacx.supabase.co';
 const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ0a3dxZW12YmZlenl3aXRpYWN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI5MDE3MTMsImV4cCI6MjA5ODQ3NzcxM30.pernwvo3Se_vGDUttFs5q0JHoyxb0Ok31Hf5sZPWe_w';
-const supa = supabase.createClient(SUPA_URL, SUPA_KEY);
 
+let supa = null;
 let supaUser = null; // aktif kullanıcı
 
+// Supabase SDK yüklendiyse başlat (yüklenmediyse uygulama yine çalışsın)
+try {
+  if (typeof supabase !== 'undefined' && supabase.createClient) {
+    supa = supabase.createClient(SUPA_URL, SUPA_KEY);
+  } else {
+    console.warn('Supabase SDK yüklenemedi — profil özellikleri devre dışı');
+  }
+} catch(e) {
+  console.warn('Supabase başlatma hatası:', e);
+}
+
 // Sayfa yüklenince oturumu kontrol et
-(async () => {
-  const { data: { session } } = await supa.auth.getSession();
-  if (session) await oturumAc(session.user);
-  supa.auth.onAuthStateChange(async (_e, session) => {
-    if (session) await oturumAc(session.user);
-    else oturumKapat();
-  });
-})();
+if (supa) {
+  (async () => {
+    try {
+      const { data: { session } } = await supa.auth.getSession();
+      if (session) await oturumAc(session.user);
+      supa.auth.onAuthStateChange(async (_e, session) => {
+        if (session) await oturumAc(session.user);
+        else oturumKapat();
+      });
+    } catch(e) { console.warn('Oturum kontrolü hatası:', e); }
+  })();
+}
 
 async function oturumAc(user) {
   supaUser = user;
@@ -559,6 +574,7 @@ function oturumKapat() {
 }
 
 async function girisGoogle() {
+  if (!supa) return authMesaj('Bağlantı kurulamadı, sayfayı yenileyin');
   const { error } = await supa.auth.signInWithOAuth({
     provider: 'google',
     options: { redirectTo: window.location.origin }
@@ -567,6 +583,7 @@ async function girisGoogle() {
 }
 
 async function girisEmail() {
+  if (!supa) return authMesaj('Bağlantı kurulamadı, sayfayı yenileyin');
   const email = document.getElementById('authEmail').value.trim();
   const pass = document.getElementById('authPass').value;
   if (!email || !pass) return authMesaj('E-posta ve şifre gerekli');
@@ -576,6 +593,7 @@ async function girisEmail() {
 }
 
 async function kayitEmail() {
+  if (!supa) return authMesaj('Bağlantı kurulamadı, sayfayı yenileyin');
   const email = document.getElementById('authEmail').value.trim();
   const pass = document.getElementById('authPass').value;
   if (!email || !pass) return authMesaj('E-posta ve şifre gerekli');
@@ -587,6 +605,7 @@ async function kayitEmail() {
 }
 
 async function cikisYap() {
+  if (!supa) return;
   await supa.auth.signOut();
   showToast('Çıkış yapıldı');
 }
@@ -597,7 +616,7 @@ function authMesaj(msg) {
 }
 
 async function profilIstatistik() {
-  if (!supaUser) return;
+  if (!supa || !supaUser) return;
   try {
     const [f, z, t] = await Promise.all([
       supa.from('favoriler').select('id', { count: 'exact', head: true }).eq('user_id', supaUser.id),
@@ -612,7 +631,7 @@ async function profilIstatistik() {
 
 // Buluta kaydet — localStorage'daki verileri Supabase'e gönder
 async function bulutaYukle() {
-  if (!supaUser) return;
+  if (!supa || !supaUser) return;
   showToast('Yükleniyor...');
   try {
     const favs = favYukle();
@@ -641,7 +660,7 @@ async function bulutaYukle() {
 
 // Buluttan indir — Supabase'den verileri localStorage'a yaz
 async function buluttanIndir() {
-  if (!supaUser) return;
+  if (!supa || !supaUser) return;
   showToast('İndiriliyor...');
   try {
     const { data: favs } = await supa.from('favoriler').select('*').eq('user_id', supaUser.id);

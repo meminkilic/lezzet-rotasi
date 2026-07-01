@@ -501,7 +501,7 @@ footer strong{color:var(--muted);font-weight:600}
 
 <footer>
   Rotaste<br>
-  <strong>Geliştirici: Mehmet Emin KILIÇ</strong> — V1.2.1<br>
+  <strong>Geliştirici: Mehmet Emin KILIÇ</strong> — V1.2.2<br>
   İletişim: <a href="mailto:rotaste@hotmail.com" style="color:var(--accentsoft);text-decoration:none">rotaste@hotmail.com</a>
 </footer>
 
@@ -564,14 +564,22 @@ async function oturumAc(user) {
   document.getElementById('authBox').style.display = 'none';
   document.getElementById('userBox').style.display = 'block';
   await profilIstatistik();
+  // Giriş yapıldı, panelleri yenile (uyarı kalksın, liste gelsin)
+  if(typeof renderFavPanel==='function') renderFavPanel();
+  if(typeof renderRotaPanel==='function') renderRotaPanel();
+  if(typeof renderZiyaretPanel==='function') renderZiyaretPanel();
 }
 
 function oturumKapat() {
   supaUser = null;
   const ico = document.getElementById('profilIco');
   if (ico) ico.textContent = '👤';
-  document.getElementById('authBox').style.display = 'block';
-  document.getElementById('userBox').style.display = 'none';
+  const ab=document.getElementById('authBox'); if(ab) ab.style.display = 'block';
+  const ub=document.getElementById('userBox'); if(ub) ub.style.display = 'none';
+  // Açık olan paneli yenile (giriş uyarısı görünsün)
+  if(typeof renderFavPanel==='function') renderFavPanel();
+  if(typeof renderRotaPanel==='function') renderRotaPanel();
+  if(typeof renderZiyaretPanel==='function') renderZiyaretPanel();
 }
 
 async function girisGoogle() {
@@ -935,8 +943,9 @@ function updateFavBadge(){
   el.textContent=n||''; el.classList.toggle('show',n>0);
 }
 function renderFavPanel(){
-  const favs=favYukle();
   const el=$('#favList');
+  if(girisGerekli()){ el.innerHTML=girisUyarisiHTML('Favoriler'); return; }
+  const favs=favYukle();
   if(!favs.length){ el.innerHTML='<div class="empty-pv"><span class="ico">❤️</span>Henüz favori eklemedin.<br>Restoran kartındaki ❤️ ikonuna tıkla.</div>'; return; }
   el.innerHTML=favs.map((r,i)=>`
     <div class="fav-card">
@@ -979,8 +988,9 @@ function updateRotaBadge(){
   el.textContent=n||''; el.classList.toggle('show',n>0);
 }
 function renderRotaPanel(){
-  const rota=rotaYukle();
   const el=$('#rotaList');
+  if(girisGerekli()){ el.innerHTML=girisUyarisiHTML('Rotam'); return; }
+  const rota=rotaYukle();
   if(!rota.length){ el.innerHTML='<div class="empty-pv"><span class="ico">🗺️</span>Rotana henüz yer eklemedin.<br>Restoran kartındaki 🗺️+ butonuna tıkla.</div>'; return; }
   el.innerHTML=rota.map((r,i)=>`
     <div class="rota-card">
@@ -1035,6 +1045,17 @@ function switchPanel(panel){
   if(panel==='profil' && typeof profilIstatistik==='function')  profilIstatistik();
   document.querySelectorAll('.btab').forEach(b=>b.classList.toggle('active',b.dataset.panel===panel));
 }
+
+/* Giriş yapılmamışsa panel içeriğinin üstüne uyarı bindir */
+function girisUyarisiHTML(neyIcin){
+  return `<div style="text-align:center;padding:48px 20px">
+    <div style="font-size:52px;margin-bottom:14px">🔒</div>
+    <p style="color:var(--cream);font-size:16px;font-weight:600;margin-bottom:8px">Giriş Yapman Gerekiyor</p>
+    <p style="color:var(--muted);font-size:13px;margin-bottom:24px;line-height:1.5">${neyIcin} özelliğini kullanmak için<br>hesabına giriş yap veya kayıt ol.</p>
+    <button class="auth-btn primary-btn" style="max-width:240px;margin:0 auto" onclick="switchPanel('profil')">👤 Giriş Yap / Kayıt Ol</button>
+  </div>`;
+}
+function girisGerekli(){ return !supaUser; }
 
 /* =============================================
    PROXY
@@ -1136,6 +1157,7 @@ function showError(msg){ $('#results').innerHTML=`<div class="empty"><span class
 
 function toggleFav(e,idx){
   e.stopPropagation();
+  if(girisGerekli()){ showToast('🔒 Favori için giriş yap'); switchPanel('profil'); return; }
   const ranked=rank(lastList,currentSort);
   const r=ranked[idx]; if(!r) return;
   const eklendi=favKaydet(r);
@@ -1143,6 +1165,7 @@ function toggleFav(e,idx){
 }
 function toggleRota(e,idx){
   e.stopPropagation();
+  if(girisGerekli()){ showToast('🔒 Rota için giriş yap'); switchPanel('profil'); return; }
   const ranked=rank(lastList,currentSort);
   const r=ranked[idx]; if(!r) return;
   const rota=rotaYukle();
@@ -1157,6 +1180,7 @@ function toggleRota(e,idx){
 }
 function toggleZiyaret(e,idx){
   e.stopPropagation();
+  if(girisGerekli()){ showToast('🔒 Ziyaret için giriş yap'); switchPanel('profil'); return; }
   const ranked=rank(lastList,currentSort);
   const r=ranked[idx]; if(!r) return;
   const eklendi=ziyaretEkle(r);
@@ -1350,8 +1374,10 @@ function updateZiyaretBadge(){
   el.textContent=n||''; el.classList.toggle('show',n>0);
 }
 function renderZiyaretPanel(){
-  const list=ziyaretYukle(), el=$('#ziyaretList');
+  const el=$('#ziyaretList');
   if(!el) return;
+  if(girisGerekli()){ el.innerHTML=girisUyarisiHTML('Ziyaretlerim'); return; }
+  const list=ziyaretYukle();
   if(!list.length){ el.innerHTML='<div class="empty-pv"><span class="ico">✅</span>Henüz ziyaret işaretlemedin.<br>Kart üstündeki ✅ butonuna bas.</div>'; return; }
   el.innerHTML=list.map((r,i)=>`
     <div class="ziyaret-card">
@@ -1448,7 +1474,7 @@ if('serviceWorker' in navigator){
     caches.keys().then(adlar=>{
       adlar.forEach(ad=>{
         // Bu sürümün cache'i dışındakileri sil
-        if(ad && ad.indexOf('lezzet-v1.2.1')===-1) caches.delete(ad);
+        if(ad && ad.indexOf('lezzet-v1.2.2')===-1) caches.delete(ad);
       });
     }).catch(()=>{});
   }

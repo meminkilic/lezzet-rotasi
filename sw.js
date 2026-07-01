@@ -1,5 +1,5 @@
-// Lezzet Rotası — Service Worker V3.2
-const CACHE = 'lezzet-v3';
+// Lezzet Rotası — Service Worker V1.1.6
+const CACHE = 'lezzet-v1.1.6';
 const STATIC = ['/', '/manifest.json'];
 
 self.addEventListener('install', e => {

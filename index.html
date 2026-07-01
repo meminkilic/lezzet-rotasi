@@ -141,8 +141,8 @@ label{font-size:11px;color:var(--muted);font-weight:600;padding-left:2px}
 .badge-count.show{display:inline-block}
 
 /* Panel görünümleri */
-.panel-view{display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:60;background:var(--bg);overflow-y:auto;max-width:480px;margin:0 auto;padding:18px 22px calc(80px + env(safe-area-inset-bottom));animation:fade .2s ease}
-.panel-view.active{display:block}
+.panel-view{display:none;position:fixed;top:0;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;z-index:60;background:var(--bg);overflow-y:auto;-webkit-overflow-scrolling:touch;padding:18px 22px calc(80px + env(safe-area-inset-bottom));box-sizing:border-box;animation:fade .2s ease}
+.panel-view[style*="block"],.panel-view.active{display:block!important}
 @keyframes fade{from{opacity:0}to{opacity:1}}
 .pv-title{font-family:'Fraunces',serif;font-weight:600;font-size:20px;margin-bottom:14px}
 .pv-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
@@ -303,6 +303,8 @@ footer strong{color:var(--muted);font-weight:600}
   </div>
 </div>
 
+</div><!-- .app -->
+
 <!-- Favoriler paneli -->
 <div class="panel-view" id="favPanel">
   <div class="pv-head"><div class="pv-title">❤️ Favorilerim</div><button class="pv-close" onclick="switchPanel('main')">✕</button></div>
@@ -378,7 +380,6 @@ footer strong{color:var(--muted);font-weight:600}
 </div>
 
 
-</div><!-- .app -->
 
 <!-- Alt navigasyon -->
 <div class="bottom-tabs">
@@ -500,7 +501,7 @@ footer strong{color:var(--muted);font-weight:600}
 
 <footer>
   Rotaste<br>
-  <strong>Geliştirici: Mehmet Emin KILIÇ</strong> — V1.2.0<br>
+  <strong>Geliştirici: Mehmet Emin KILIÇ</strong> — V1.2.1<br>
   İletişim: <a href="mailto:rotaste@hotmail.com" style="color:var(--accentsoft);text-decoration:none">rotaste@hotmail.com</a>
 </footer>
 
@@ -1447,7 +1448,7 @@ if('serviceWorker' in navigator){
     caches.keys().then(adlar=>{
       adlar.forEach(ad=>{
         // Bu sürümün cache'i dışındakileri sil
-        if(ad && ad.indexOf('lezzet-v1.2.0')===-1) caches.delete(ad);
+        if(ad && ad.indexOf('lezzet-v1.2.1')===-1) caches.delete(ad);
       });
     }).catch(()=>{});
   }

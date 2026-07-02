@@ -326,11 +326,17 @@ footer strong{color:var(--muted);font-weight:600}
 
   <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px">
     <div style="display:flex;gap:8px">
-      <input type="text" id="rotaAdres1" placeholder="📍 Başlangıç (örn: Ankara)" class="auth-input" style="margin-bottom:0;flex:1" onkeydown="if(event.key==='Enter')rotaAdresBul('A')">
+      <div style="position:relative;flex:1">
+        <input type="text" id="rotaAdres1" placeholder="📍 Başlangıç (örn: Ankara)" class="auth-input" style="margin-bottom:0;width:100%;box-sizing:border-box" autocomplete="off" onkeydown="if(event.key==='Enter')rotaAdresBul('A')">
+        <div class="autocomplete-list" id="rotaAc1"></div>
+      </div>
       <button class="rota-nokta-btn" style="flex:0 0 auto;padding:11px 14px" onclick="rotaAdresBul('A')">Bul</button>
     </div>
     <div style="display:flex;gap:8px">
-      <input type="text" id="rotaAdres2" placeholder="🏁 Varış (örn: Bursa)" class="auth-input" style="margin-bottom:0;flex:1" onkeydown="if(event.key==='Enter')rotaAdresBul('B')">
+      <div style="position:relative;flex:1">
+        <input type="text" id="rotaAdres2" placeholder="🏁 Varış (örn: Bursa)" class="auth-input" style="margin-bottom:0;width:100%;box-sizing:border-box" autocomplete="off" onkeydown="if(event.key==='Enter')rotaAdresBul('B')">
+        <div class="autocomplete-list" id="rotaAc2"></div>
+      </div>
       <button class="rota-nokta-btn" style="flex:0 0 auto;padding:11px 14px" onclick="rotaAdresBul('B')">Bul</button>
     </div>
   </div>
@@ -542,7 +548,7 @@ footer strong{color:var(--muted);font-weight:600}
 
 <footer>
   Rotaste<br>
-  <strong>Geliştirici: RotasteTeam</strong> — V1.5.5<br>
+  <strong>Geliştirici: RotasteTeam</strong> — V1.6.1<br>
   İletişim: <a href="mailto:rotaste@hotmail.com" style="color:var(--accentsoft);text-decoration:none">rotaste@hotmail.com</a>
 </footer>
 
@@ -1070,6 +1076,26 @@ setupAutoComplete('ilce','ilceAc',
   val => { $('#ilce').value=val; }
 );
 
+// Rotadan başlangıç/varış autocomplete (il + ilçe birlikte)
+function rotaAcKaynak(q){
+  const nq=norm(q);
+  const iller = IL_LISTESI.filter(il=>norm(il).includes(nq)).map(il=>il);
+  const ilceler = [];
+  for(const [il,list] of Object.entries(IL_ILCE)){
+    for(const ilce of list){
+      if(norm(ilce).includes(nq)) ilceler.push(ilce+', '+il);
+    }
+  }
+  // Önce iller, sonra ilçeler
+  return [...iller, ...ilceler];
+}
+if($('#rotaAdres1')){
+  setupAutoComplete('rotaAdres1','rotaAc1', rotaAcKaynak,
+    val => { $('#rotaAdres1').value=val; rotaAdresBul('A'); });
+  setupAutoComplete('rotaAdres2','rotaAc2', rotaAcKaynak,
+    val => { $('#rotaAdres2').value=val; rotaAdresBul('B'); });
+}
+
 /* =============================================
    SON ARAMALAR GEÇMİŞİ
    ============================================= */
@@ -1178,6 +1204,7 @@ let rotaMap=null, rotaNoktaA=null, rotaNoktaB=null, rotaAktifNokta='A';
 let rotaMarkerA=null, rotaMarkerB=null, rotaCizgi=null, rotaTur='';
 let rotaKoordinatlar=[]; // OSRM'den gelen yol noktaları
 let rotaRestoranMarkers=[]; // haritadaki restoran işaretleri
+let rotaSonuclar=[]; // Rotadan arama sonuçları (sıralı)
 
 function rotaHaritaBaslat(){
   if(typeof L==='undefined'){ return; } // Leaflet yüklenmediyse
@@ -1294,6 +1321,7 @@ async function rotaAra(){
     if(!list.length){ sonuc.innerHTML='<div style="text-align:center;padding:30px;color:var(--muted)">Bu rota üzerinde restoran bulunamadı.</div>'; return; }
     // Puana göre sırala ve mevcut kart tasarımıyla göster
     const ranked=rank(list,'akilli');
+    rotaSonuclar=ranked; // detay modalı için sakla
     lastList=list; lastLive=true;
     sonuc.innerHTML=`<div class="meta" style="margin-bottom:10px"><span>🗺️ Rota üzeri · ${ranked.length} sofra</span><span class="src-tag live">Canlı · Google</span></div>`
       + ranked.map((r,i)=>rotaKartHTML(r,i)).join('');
@@ -1319,7 +1347,7 @@ function rotaRestoranlariHaritayaEkle(list){
       iconSize:[26,26], iconAnchor:[13,26]
     });
     const m=L.marker([r.lat,r.lng],{icon}).addTo(rotaMap)
-      .bindPopup(`<div style="min-width:180px"><b>${r.name}</b><br>⭐ ${puan.toFixed(1)} (${(r.reviews||0).toLocaleString('tr-TR')} yorum)<br><span style="color:#888;font-size:12px">${r.addr||''}</span><br><button onclick="rotaKartaGit(${i})" style="margin-top:8px;width:100%;background:#7cc242;color:#fff;border:none;border-radius:8px;padding:8px;font-size:13px;font-weight:600;cursor:pointer">📋 Detayları Gör</button></div>`);
+      .bindPopup(`<div style="min-width:190px"><b>${r.name}</b><br>⭐ ${puan.toFixed(1)} (${(r.reviews||0).toLocaleString('tr-TR')} yorum)<br><span style="color:#888;font-size:12px">${r.addr||''}</span><div style="display:flex;gap:6px;margin-top:8px"><button onclick="rotaOpenModal(${i})" style="flex:1;background:#7cc242;color:#fff;border:none;border-radius:8px;padding:8px;font-size:12.5px;font-weight:600;cursor:pointer">📋 Detay</button><button onclick="rotaKartaGitSade(${i})" style="flex:0 0 auto;background:#2a3028;color:#fff;border:1px solid #444;border-radius:8px;padding:8px 10px;font-size:13px;font-weight:600;cursor:pointer" title="Karta git">⬇️</button></div></div>`);
     rotaRestoranMarkers.push(m);
   });
   // Haritayı tüm noktaları kapsayacak şekilde ayarla
@@ -1329,26 +1357,90 @@ function rotaRestoranlariHaritayaEkle(list){
   }
 }
 
-// Haritadaki popup'tan ilgili karta kaydır ve vurgula
-function rotaKartaGit(i){
+// Sadece ilgili karta kaydır ve vurgula (modal açmaz)
+function rotaKartaGitSade(i){
   if(rotaMap) rotaMap.closePopup();
   const kart=document.getElementById('rotaKart'+i);
   if(!kart) return;
   kart.scrollIntoView({behavior:'smooth', block:'center'});
-  // Kısa süreli vurgu
   kart.style.transition='box-shadow .3s, transform .3s';
   kart.style.boxShadow='0 0 0 3px var(--accent)';
   kart.style.transform='scale(1.02)';
   setTimeout(()=>{ kart.style.boxShadow=''; kart.style.transform=''; }, 1600);
 }
 
+// Haritadaki popup'tan ilgili karta kaydır, vurgula ve detay aç
+function rotaKartaGit(i){
+  if(rotaMap) rotaMap.closePopup();
+  const kart=document.getElementById('rotaKart'+i);
+  if(kart){
+    kart.scrollIntoView({behavior:'smooth', block:'center'});
+    kart.style.transition='box-shadow .3s, transform .3s';
+    kart.style.boxShadow='0 0 0 3px var(--accent)';
+    kart.style.transform='scale(1.02)';
+    setTimeout(()=>{ kart.style.boxShadow=''; kart.style.transform=''; }, 1600);
+  }
+  // Detay modalını da aç
+  if(typeof rotaOpenModal==='function') rotaOpenModal(i);
+}
+
+// Rotadan sonuçları için tam detay modalı (Keşfet'teki gibi)
+async function rotaOpenModal(idx){
+  const r=rotaSonuclar[idx]; if(!r) return;
+  lastLive=true;
+  $('#modalContent').innerHTML=`
+    <h2>${r.name}</h2>
+    <div class="mcuisine">${r.cuisine||'Restoran'}${r.price?' · '+r.price:''}</div>
+    <div class="mrating">
+      <span class="big">${(r.rating||0).toFixed(1)}</span>
+      <div><div class="mstars">${stars(r.rating)}</div><div class="mcnt">${(r.reviews||0).toLocaleString('tr-TR')} yorum</div></div>
+    </div>
+    ${r.summary?`<p style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:10px">${r.summary}</p>`:''}
+    <div class="minfo-row">📍 <span>${r.addr||''}</span></div>
+    <div id="modalExtra"></div>
+    ${r.lat&&r.lng?`<button class="modal-map-btn" onclick="openMap(${r.lat},${r.lng},'${encodeURIComponent(r.name)}')">🗺️ Haritada Aç</button>`:''}
+    <div class="section-title">Yorumlar</div>
+    <div id="modalRevs"><div class="load-rev">Yükleniyor…</div></div>`;
+  modalBg.classList.add('open');
+  if(!r.id){ $('#modalRevs').innerHTML='<div class="no-rev">Detay bilgisi yok.</div>'; return; }
+  try{
+    const data=await (await fetch(`${loadProxy()}/api/detay/${r.id}`,{signal:AbortSignal.timeout(12000)})).json();
+    if(data.hata){ $('#modalRevs').innerHTML='<div class="no-rev">Yorum yüklenemedi.</div>'; return; }
+    const ex=$('#modalExtra');
+    if(ex){
+      let h='';
+      if(data.acik_mi!==undefined) h+=`<span class="mbadge ${data.acik_mi?'open':'closed'}">${data.acik_mi?'✓ Şu an açık':'✗ Şu an kapalı'}</span>`;
+      if(data.alkol===true) h+=`<span class="mbadge alkollu">🍺 Alkol servisi var</span>`;
+      else if(data.alkol===false) h+=`<span class="mbadge alkolsuz">🚫 Alkolsüz mekân</span>`;
+      if(data.telefon) h+=`<div class="minfo-row">📞 <a href="tel:${data.telefon}">${data.telefon}</a></div>`;
+      if(data.website) h+=`<div class="minfo-row">🌐 <a href="${data.website}" target="_blank" rel="noopener">Web sitesi</a></div>`;
+      ex.innerHTML=h;
+    }
+    const revs=data.yorumlar||[];
+    const mapsUrl = `https://www.google.com/maps/place/?q=place_id:${r.id}`;
+    const mapsBtn = `<a href="${mapsUrl}" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:var(--s2);border:1px solid var(--line);color:var(--muted);border-radius:12px;padding:11px;font-family:inherit;font-weight:600;font-size:13.5px;text-decoration:none;margin-top:12px">🗺️ Google Maps'te tüm yorumları gör</a>`;
+    $('#modalRevs').innerHTML=(revs.length
+      ? revs.map(rv=>`<div class="rev-item"><div class="rev-author">${rv.author}</div><div class="rev-meta"><span class="rev-stars">${'★'.repeat(Math.round(rv.rating))}</span><span class="rev-time">${rv.time}</span></div>${rv.text?`<div class="rev-text">${rv.text}</div>`:''}</div>`).join('')
+      : '<div class="no-rev">Yorum bulunamadı.</div>') + mapsBtn;
+  }catch(e){ $('#modalRevs').innerHTML='<div class="no-rev">Yorum yüklenemedi.</div>'; }
+}
+
+// Rotadan sonuçları için favorileme (rotaSonuclar dizisinden)
+function rotaToggleFav(e,idx){
+  e.stopPropagation();
+  if(girisGerekli()){ showToast('🔒 Favori için giriş yap'); switchPanel('profil'); return; }
+  const r=rotaSonuclar[idx]; if(!r) return;
+  const eklendi=favKaydet(r);
+  e.currentTarget.classList.toggle('active',eklendi);
+}
+
 function rotaKartHTML(r,i){
   return `<div class="card" id="rotaKart${i}" style="animation-delay:${i*30}ms">
-    <button class="fav-btn ${favMi(r)?'active':''}" onclick="toggleFav(event,${i})" title="Favori">❤️</button>
+    <button class="fav-btn ${favMi(r)?'active':''}" onclick="rotaToggleFav(event,${i})" title="Favori">❤️</button>
     ${r.photoRef && lastLive ? `<div class="card-foto-wrap"><img class="card-foto" src="${fotoUrl(r.photoRef)}" alt="${r.name}" loading="lazy" onerror="this.parentElement.style.display='none'"><div class="foto-overlay"></div></div>` : ''}
     <div class="card-main">
       <div class="rank">${i+1}</div>
-      <div class="info" onclick="openModal(${i})" style="cursor:pointer">
+      <div class="info" onclick="rotaOpenModal(${i})" style="cursor:pointer">
         <div class="cname">${r.name}</div>
         <div class="caddr">${r.addr||''}</div>
         <div class="crating">${'★'.repeat(Math.floor(r.rating||0))}<span style="color:var(--muted)"> ${(r.rating||0).toFixed(1)} (${(r.reviews||0).toLocaleString('tr-TR')})</span></div>
@@ -1861,7 +1953,7 @@ if('serviceWorker' in navigator){
     caches.keys().then(adlar=>{
       adlar.forEach(ad=>{
         // Bu sürümün cache'i dışındakileri sil
-        if(ad && ad.indexOf('lezzet-v1.5.5')===-1) caches.delete(ad);
+        if(ad && ad.indexOf('lezzet-v1.6.1')===-1) caches.delete(ad);
       });
     }).catch(()=>{});
   }

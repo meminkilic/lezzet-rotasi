@@ -542,7 +542,7 @@ footer strong{color:var(--muted);font-weight:600}
 
 <footer>
   Rotaste<br>
-  <strong>Geliştirici: RotasteTeam</strong> — V1.5.4<br>
+  <strong>Geliştirici: RotasteTeam</strong> — V1.5.5<br>
   İletişim: <a href="mailto:rotaste@hotmail.com" style="color:var(--accentsoft);text-decoration:none">rotaste@hotmail.com</a>
 </footer>
 
@@ -1168,6 +1168,7 @@ function rotaMi(r){ return rotaYukle().some(x=>x.name===r.name&&x.addr===r.addr)
 function updateRotaBadge(){
   const n=rotaYukle().length;
   const el=$('#rotaCount');
+  if(!el) return;
   el.textContent=n||''; el.classList.toggle('show',n>0);
 }
 /* =============================================
@@ -1359,6 +1360,7 @@ function rotaKartHTML(r,i){
 
 function renderRotaPanel(){
   const el=$('#rotaList');
+  if(!el) return; // Rotadan'a geçildi, eski liste artık yok — zararsızca çık
   if(girisGerekli()){ el.innerHTML=girisUyarisiHTML('Rotam'); return; }
   const rota=rotaYukle();
   if(!rota.length){ el.innerHTML='<div class="empty-pv"><span class="ico">🗺️</span>Rotana henüz yer eklemedin.<br>Restoran kartındaki 🗺️+ butonuna tıkla.</div>'; return; }
@@ -1859,7 +1861,7 @@ if('serviceWorker' in navigator){
     caches.keys().then(adlar=>{
       adlar.forEach(ad=>{
         // Bu sürümün cache'i dışındakileri sil
-        if(ad && ad.indexOf('lezzet-v1.5.4')===-1) caches.delete(ad);
+        if(ad && ad.indexOf('lezzet-v1.5.5')===-1) caches.delete(ad);
       });
     }).catch(()=>{});
   }

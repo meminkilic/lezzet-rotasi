@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Rotaste — Proxy Sunucusu
-Geliştirici: Mehmet Emin KILIÇ — V1.4.0
+Geliştirici: Mehmet Emin KILIÇ — V1.5.0
 """
 import os, requests
 from flask import Flask, request, jsonify, send_file, Response
@@ -195,6 +195,64 @@ def restoranlar():
         return _hata("Zaman aşımı.", 504)
     except requests.exceptions.RequestException as e:
         return _hata(f"Bağlantı hatası: {e}", 502)
+
+@app.route("/api/rota-restoranlar", methods=["POST"])
+def rota_restoranlar():
+    """Rota üzerindeki restoranları bulur.
+    Frontend'den gelen rota noktaları (polyline) boyunca örnekleme yapıp,
+    her örnekleme noktasının çevresinde restoran arar, tekilleştirir."""
+    if not API_KEY:
+        return _hata("Sunucuda GOOGLE_API_KEY tanımlı değil.", 500)
+    try:
+        veri = request.get_json(force=True) or {}
+        noktalar = veri.get("noktalar") or []   # [[lat,lng], [lat,lng], ...]
+        tur = (veri.get("tur") or "").strip()
+        yaricap = float(veri.get("yaricap", 2500))
+        yaricap = max(500.0, min(yaricap, 3000.0))  # 0.5-3 km arası
+        if len(noktalar) < 2:
+            return _hata("En az 2 rota noktası gerekli.")
+
+        # Rota çok uzunsa örnekleme yap: en fazla 12 arama noktası
+        # (Google API maliyeti ve süre için sınır)
+        MAX_NOKTA = 12
+        adim = max(1, len(noktalar) // MAX_NOKTA)
+        ornek_noktalar = noktalar[::adim][:MAX_NOKTA]
+
+        bulunanlar = {}  # place_id -> restoran (tekilleştirme)
+        for nk in ornek_noktalar:
+            try:
+                lat, lng = float(nk[0]), float(nk[1])
+            except (ValueError, IndexError, TypeError):
+                continue
+            try:
+                if tur:
+                    r = requests.post(f"{PLACES_BASE}:searchText",
+                        headers=_headers(FIELD_MASK_LIST),
+                        json={"textQuery": f"{tur} restoran", "maxResultCount": 10,
+                              "languageCode": "tr", "regionCode": "TR", "includedType": "restaurant",
+                              "locationBias": {"circle": {"center": {"latitude": lat, "longitude": lng}, "radius": yaricap}}},
+                        timeout=10)
+                else:
+                    r = requests.post(f"{PLACES_BASE}:searchNearby",
+                        headers=_headers(FIELD_MASK_LIST),
+                        json={"includedTypes": ["restaurant"], "maxResultCount": 10,
+                              "languageCode": "tr", "regionCode": "TR",
+                              "locationRestriction": {"circle": {"center": {"latitude": lat, "longitude": lng}, "radius": yaricap}}},
+                        timeout=10)
+                if r.status_code == 200:
+                    for p in r.json().get("places", []):
+                        fp = _fmt_place(p)
+                        if fp.get("id") and fp["id"] not in bulunanlar:
+                            bulunanlar[fp["id"]] = fp
+            except requests.exceptions.RequestException:
+                continue  # bir nokta hata verirse diğerlerine devam
+
+        liste = list(bulunanlar.values())
+        return jsonify({"kaynak": "google", "sayi": len(liste), "restoranlar": liste,
+                        "arama_noktasi": len(ornek_noktalar)})
+    except Exception as e:
+        return _hata(f"Rota arama hatası: {e}", 500)
+
 
 @app.route("/api/detay/<place_id>")
 def detay(place_id):

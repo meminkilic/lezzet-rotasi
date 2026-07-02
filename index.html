@@ -163,6 +163,12 @@ label{font-size:11px;color:var(--muted);font-weight:600;padding-left:2px}
 .stat-box:active{background:var(--s3)}
 .stat-num{font-family:'Fraunces',serif;font-size:24px;font-weight:700;color:var(--accent)}
 .stat-lbl{font-size:11px;color:var(--muted);margin-top:3px}
+.rota-nokta-btn{flex:1;padding:11px 8px;border-radius:10px;border:1px solid var(--line);background:var(--s2);color:var(--muted);font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;transition:all .15s}
+.rota-nokta-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.rota-tur{flex:0 0 auto;padding:8px 14px;border-radius:20px;border:1px solid var(--line);background:var(--s2);color:var(--muted);font-size:12.5px;font-weight:600;font-family:inherit;cursor:pointer;white-space:nowrap;transition:all .15s}
+.rota-tur.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.leaflet-container{font-family:inherit}
+#rotaMap .leaflet-control-attribution{font-size:9px;opacity:.6}
 .fav-card,.rota-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:13px;margin-bottom:10px;display:flex;align-items:center;gap:12px;transition:background .8s}
 .fav-card .info,.rota-card .info{flex:1;min-width:0}
 .fav-card .cname,.rota-card .cname{font-family:'Fraunces',serif;font-weight:600;font-size:16px}
@@ -230,6 +236,8 @@ footer{padding:16px 22px 22px;text-align:center;color:var(--dim);font-size:11px;
 footer strong{color:var(--muted);font-weight:600}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 </head>
 <body>
 <div class="app">
@@ -313,8 +321,29 @@ footer strong{color:var(--muted);font-weight:600}
 
 <!-- Rota paneli -->
 <div class="panel-view" id="rotaPanel">
-  <div class="pv-head"><div class="pv-title">🗺️ Bugünkü Rotam</div><button class="pv-close" onclick="switchPanel('main')">✕</button></div>
-  <div id="rotaList"></div>
+  <div class="pv-head"><div class="pv-title">🗺️ Rotadan</div><button class="pv-close" onclick="switchPanel('main')">✕</button></div>
+  <p style="color:var(--muted);font-size:13px;line-height:1.5;margin-bottom:14px">Yol üzerindeki en iyi restoranları keşfet. Haritadan <b style="color:var(--accent)">başlangıç</b> ve <b style="color:var(--red)">varış</b> noktalarını seç.</p>
+
+  <div id="rotaSecim" style="display:flex;gap:8px;margin-bottom:12px">
+    <button class="rota-nokta-btn active" id="btnNoktaA" onclick="noktaSecModu('A')">📍 Başlangıç</button>
+    <button class="rota-nokta-btn" id="btnNoktaB" onclick="noktaSecModu('B')">🏁 Varış</button>
+    <button class="rota-nokta-btn" onclick="rotaTemizle()" style="flex:0 0 auto;background:var(--s2)">🗑️</button>
+  </div>
+
+  <div id="rotaMap" style="width:100%;height:280px;border-radius:14px;overflow:hidden;margin-bottom:12px;background:var(--s2)"></div>
+
+  <div id="rotaTurFiltre" style="display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:10px">
+    <button class="rota-tur active" data-tur="" onclick="rotaTurSec(this,'')">Tümü</button>
+    <button class="rota-tur" data-tur="kebap" onclick="rotaTurSec(this,'kebap')">🥩 Kebap</button>
+    <button class="rota-tur" data-tur="köfte" onclick="rotaTurSec(this,'köfte')">🍖 Köfte</button>
+    <button class="rota-tur" data-tur="çorba" onclick="rotaTurSec(this,'çorba')">🍲 Çorba</button>
+    <button class="rota-tur" data-tur="kahvaltı" onclick="rotaTurSec(this,'kahvaltı')">🍳 Kahvaltı</button>
+    <button class="rota-tur" data-tur="pide lahmacun" onclick="rotaTurSec(this,'pide lahmacun')">🫓 Pide</button>
+  </div>
+
+  <button class="auth-btn primary-btn" id="rotaAraBtn" onclick="rotaAra()" style="margin-bottom:16px">🔍 Rota Üzerinde Ara</button>
+
+  <div id="rotaSonuc"></div>
 </div>
 
 <!-- Ziyaret paneli -->
@@ -395,7 +424,7 @@ footer strong{color:var(--muted);font-weight:600}
     <span class="badge-count" id="favCount"></span>
   </button>
   <button class="btab" data-panel="rota" onclick="switchPanel('rota')">
-    <span class="ico">🗺️</span><span>Rotam</span>
+    <span class="ico">🗺️</span><span>Rotadan</span>
     <span class="badge-count" id="rotaCount"></span>
   </button>
   <button class="btab" data-panel="ziyaret" onclick="switchPanel('ziyaret')">
@@ -502,7 +531,7 @@ footer strong{color:var(--muted);font-weight:600}
 
 <footer>
   Rotaste<br>
-  <strong>Geliştirici: RotasteTeam</strong> — V1.4.0<br>
+  <strong>Geliştirici: RotasteTeam</strong> — V1.5.0<br>
   İletişim: <a href="mailto:rotaste@hotmail.com" style="color:var(--accentsoft);text-decoration:none">rotaste@hotmail.com</a>
 </footer>
 
@@ -1130,6 +1159,119 @@ function updateRotaBadge(){
   const el=$('#rotaCount');
   el.textContent=n||''; el.classList.toggle('show',n>0);
 }
+/* =============================================
+   ROTADAN — Yol üzeri restoran arama
+   ============================================= */
+let rotaMap=null, rotaNoktaA=null, rotaNoktaB=null, rotaAktifNokta='A';
+let rotaMarkerA=null, rotaMarkerB=null, rotaCizgi=null, rotaTur='';
+let rotaKoordinatlar=[]; // OSRM'den gelen yol noktaları
+
+function rotaHaritaBaslat(){
+  if(typeof L==='undefined'){ return; } // Leaflet yüklenmediyse
+  if(rotaMap){ setTimeout(()=>rotaMap.invalidateSize(),100); return; }
+  // Türkiye merkezli başlat
+  rotaMap = L.map('rotaMap',{zoomControl:true,attributionControl:true}).setView([39.5,35.0],6);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    maxZoom:19, attribution:'© OpenStreetMap'
+  }).addTo(rotaMap);
+  rotaMap.on('click', e=>rotaHaritaTikla(e.latlng));
+  setTimeout(()=>rotaMap.invalidateSize(),200);
+}
+
+function noktaSecModu(hangi){
+  rotaAktifNokta=hangi;
+  document.getElementById('btnNoktaA').classList.toggle('active',hangi==='A');
+  document.getElementById('btnNoktaB').classList.toggle('active',hangi==='B');
+}
+
+function rotaHaritaTikla(latlng){
+  if(rotaAktifNokta==='A'){
+    rotaNoktaA=latlng;
+    if(rotaMarkerA) rotaMap.removeLayer(rotaMarkerA);
+    rotaMarkerA=L.marker(latlng,{title:'Başlangıç'}).addTo(rotaMap).bindPopup('📍 Başlangıç');
+    // Otomatik B'ye geç
+    noktaSecModu('B');
+  } else {
+    rotaNoktaB=latlng;
+    if(rotaMarkerB) rotaMap.removeLayer(rotaMarkerB);
+    rotaMarkerB=L.marker(latlng,{title:'Varış'}).addTo(rotaMap).bindPopup('🏁 Varış');
+  }
+  // İki nokta da varsa rotayı çiz
+  if(rotaNoktaA && rotaNoktaB) rotaCiz();
+}
+
+async function rotaCiz(){
+  if(!rotaNoktaA || !rotaNoktaB) return;
+  // OSRM ile karayolu rotası al
+  const url=`https://router.project-osrm.org/route/v1/driving/${rotaNoktaA.lng},${rotaNoktaA.lat};${rotaNoktaB.lng},${rotaNoktaB.lat}?overview=full&geometries=geojson`;
+  try{
+    const res=await fetch(url,{signal:AbortSignal.timeout(12000)});
+    const data=await res.json();
+    if(data.routes && data.routes[0]){
+      const coords=data.routes[0].geometry.coordinates; // [lng,lat]
+      rotaKoordinatlar=coords.map(c=>[c[1],c[0]]); // [lat,lng]
+      if(rotaCizgi) rotaMap.removeLayer(rotaCizgi);
+      rotaCizgi=L.polyline(rotaKoordinatlar,{color:'#7cc242',weight:5,opacity:.8}).addTo(rotaMap);
+      rotaMap.fitBounds(rotaCizgi.getBounds(),{padding:[30,30]});
+    }
+  }catch(e){ showToast('Rota çizilemedi, tekrar dene'); }
+}
+
+function rotaTurSec(btn,tur){
+  rotaTur=tur;
+  document.querySelectorAll('.rota-tur').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function rotaTemizle(){
+  rotaNoktaA=rotaNoktaB=null; rotaKoordinatlar=[];
+  if(rotaMarkerA){ rotaMap.removeLayer(rotaMarkerA); rotaMarkerA=null; }
+  if(rotaMarkerB){ rotaMap.removeLayer(rotaMarkerB); rotaMarkerB=null; }
+  if(rotaCizgi){ rotaMap.removeLayer(rotaCizgi); rotaCizgi=null; }
+  document.getElementById('rotaSonuc').innerHTML='';
+  noktaSecModu('A');
+  if(rotaMap) rotaMap.setView([39.5,35.0],6);
+}
+
+async function rotaAra(){
+  if(!rotaKoordinatlar.length){ showToast('Önce haritadan başlangıç ve varış seç'); return; }
+  const sonuc=document.getElementById('rotaSonuc');
+  sonuc.innerHTML='<div style="text-align:center;padding:30px;color:var(--muted)">🔍 Rota üzerinde aranıyor...</div>';
+  try{
+    const res=await fetch(`${loadProxy()}/api/rota-restoranlar`,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({noktalar:rotaKoordinatlar, tur:rotaTur, yaricap:2500}),
+      signal:AbortSignal.timeout(30000)
+    });
+    const data=await res.json();
+    if(data.hata){ sonuc.innerHTML=`<div style="text-align:center;padding:30px;color:var(--red)">${data.hata}</div>`; return; }
+    const list=data.restoranlar||[];
+    if(!list.length){ sonuc.innerHTML='<div style="text-align:center;padding:30px;color:var(--muted)">Bu rota üzerinde restoran bulunamadı.</div>'; return; }
+    // Puana göre sırala ve mevcut kart tasarımıyla göster
+    const ranked=rank(list,'akilli');
+    lastList=list; lastLive=true;
+    sonuc.innerHTML=`<div class="meta" style="margin-bottom:10px"><span>🗺️ Rota üzeri · ${ranked.length} sofra</span><span class="src-tag live">Canlı · Google</span></div>`
+      + ranked.map((r,i)=>rotaKartHTML(r,i)).join('');
+  }catch(e){ sonuc.innerHTML='<div style="text-align:center;padding:30px;color:var(--red)">Arama başarısız, tekrar dene.</div>'; }
+}
+
+function rotaKartHTML(r,i){
+  return `<div class="card" style="animation-delay:${i*30}ms">
+    <button class="fav-btn ${favMi(r)?'active':''}" onclick="toggleFav(event,${i})" title="Favori">❤️</button>
+    ${r.photoRef && lastLive ? `<div class="card-foto-wrap"><img class="card-foto" src="${fotoUrl(r.photoRef)}" alt="${r.name}" loading="lazy" onerror="this.parentElement.style.display='none'"><div class="foto-overlay"></div></div>` : ''}
+    <div class="card-main">
+      <div class="rank">${i+1}</div>
+      <div class="info" onclick="openModal(${i})" style="cursor:pointer">
+        <div class="cname">${r.name}</div>
+        <div class="caddr">${r.addr||''}</div>
+        <div class="crating">${'★'.repeat(Math.floor(r.rating||0))}<span style="color:var(--muted)"> ${(r.rating||0).toFixed(1)} (${(r.reviews||0).toLocaleString('tr-TR')})</span></div>
+      </div>
+      ${r.lat&&r.lng?`<button class="cact map-btn" style="flex:0 0 auto;padding:8px" onclick="openMap(${r.lat},${r.lng},'${encodeURIComponent(r.name)}')">🗺️</button>`:''}
+    </div>
+  </div>`;
+}
+
 function renderRotaPanel(){
   const el=$('#rotaList');
   if(girisGerekli()){ el.innerHTML=girisUyarisiHTML('Rotam'); return; }
@@ -1183,7 +1325,7 @@ function switchPanel(panel){
     if(el) el.style.display='block';
   }
   if(panel==='fav'    && typeof renderFavPanel==='function')    renderFavPanel();
-  if(panel==='rota'   && typeof renderRotaPanel==='function')   renderRotaPanel();
+  if(panel==='rota'   && typeof rotaHaritaBaslat==='function')  rotaHaritaBaslat();
   if(panel==='ziyaret'&& typeof renderZiyaretPanel==='function')renderZiyaretPanel();
   if(panel==='profil' && typeof profilIstatistik==='function')  profilIstatistik();
   document.querySelectorAll('.btab').forEach(b=>b.classList.toggle('active',b.dataset.panel===panel));
@@ -1620,7 +1762,7 @@ if('serviceWorker' in navigator){
     caches.keys().then(adlar=>{
       adlar.forEach(ad=>{
         // Bu sürümün cache'i dışındakileri sil
-        if(ad && ad.indexOf('lezzet-v1.4.0')===-1) caches.delete(ad);
+        if(ad && ad.indexOf('lezzet-v1.5.0')===-1) caches.delete(ad);
       });
     }).catch(()=>{});
   }

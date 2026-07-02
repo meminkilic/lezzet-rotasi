@@ -234,12 +234,66 @@ label{font-size:11px;color:var(--muted);font-weight:600;padding-left:2px}
 .empty .ico{font-size:34px;display:block;margin-bottom:10px}
 footer{padding:16px 22px 22px;text-align:center;color:var(--dim);font-size:11px;line-height:1.7;transition:color .6s}
 footer strong{color:var(--muted);font-weight:600}
+
+/* ===== PREMIUM POLISH (V1.7.1) ===== */
+.fchip{padding:10px 18px;font-size:13px;border-radius:22px;transition:all .25s cubic-bezier(.2,.8,.3,1)}
+.fchip:active{transform:scale(.94)}
+.fchip.active{background:var(--accent)!important;color:#fff!important;border-color:var(--accent)!important;box-shadow:0 0 16px rgba(124,194,66,.35)}
+.chip{padding:10px 8px;transition:all .25s cubic-bezier(.2,.8,.3,1)}
+.chip:active{transform:scale(.96)}
+.chip.active{box-shadow:0 0 14px rgba(124,194,66,.22)}
+.cact:active,.auth-btn:active,.loc-btn:active,.search-btn:active,.rota-nokta-btn:active,.rota-tur:active{transform:scale(.96)}
+@keyframes favpop{0%{transform:scale(1)}45%{transform:scale(1.5)}100%{transform:scale(1.12)}}
+.fav-btn.pop{animation:favpop .45s cubic-bezier(.2,.8,.3,1)}
+.skel-card{border-radius:16px;background:var(--surface);border:1px solid var(--line);height:118px;margin-bottom:14px;position:relative;overflow:hidden}
+.skel-card::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.07),transparent);animation:shimmer 1.4s infinite}
+@keyframes shimmer{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+.info-tip{position:relative;display:inline-block;margin-left:5px;cursor:pointer;color:var(--accentsoft);font-weight:800}
+.info-tip .tip-box{display:none;position:absolute;bottom:140%;right:-10px;width:238px;background:var(--s3);border:1px solid var(--line);border-radius:12px;padding:11px 13px;font-size:11.5px;line-height:1.6;color:var(--cream);z-index:40;box-shadow:var(--shadow);font-weight:500;text-align:left}
+.info-tip.show .tip-box{display:block}
+.serbest-bar{display:flex;gap:8px;margin-bottom:14px}
+.serbest-bar input{flex:1;padding:13px 16px;border-radius:14px;border:1px solid var(--line);background:var(--surface);color:var(--cream);font-size:14px;font-family:inherit;min-width:0}
+.serbest-bar input::placeholder{color:var(--dim)}
+.serbest-bar button{flex:0 0 auto;padding:0 20px;border:none;border-radius:14px;background:var(--accent);color:#fff;font-weight:700;font-family:inherit;font-size:14px;cursor:pointer;transition:transform .15s}
+.serbest-bar button:active{transform:scale(.95)}
+.why-line{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}
+.why-tag{font-size:10px;font-weight:700;color:var(--accentsoft);background:rgba(124,194,66,.09);border:1px solid rgba(124,194,66,.2);border-radius:7px;padding:3px 7px}
+.cdist{font-size:11.5px;color:var(--accentsoft);font-weight:700;margin-top:3px}
+.empty-sug{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:16px}
+.empty-sug .sug{background:var(--s2);border:1px solid var(--line);border-radius:18px;padding:9px 16px;font-size:12.5px;font-weight:600;color:var(--cream);cursor:pointer;transition:all .2s}
+.empty-sug .sug:active{transform:scale(.95)}
+.btab svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}
+.btab.active svg{transform:translateY(-1px)}
+.btab .ico{display:flex;align-items:center;justify-content:center;height:24px}
+.btab .ico img{width:24px;height:24px;border-radius:50%;object-fit:cover}
+
+/* ===== CANLI ARKA PLAN — AURORA (V1.7.1) ===== */
+.aurora{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.aurora span{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;will-change:transform}
+.aurora .a1{width:440px;height:440px;background:radial-gradient(circle,rgba(46,94,28,.6),transparent 70%);top:-130px;left:-110px;animation:aur1 26s ease-in-out infinite alternate}
+.aurora .a2{width:380px;height:380px;background:radial-gradient(circle,rgba(14,61,42,.65),transparent 70%);bottom:-110px;right:-100px;animation:aur2 32s ease-in-out infinite alternate}
+.aurora .a3{width:260px;height:260px;background:radial-gradient(circle,rgba(124,194,66,.24),transparent 70%);top:38%;left:58%;animation:aur3 22s ease-in-out infinite alternate}
+@keyframes aur1{to{transform:translate(80px,110px) scale(1.15)}}
+@keyframes aur2{to{transform:translate(-70px,-80px) scale(1.08)}}
+@keyframes aur3{to{transform:translate(-100px,60px) scale(.85)}}
+.app{position:relative;z-index:1}
+
+/* ===== LOGO ANİMASYONU ===== */
+header img[alt="Rotaste"]{animation:logoin .9s cubic-bezier(.2,.9,.3,1) both, logofloat 4.5s ease-in-out 1.2s infinite, logoglow 4.5s ease-in-out 1.2s infinite}
+@keyframes logoin{from{opacity:0;transform:translateY(16px) scale(.95)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes logofloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes logoglow{0%,100%{filter:drop-shadow(0 0 0 rgba(124,194,66,0))}50%{filter:drop-shadow(0 5px 24px rgba(124,194,66,.45))}}
+
+@media (prefers-reduced-motion:reduce){
+  .aurora span,header img[alt="Rotaste"]{animation:none!important}
+}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 </head>
 <body>
+<div class="aurora"><span class="a1"></span><span class="a2"></span><span class="a3"></span></div>
 <div class="app">
 
 <header style="padding:28px 22px 16px">
@@ -254,6 +308,11 @@ footer strong{color:var(--muted);font-weight:600}
 <!-- Ana arama paneli -->
 <div id="mainPanel" style="display:none">
   <!-- Son aramalar -->
+  <div class="serbest-bar">
+    <input type="text" id="serbestArama" placeholder="Mekan, kebap, pide veya kahve ara..." onkeydown="if(event.key==='Enter')serbestAra()">
+    <button onclick="serbestAra()">Ara</button>
+  </div>
+
   <div class="gecmis" id="gecmisBar"></div>
 
   <div class="panel">
@@ -302,7 +361,7 @@ footer strong{color:var(--muted);font-weight:600}
   </div>
 
   <div class="sortbar">
-    <div class="chip active" data-sort="balanced">Puan + yorum dengesi</div>
+    <div class="chip active" data-sort="balanced">Puan + yorum dengesi<span class="info-tip" onclick="event.stopPropagation();this.classList.toggle('show')">ⓘ<span class="tip-box">Çok yüksek puan alan ancak yeterli yorum bulunmayan işletmeler yerine, hem yüksek puanlı hem de güvenilir sayıda yoruma sahip restoranlar öne çıkarılır.</span></span></div>
     <div class="chip" data-sort="rating">Sadece en yüksek puan</div>
   </div>
 
@@ -434,22 +493,22 @@ footer strong{color:var(--muted);font-weight:600}
 <!-- Alt navigasyon -->
 <div class="bottom-tabs">
   <button class="btab active" data-panel="main" onclick="switchPanel('main')">
-    <span class="ico">🍽️</span><span>Keşfet</span>
+    <span class="ico"><svg viewBox="0 0 24 24"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3z"/><path d="M21 15v7"/></svg></span><span>Keşfet</span>
   </button>
   <button class="btab" data-panel="fav" onclick="switchPanel('fav')">
-    <span class="ico">❤️</span><span>Favoriler</span>
+    <span class="ico"><svg viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span><span>Favoriler</span>
     <span class="badge-count" id="favCount"></span>
   </button>
   <button class="btab" data-panel="rota" onclick="switchPanel('rota')">
-    <span class="ico">🗺️</span><span>Rotadan</span>
+    <span class="ico"><svg viewBox="0 0 24 24"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg></span><span>Rotadan</span>
     <span class="badge-count" id="rotaCount"></span>
   </button>
   <button class="btab" data-panel="ziyaret" onclick="switchPanel('ziyaret')">
-    <span class="ico">✅</span><span>Ziyaret</span>
+    <span class="ico"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg></span><span>Ziyaret</span>
     <span class="badge-count" id="ziyaretCount"></span>
   </button>
   <button class="btab" data-panel="profil" onclick="switchPanel('profil')" id="profilTab">
-    <span class="ico" id="profilIco">👤</span><span>Profil</span>
+    <span class="ico" id="profilIco"><svg viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><span>Profil</span>
   </button>
 </div>
 
@@ -548,7 +607,7 @@ footer strong{color:var(--muted);font-weight:600}
 
 <footer>
   Rotaste<br>
-  <strong>Geliştirici: RotasteTeam</strong> — V1.6.1<br>
+  <strong>Geliştirici: RotasteTeam</strong> — V1.7.1<br>
   İletişim: <a href="mailto:rotaste@hotmail.com" style="color:var(--accentsoft);text-decoration:none">rotaste@hotmail.com</a>
 </footer>
 
@@ -597,7 +656,7 @@ async function oturumAc(user) {
     if (avatarKaynak) {
       ico.innerHTML = `<img src="${avatarKaynak}" alt="" style="width:24px;height:24px;border-radius:50%;object-fit:cover;display:block">`;
     } else {
-      ico.textContent = '👤';
+      ico.innerHTML = PROFIL_SVG;
     }
   }
   // UI
@@ -628,7 +687,7 @@ async function oturumAc(user) {
 function oturumKapat() {
   supaUser = null;
   const ico = document.getElementById('profilIco');
-  if (ico) ico.textContent = '👤';
+  if (ico) ico.innerHTML = PROFIL_SVG;
   const ab=document.getElementById('authBox'); if(ab) ab.style.display = 'block';
   const ub=document.getElementById('userBox'); if(ub) ub.style.display = 'none';
   // Açık olan paneli yenile (giriş uyarısı görünsün)
@@ -1432,6 +1491,8 @@ function rotaToggleFav(e,idx){
   const r=rotaSonuclar[idx]; if(!r) return;
   const eklendi=favKaydet(r);
   e.currentTarget.classList.toggle('active',eklendi);
+  e.currentTarget.classList.add('pop');
+  const btn=e.currentTarget; setTimeout(()=>btn.classList.remove('pop'),480);
 }
 
 function rotaKartHTML(r,i){
@@ -1600,6 +1661,8 @@ function render(list,label,live){
             <div class="ccuisine">${r.cuisine}</div>
             <div class="caddr">${r.addr}</div>
             ${r.price?`<div class="cprice">${r.price}</div>`:''}
+            ${mesafeStr(r)?`<div class="cdist">📍 ${mesafeStr(r)}</div>`:''}
+            ${nedenTags(r).length?`<div class="why-line">${nedenTags(r).map(t=>`<span class="why-tag">${t}</span>`).join('')}</div>`:''}
           </div>
           <div class="score">
             <div class="stars">${stars(r.rating)}</div>
@@ -1616,8 +1679,19 @@ function render(list,label,live){
       </div>`).join('')}`;
 }
 
-function showLoading(label){ $('#results').innerHTML=`<div class="empty"><span class="ico">🍳</span>${label} için sofralar getiriliyor…</div>`; }
-function showError(msg){ $('#results').innerHTML=`<div class="empty"><span class="ico">⚠️</span>${msg}</div>`; }
+function showLoading(label){ $('#results').innerHTML=`<div class="meta"><span>🍳 ${label} için sofralar getiriliyor…</span></div>`+Array(4).fill('<div class="skel-card"></div>').join(''); }
+function showError(msg){
+  const bulunamadi = msg.includes('bulunamadı');
+  const oneriler=['🥩 Kebap','🍳 Kahvaltı','🫓 Pide','🍲 Çorba'];
+  const sug = bulunamadi
+    ? `<div class="empty-sug">${oneriler.map(o=>`<span class="sug" onclick="hizliTurAra('${o.split(' ')[1]}')">${o}</span>`).join('')}</div><p style="font-size:12px;color:var(--dim);margin-top:12px">ya da farklı bir ilçe/mahalle dene</p>`
+    : '';
+  $('#results').innerHTML=`<div class="empty"><span class="ico">${bulunamadi?'🍽️':'⚠️'}</span>${msg}${sug}</div>`;
+}
+function hizliTurAra(tur){
+  if(!lastParams) return;
+  doSearch(lastQuery+' · '+tur, {...lastParams, tur:tur.toLowerCase()});
+}
 
 function toggleFav(e,idx){
   e.stopPropagation();
@@ -1626,6 +1700,8 @@ function toggleFav(e,idx){
   const r=ranked[idx]; if(!r) return;
   const eklendi=favKaydet(r);
   e.currentTarget.classList.toggle('active',eklendi);
+  e.currentTarget.classList.add('pop');
+  const btn=e.currentTarget; setTimeout(()=>btn.classList.remove('pop'),480);
 }
 function toggleRota(e,idx){
   e.stopPropagation();
@@ -1652,6 +1728,36 @@ function toggleZiyaret(e,idx){
   e.currentTarget.textContent='✅ Gittim';
   e.currentTarget.classList.add('active');
   showToast('✅ Ziyaret listene eklendi!');
+}
+
+
+/* ===== PREMIUM POLISH JS (V1.7.1) ===== */
+const PROFIL_SVG = '<svg viewBox="0 0 24 24" style="width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
+let userKonum = null; // {lat,lng} — mesafe hesabı için
+
+function serbestAra(){
+  const q = $('#serbestArama').value.trim();
+  if(!q){ $('#serbestArama').focus(); return; }
+  doSearch(q, {metin:q, tur:currentTur});
+}
+
+function mesafeStr(r){
+  if(!userKonum || !r.lat || !r.lng) return '';
+  const R=6371, dLat=(r.lat-userKonum.lat)*Math.PI/180, dLng=(r.lng-userKonum.lng)*Math.PI/180;
+  const a=Math.sin(dLat/2)**2 + Math.cos(userKonum.lat*Math.PI/180)*Math.cos(r.lat*Math.PI/180)*Math.sin(dLng/2)**2;
+  const km=R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+  return km<1 ? `${Math.round(km*1000)} m` : `${km.toFixed(1)} km`;
+}
+
+function nedenTags(r){
+  const t=[];
+  const p=r.rating||0, y=r.reviews||0;
+  if(p>=4.6) t.push('⭐ Çok yüksek puan');
+  else if(p>=4.3) t.push('⭐ Yüksek puan');
+  if(y>=1000) t.push('🔥 Binlerce yorum');
+  else if(y>=200) t.push('👥 Güvenilir yorum hacmi');
+  if(p>=4.3 && y>=500) t.push('📈 İstikrarlı kalite');
+  return t.slice(0,3);
 }
 
 /* =============================================
@@ -1699,6 +1805,7 @@ $('#locBtn').onclick=()=>{
   navigator.geolocation.getCurrentPosition(
     pos=>{
       const {latitude:la,longitude:lo}=pos.coords;
+      userKonum={lat:la,lng:lo};
       st.value=`${la.toFixed(3)}, ${lo.toFixed(3)}`;
       msg.className='loc-msg show ok'; msg.textContent='Konum alındı.';
       doSearch('Yakınımdaki sofralar',{lat:la,lng:lo,tur:currentTur});
@@ -1953,7 +2060,7 @@ if('serviceWorker' in navigator){
     caches.keys().then(adlar=>{
       adlar.forEach(ad=>{
         // Bu sürümün cache'i dışındakileri sil
-        if(ad && ad.indexOf('lezzet-v1.6.1')===-1) caches.delete(ad);
+        if(ad && ad.indexOf('lezzet-v1.7.1')===-1) caches.delete(ad);
       });
     }).catch(()=>{});
   }

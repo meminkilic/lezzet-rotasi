@@ -542,7 +542,7 @@ footer strong{color:var(--muted);font-weight:600}
 
 <footer>
   Rotaste<br>
-  <strong>Geliştirici: RotasteTeam</strong> — V1.5.1<br>
+  <strong>Geliştirici: RotasteTeam</strong> — V1.5.3<br>
   İletişim: <a href="mailto:rotaste@hotmail.com" style="color:var(--accentsoft);text-decoration:none">rotaste@hotmail.com</a>
 </footer>
 
@@ -1318,7 +1318,7 @@ function rotaRestoranlariHaritayaEkle(list){
       iconSize:[26,26], iconAnchor:[13,26]
     });
     const m=L.marker([r.lat,r.lng],{icon}).addTo(rotaMap)
-      .bindPopup(`<b>${r.name}</b><br>⭐ ${puan.toFixed(1)} (${(r.reviews||0).toLocaleString('tr-TR')} yorum)<br>${r.addr||''}`);
+      .bindPopup(`<div style="min-width:180px"><b>${r.name}</b><br>⭐ ${puan.toFixed(1)} (${(r.reviews||0).toLocaleString('tr-TR')} yorum)<br><span style="color:#888;font-size:12px">${r.addr||''}</span><br><button onclick="rotaKartaGit(${i})" style="margin-top:8px;width:100%;background:#7cc242;color:#fff;border:none;border-radius:8px;padding:8px;font-size:13px;font-weight:600;cursor:pointer">📋 Detayları Gör</button></div>`);
     rotaRestoranMarkers.push(m);
   });
   // Haritayı tüm noktaları kapsayacak şekilde ayarla
@@ -1328,8 +1328,21 @@ function rotaRestoranlariHaritayaEkle(list){
   }
 }
 
+// Haritadaki popup'tan ilgili karta kaydır ve vurgula
+function rotaKartaGit(i){
+  if(rotaMap) rotaMap.closePopup();
+  const kart=document.getElementById('rotaKart'+i);
+  if(!kart) return;
+  kart.scrollIntoView({behavior:'smooth', block:'center'});
+  // Kısa süreli vurgu
+  kart.style.transition='box-shadow .3s, transform .3s';
+  kart.style.boxShadow='0 0 0 3px var(--accent)';
+  kart.style.transform='scale(1.02)';
+  setTimeout(()=>{ kart.style.boxShadow=''; kart.style.transform=''; }, 1600);
+}
+
 function rotaKartHTML(r,i){
-  return `<div class="card" style="animation-delay:${i*30}ms">
+  return `<div class="card" id="rotaKart${i}" style="animation-delay:${i*30}ms">
     <button class="fav-btn ${favMi(r)?'active':''}" onclick="toggleFav(event,${i})" title="Favori">❤️</button>
     ${r.photoRef && lastLive ? `<div class="card-foto-wrap"><img class="card-foto" src="${fotoUrl(r.photoRef)}" alt="${r.name}" loading="lazy" onerror="this.parentElement.style.display='none'"><div class="foto-overlay"></div></div>` : ''}
     <div class="card-main">
@@ -1808,9 +1821,10 @@ if(filterScroll && scrollHint){
   });
 }
 
-// Başlangıçta mainPanel göster, diğerlerini gizle
-document.getElementById('mainPanel').style.display='block';
+// Başlangıçta Keşfet panelini aç (switchPanel ile tutarlı davranış)
 ['favPanel','rotaPanel','ziyaretPanel','rehberPanel','profilPanel'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});
+if(typeof switchPanel==='function'){ switchPanel('main'); }
+else { document.getElementById('mainPanel').style.display='block'; }
 
 if('serviceWorker' in navigator){
   navigator.serviceWorker.register('/sw.js').then(reg=>{
@@ -1834,7 +1848,7 @@ if('serviceWorker' in navigator){
     caches.keys().then(adlar=>{
       adlar.forEach(ad=>{
         // Bu sürümün cache'i dışındakileri sil
-        if(ad && ad.indexOf('lezzet-v1.5.1')===-1) caches.delete(ad);
+        if(ad && ad.indexOf('lezzet-v1.5.3')===-1) caches.delete(ad);
       });
     }).catch(()=>{});
   }

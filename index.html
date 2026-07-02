@@ -343,13 +343,18 @@ footer strong{color:var(--muted);font-weight:600}
         <button class="auth-btn primary-btn" onclick="girisEmail()">Giriş Yap</button>
         <button class="auth-btn secondary-btn" onclick="kayitEmail()">Yeni Hesap Oluştur</button>
         <div id="authMsg" style="color:var(--red);font-size:12px;margin-top:10px;text-align:center"></div>
+        <button class="auth-btn secondary-btn" style="margin-top:18px" onclick="switchPanel('rehber')">💡 Nasıl Kullanılır?</button>
       </div>
     </div>
     <!-- Giriş yapılmışsa -->
     <div id="userBox" style="display:none">
       <div style="display:flex;align-items:center;gap:14px;padding:16px 0 20px;border-bottom:1px solid var(--line)">
-        <img id="userAvatar" src="" alt="" style="width:52px;height:52px;border-radius:50%;object-fit:cover;background:var(--s2);display:none">
-        <div style="font-size:40px;display:none" id="userAvatarEmoji">👤</div>
+        <div style="position:relative;flex:0 0 auto;cursor:pointer" onclick="document.getElementById('avatarInput').click()" title="Fotoğrafı değiştir">
+          <img id="userAvatar" src="" alt="" style="width:52px;height:52px;border-radius:50%;object-fit:cover;background:var(--s2);display:none">
+          <div style="font-size:40px;display:none" id="userAvatarEmoji">👤</div>
+          <span style="position:absolute;bottom:-2px;right:-2px;background:var(--accent);width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;border:2px solid var(--bg)">📷</span>
+        </div>
+        <input type="file" id="avatarInput" accept="image/*" style="display:none" onchange="avatarYukle(event)">
         <div>
           <div id="userName" style="color:var(--cream);font-weight:600;font-size:16px"></div>
           <div id="userEmail" style="color:var(--muted);font-size:12px;margin-top:2px"></div>
@@ -372,7 +377,8 @@ footer strong{color:var(--muted);font-weight:600}
       <div style="margin-top:8px">
         <p style="color:var(--muted);font-size:12px;text-align:center;display:flex;align-items:center;justify-content:center;gap:6px"><span style="color:var(--accent)">☁️</span> Favorilerin ve ziyaretlerin otomatik olarak buluta kaydediliyor</p>
       </div>
-      <button class="auth-btn danger-btn" style="margin-top:24px" onclick="cikisYap()">Çıkış Yap</button>
+      <button class="auth-btn secondary-btn" style="margin-top:18px" onclick="switchPanel('rehber')">💡 Nasıl Kullanılır?</button>
+      <button class="auth-btn danger-btn" style="margin-top:10px" onclick="cikisYap()">Çıkış Yap</button>
     </div>
   </div>
 </div>
@@ -396,9 +402,6 @@ footer strong{color:var(--muted);font-weight:600}
     <span class="ico">✅</span><span>Ziyaret</span>
     <span class="badge-count" id="ziyaretCount"></span>
   </button>
-  <button class="btab" data-panel="rehber" onclick="switchPanel('rehber')">
-    <span class="ico">💡</span><span>Rehber</span>
-  </button>
   <button class="btab" data-panel="profil" onclick="switchPanel('profil')" id="profilTab">
     <span class="ico" id="profilIco">👤</span><span>Profil</span>
   </button>
@@ -419,7 +422,7 @@ footer strong{color:var(--muted);font-weight:600}
   <div style="padding:56px 0 100px">
     <div style="padding:18px 22px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(246,236,224,.10)">
       <div style="font-family:'Fraunces',serif;font-weight:600;font-size:22px;color:#f6ece0">💡 Nasıl Kullanılır?</div>
-      <button onclick="switchPanel('main')" style="background:rgba(255,255,255,.1);border:none;color:#f6ece0;border-radius:8px;padding:6px 12px;font-size:13px;cursor:pointer;font-family:inherit">✕ Kapat</button>
+      <button onclick="switchPanel('profil')" style="background:rgba(255,255,255,.1);border:none;color:#f6ece0;border-radius:8px;padding:6px 12px;font-size:13px;cursor:pointer;font-family:inherit">✕ Kapat</button>
     </div>
 
     <div style="display:flex;align-items:flex-start;gap:14px;padding:16px 22px;border-bottom:1px solid rgba(246,236,224,.08)">
@@ -499,7 +502,7 @@ footer strong{color:var(--muted);font-weight:600}
 
 <footer>
   Rotaste<br>
-  <strong>Geliştirici: Mehmet Emin KILIÇ</strong> — V1.3.0<br>
+  <strong>Geliştirici: RotasteTeam</strong> — V1.4.0<br>
   İletişim: <a href="mailto:rotaste@hotmail.com" style="color:var(--accentsoft);text-decoration:none">rotaste@hotmail.com</a>
 </footer>
 
@@ -541,14 +544,21 @@ if (supa) {
 async function oturumAc(user) {
   supaUser = user;
   const meta = user.user_metadata || {};
-  // Profil ikonunu güncelle
+  // Profil ikonunu güncelle — avatar varsa küçük yuvarlak foto
   const ico = document.getElementById('profilIco');
-  if (ico) ico.textContent = meta.avatar_url ? '' : '👤';
+  const avatarKaynak = ozelAvatarGetir() || meta.avatar_url;
+  if (ico) {
+    if (avatarKaynak) {
+      ico.innerHTML = `<img src="${avatarKaynak}" alt="" style="width:24px;height:24px;border-radius:50%;object-fit:cover;display:block">`;
+    } else {
+      ico.textContent = '👤';
+    }
+  }
   // UI
   const avatar = document.getElementById('userAvatar');
   const avatarEmoji = document.getElementById('userAvatarEmoji');
-  if (meta.avatar_url && avatar) {
-    avatar.src = meta.avatar_url;
+  if (avatarKaynak && avatar) {
+    avatar.src = avatarKaynak;
     avatar.style.display = 'block';
     if (avatarEmoji) avatarEmoji.style.display = 'none';
   } else {
@@ -612,8 +622,44 @@ async function kayitEmail() {
   else authMesaj('✅ Doğrulama e-postası gönderildi, kontrol et!');
 }
 
+// Kullanıcının Supabase Storage'a yüklediği özel avatarı localStorage'dan getir
+function ozelAvatarGetir(){
+  try{ return localStorage.getItem('rotaste_avatar_url') || null; }catch(e){ return null; }
+}
+
+// Telefondan seçilen fotoğrafı Supabase Storage'a yükle
+async function avatarYukle(event){
+  const dosya = event.target.files && event.target.files[0];
+  if(!dosya) return;
+  if(!supa || !supaUser){ showToast('Önce giriş yap'); return; }
+  if(dosya.size > 5*1024*1024){ showToast('⚠️ Fotoğraf 5MB\'dan küçük olmalı'); return; }
+  showToast('Fotoğraf yükleniyor...');
+  try{
+    const uzanti = (dosya.name.split('.').pop()||'jpg').toLowerCase();
+    const yol = `${supaUser.id}/avatar.${uzanti}`;
+    // Storage'a yükle (üzerine yaz)
+    const { error: upErr } = await supa.storage.from('avatarlar').upload(yol, dosya, { upsert: true, contentType: dosya.type });
+    if(upErr){ console.error('Avatar yükleme hatası:', upErr); showToast('⚠️ Yükleme başarısız'); return; }
+    // Public URL al
+    const { data: urlData } = supa.storage.from('avatarlar').getPublicUrl(yol);
+    const publicUrl = urlData.publicUrl + '?t=' + Date.now(); // cache bypass
+    // Profiller tablosuna yaz
+    await supa.from('profiller').upsert({ id: supaUser.id, avatar_url: publicUrl }, { onConflict: 'id' });
+    // localStorage'a kaydet ve UI güncelle
+    try{ localStorage.setItem('rotaste_avatar_url', publicUrl); }catch(e){}
+    const av = document.getElementById('userAvatar');
+    const em = document.getElementById('userAvatarEmoji');
+    if(av){ av.src = publicUrl; av.style.display='block'; }
+    if(em) em.style.display='none';
+    const ico = document.getElementById('profilIco');
+    if(ico) ico.innerHTML = `<img src="${publicUrl}" alt="" style="width:24px;height:24px;border-radius:50%;object-fit:cover;display:block">`;
+    showToast('✅ Profil fotoğrafın güncellendi!');
+  }catch(e){ console.error(e); showToast('⚠️ Hata: '+e.message); }
+}
+
 async function cikisYap() {
   if (!supa) return;
+  try{ localStorage.removeItem('rotaste_avatar_url'); }catch(e){}
   await supa.auth.signOut();
   showToast('Çıkış yapıldı');
 }
@@ -666,6 +712,13 @@ async function supaZiyaretSil(r){
 async function otomatikSenkronize(){
   if(!supa || !supaUser) return;
   try{
+    // 0) Profildeki kayıtlı özel avatarı çek
+    try{
+      const { data: prof } = await supa.from('profiller').select('avatar_url').eq('id', supaUser.id).single();
+      if(prof && prof.avatar_url && prof.avatar_url.includes('/avatarlar/')){
+        localStorage.setItem('rotaste_avatar_url', prof.avatar_url);
+      }
+    }catch(e){}
     // 1) Buluttaki favorileri çek, local'e olmayanları ekle
     const { data: bulutFav } = await supa.from('favoriler').select('*').eq('user_id', supaUser.id);
     const localFav = favYukle();
@@ -1567,7 +1620,7 @@ if('serviceWorker' in navigator){
     caches.keys().then(adlar=>{
       adlar.forEach(ad=>{
         // Bu sürümün cache'i dışındakileri sil
-        if(ad && ad.indexOf('lezzet-v1.3.0')===-1) caches.delete(ad);
+        if(ad && ad.indexOf('lezzet-v1.4.0')===-1) caches.delete(ad);
       });
     }).catch(()=>{});
   }

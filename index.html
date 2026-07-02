@@ -322,11 +322,22 @@ footer strong{color:var(--muted);font-weight:600}
 <!-- Rota paneli -->
 <div class="panel-view" id="rotaPanel">
   <div class="pv-head"><div class="pv-title">🗺️ Rotadan</div><button class="pv-close" onclick="switchPanel('main')">✕</button></div>
-  <p style="color:var(--muted);font-size:13px;line-height:1.5;margin-bottom:14px">Yol üzerindeki en iyi restoranları keşfet. Haritadan <b style="color:var(--accent)">başlangıç</b> ve <b style="color:var(--red)">varış</b> noktalarını seç.</p>
+  <p style="color:var(--muted);font-size:13px;line-height:1.5;margin-bottom:14px">Yol üzerindeki en iyi restoranları keşfet. Aşağıya <b style="color:var(--accent)">başlangıç</b> ve <b style="color:var(--red)">varış</b> yaz ya da haritaya tıkla.</p>
+
+  <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px">
+    <div style="display:flex;gap:8px">
+      <input type="text" id="rotaAdres1" placeholder="📍 Başlangıç (örn: Ankara)" class="auth-input" style="margin-bottom:0;flex:1" onkeydown="if(event.key==='Enter')rotaAdresBul('A')">
+      <button class="rota-nokta-btn" style="flex:0 0 auto;padding:11px 14px" onclick="rotaAdresBul('A')">Bul</button>
+    </div>
+    <div style="display:flex;gap:8px">
+      <input type="text" id="rotaAdres2" placeholder="🏁 Varış (örn: Bursa)" class="auth-input" style="margin-bottom:0;flex:1" onkeydown="if(event.key==='Enter')rotaAdresBul('B')">
+      <button class="rota-nokta-btn" style="flex:0 0 auto;padding:11px 14px" onclick="rotaAdresBul('B')">Bul</button>
+    </div>
+  </div>
 
   <div id="rotaSecim" style="display:flex;gap:8px;margin-bottom:12px">
-    <button class="rota-nokta-btn active" id="btnNoktaA" onclick="noktaSecModu('A')">📍 Başlangıç</button>
-    <button class="rota-nokta-btn" id="btnNoktaB" onclick="noktaSecModu('B')">🏁 Varış</button>
+    <button class="rota-nokta-btn active" id="btnNoktaA" onclick="noktaSecModu('A')">📍 Haritadan Başlangıç</button>
+    <button class="rota-nokta-btn" id="btnNoktaB" onclick="noktaSecModu('B')">🏁 Haritadan Varış</button>
     <button class="rota-nokta-btn" onclick="rotaTemizle()" style="flex:0 0 auto;background:var(--s2)">🗑️</button>
   </div>
 
@@ -531,7 +542,7 @@ footer strong{color:var(--muted);font-weight:600}
 
 <footer>
   Rotaste<br>
-  <strong>Geliştirici: RotasteTeam</strong> — V1.5.0<br>
+  <strong>Geliştirici: RotasteTeam</strong> — V1.5.1<br>
   İletişim: <a href="mailto:rotaste@hotmail.com" style="color:var(--accentsoft);text-decoration:none">rotaste@hotmail.com</a>
 </footer>
 
@@ -1165,6 +1176,7 @@ function updateRotaBadge(){
 let rotaMap=null, rotaNoktaA=null, rotaNoktaB=null, rotaAktifNokta='A';
 let rotaMarkerA=null, rotaMarkerB=null, rotaCizgi=null, rotaTur='';
 let rotaKoordinatlar=[]; // OSRM'den gelen yol noktaları
+let rotaRestoranMarkers=[]; // haritadaki restoran işaretleri
 
 function rotaHaritaBaslat(){
   if(typeof L==='undefined'){ return; } // Leaflet yüklenmediyse
@@ -1182,6 +1194,33 @@ function noktaSecModu(hangi){
   rotaAktifNokta=hangi;
   document.getElementById('btnNoktaA').classList.toggle('active',hangi==='A');
   document.getElementById('btnNoktaB').classList.toggle('active',hangi==='B');
+}
+
+// Yazılan adresi koordinata çevir (Nominatim/OSM geocoding)
+async function rotaAdresBul(hangi){
+  const inputId = hangi==='A' ? 'rotaAdres1' : 'rotaAdres2';
+  const adres = document.getElementById(inputId).value.trim();
+  if(!adres){ showToast('Bir yer adı yaz'); return; }
+  showToast('Konum aranıyor...');
+  try{
+    const url=`https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=tr&q=${encodeURIComponent(adres)}`;
+    const res=await fetch(url,{headers:{'Accept-Language':'tr'},signal:AbortSignal.timeout(10000)});
+    const data=await res.json();
+    if(!data.length){ showToast('Konum bulunamadı, farklı yaz'); return; }
+    const latlng=L.latLng(parseFloat(data[0].lat), parseFloat(data[0].lon));
+    if(hangi==='A'){
+      rotaNoktaA=latlng;
+      if(rotaMarkerA) rotaMap.removeLayer(rotaMarkerA);
+      rotaMarkerA=L.marker(latlng).addTo(rotaMap).bindPopup('📍 '+adres);
+    } else {
+      rotaNoktaB=latlng;
+      if(rotaMarkerB) rotaMap.removeLayer(rotaMarkerB);
+      rotaMarkerB=L.marker(latlng).addTo(rotaMap).bindPopup('🏁 '+adres);
+    }
+    rotaMap.setView(latlng, 10);
+    if(rotaNoktaA && rotaNoktaB) rotaCiz();
+    showToast('✓ '+adres+' bulundu');
+  }catch(e){ showToast('Konum araması başarısız'); }
 }
 
 function rotaHaritaTikla(latlng){
@@ -1228,6 +1267,10 @@ function rotaTemizle(){
   if(rotaMarkerA){ rotaMap.removeLayer(rotaMarkerA); rotaMarkerA=null; }
   if(rotaMarkerB){ rotaMap.removeLayer(rotaMarkerB); rotaMarkerB=null; }
   if(rotaCizgi){ rotaMap.removeLayer(rotaCizgi); rotaCizgi=null; }
+  rotaRestoranMarkers.forEach(m=>rotaMap.removeLayer(m));
+  rotaRestoranMarkers=[];
+  const a1=document.getElementById('rotaAdres1'); if(a1) a1.value='';
+  const a2=document.getElementById('rotaAdres2'); if(a2) a2.value='';
   document.getElementById('rotaSonuc').innerHTML='';
   noktaSecModu('A');
   if(rotaMap) rotaMap.setView([39.5,35.0],6);
@@ -1253,7 +1296,36 @@ async function rotaAra(){
     lastList=list; lastLive=true;
     sonuc.innerHTML=`<div class="meta" style="margin-bottom:10px"><span>🗺️ Rota üzeri · ${ranked.length} sofra</span><span class="src-tag live">Canlı · Google</span></div>`
       + ranked.map((r,i)=>rotaKartHTML(r,i)).join('');
+    // Restoranları haritada göster
+    rotaRestoranlariHaritayaEkle(ranked);
   }catch(e){ sonuc.innerHTML='<div style="text-align:center;padding:30px;color:var(--red)">Arama başarısız, tekrar dene.</div>'; }
+}
+
+// Bulunan restoranları harita üzerinde işaretle
+function rotaRestoranlariHaritayaEkle(list){
+  // Eski restoran marker'larını temizle
+  rotaRestoranMarkers.forEach(m=>rotaMap.removeLayer(m));
+  rotaRestoranMarkers=[];
+  if(!rotaMap) return;
+  list.forEach((r,i)=>{
+    if(!r.lat||!r.lng) return;
+    // Küçük yeşil daire işareti (puanı yüksekse belirgin)
+    const puan=r.rating||0;
+    const renk = puan>=4.5 ? '#7cc242' : puan>=4.0 ? '#e9b04a' : '#9aa89a';
+    const icon=L.divIcon({
+      className:'rota-rest-marker',
+      html:`<div style="background:${renk};width:26px;height:26px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center"><span style="transform:rotate(45deg);font-size:10px;font-weight:700;color:#fff">${puan.toFixed(1)}</span></div>`,
+      iconSize:[26,26], iconAnchor:[13,26]
+    });
+    const m=L.marker([r.lat,r.lng],{icon}).addTo(rotaMap)
+      .bindPopup(`<b>${r.name}</b><br>⭐ ${puan.toFixed(1)} (${(r.reviews||0).toLocaleString('tr-TR')} yorum)<br>${r.addr||''}`);
+    rotaRestoranMarkers.push(m);
+  });
+  // Haritayı tüm noktaları kapsayacak şekilde ayarla
+  if(rotaCizgi){
+    const grup=L.featureGroup([rotaCizgi,...rotaRestoranMarkers]);
+    try{ rotaMap.fitBounds(grup.getBounds(),{padding:[30,30]}); }catch(e){}
+  }
 }
 
 function rotaKartHTML(r,i){
@@ -1762,7 +1834,7 @@ if('serviceWorker' in navigator){
     caches.keys().then(adlar=>{
       adlar.forEach(ad=>{
         // Bu sürümün cache'i dışındakileri sil
-        if(ad && ad.indexOf('lezzet-v1.5.0')===-1) caches.delete(ad);
+        if(ad && ad.indexOf('lezzet-v1.5.1')===-1) caches.delete(ad);
       });
     }).catch(()=>{});
   }

@@ -542,7 +542,7 @@ footer strong{color:var(--muted);font-weight:600}
 
 <footer>
   Rotaste<br>
-  <strong>Geliştirici: RotasteTeam</strong> — V1.5.3<br>
+  <strong>Geliştirici: RotasteTeam</strong> — V1.5.4<br>
   İletişim: <a href="mailto:rotaste@hotmail.com" style="color:var(--accentsoft);text-decoration:none">rotaste@hotmail.com</a>
 </footer>
 
@@ -1821,10 +1821,21 @@ if(filterScroll && scrollHint){
   });
 }
 
-// Başlangıçta Keşfet panelini aç (switchPanel ile tutarlı davranış)
-['favPanel','rotaPanel','ziyaretPanel','rehberPanel','profilPanel'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});
-if(typeof switchPanel==='function'){ switchPanel('main'); }
-else { document.getElementById('mainPanel').style.display='block'; }
+// Başlangıçta Keşfet panelini aç (sağlam yöntem)
+function rotasteBaslangic(){
+  ['favPanel','rotaPanel','ziyaretPanel','rehberPanel','profilPanel'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.style.display='none';
+  });
+  const mp=document.getElementById('mainPanel');
+  if(mp) mp.style.display='block';
+  // Alt menüde Keşfet'i aktif işaretle
+  document.querySelectorAll('.btab').forEach(b=>b.classList.toggle('active', b.dataset.panel==='main'));
+}
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded', rotasteBaslangic);
+} else {
+  rotasteBaslangic();
+}
 
 if('serviceWorker' in navigator){
   navigator.serviceWorker.register('/sw.js').then(reg=>{
@@ -1848,7 +1859,7 @@ if('serviceWorker' in navigator){
     caches.keys().then(adlar=>{
       adlar.forEach(ad=>{
         // Bu sürümün cache'i dışındakileri sil
-        if(ad && ad.indexOf('lezzet-v1.5.3')===-1) caches.delete(ad);
+        if(ad && ad.indexOf('lezzet-v1.5.4')===-1) caches.delete(ad);
       });
     }).catch(()=>{});
   }

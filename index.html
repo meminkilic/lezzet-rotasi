@@ -235,7 +235,7 @@ label{font-size:11px;color:var(--muted);font-weight:600;padding-left:2px}
 footer{padding:16px 22px 22px;text-align:center;color:var(--dim);font-size:11px;line-height:1.7;transition:color .6s}
 footer strong{color:var(--muted);font-weight:600}
 
-/* ===== PREMIUM POLISH (V1.8.1) ===== */
+/* ===== PREMIUM POLISH (V1.8.2) ===== */
 .fchip{padding:10px 18px;font-size:13px;border-radius:22px;transition:all .25s cubic-bezier(.2,.8,.3,1)}
 .fchip:active{transform:scale(.94)}
 .fchip.active{background:var(--accent)!important;color:#fff!important;border-color:var(--accent)!important;box-shadow:0 0 16px rgba(124,194,66,.35)}
@@ -267,7 +267,7 @@ footer strong{color:var(--muted);font-weight:600}
 .btab .ico{display:flex;align-items:center;justify-content:center;height:24px}
 .btab .ico img{width:24px;height:24px;border-radius:50%;object-fit:cover}
 
-/* ===== CANLI ARKA PLAN — AURORA (V1.8.1) ===== */
+/* ===== CANLI ARKA PLAN — AURORA (V1.8.2) ===== */
 .aurora{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
 .aurora span{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;will-change:transform}
 .aurora .a1{width:440px;height:440px;background:radial-gradient(circle,rgba(46,94,28,.6),transparent 70%);top:-130px;left:-110px;animation:aur1 26s ease-in-out infinite alternate}
@@ -290,7 +290,7 @@ footer strong{color:var(--muted);font-weight:600}
   .aurora span{animation:none!important}
 }
 
-/* ===== LOGO YOLU & ARABALAR (V1.8.1) ===== */
+/* ===== LOGO YOLU & ARABALAR (V1.8.2) ===== */
 .logo-sahne{position:relative;display:inline-block;animation:logoin .9s cubic-bezier(.2,.9,.3,1) both, logofloat 4.5s ease-in-out 1.2s infinite, logoglow 4.5s ease-in-out 1.2s infinite}
 .logo-sahne img{display:block;animation:none!important}
 .logo-yol{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
@@ -307,6 +307,14 @@ footer strong{color:var(--muted);font-weight:600}
   .araba animateMotion{display:none}
   #agCanvas{display:none}
 }
+
+/* ===== AŞAĞI SÜRÜKLEYEREK KAPATMA (V1.8.2) ===== */
+.panel-view,#rehberPanel{transition:transform .28s cubic-bezier(.2,.8,.3,1)}
+.panel-view.dragging,#rehberPanel.dragging{transition:none}
+.modal{transition:transform .28s cubic-bezier(.2,.8,.3,1)}
+.modal.dragging{transition:none}
+.pv-drag-handle{width:38px;height:5px;background:var(--s3);border-radius:3px;margin:0 auto 12px;cursor:grab;touch-action:none}
+.pv-drag-handle:active{cursor:grabbing}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
@@ -420,12 +428,14 @@ footer strong{color:var(--muted);font-weight:600}
 
 <!-- Favoriler paneli -->
 <div class="panel-view" id="favPanel">
+  <div class="pv-drag-handle"></div>
   <div class="pv-head"><div class="pv-title">❤️ Favorilerim</div><button class="pv-close" onclick="switchPanel('main')">✕</button></div>
   <div id="favList"></div>
 </div>
 
 <!-- Rota paneli -->
 <div class="panel-view" id="rotaPanel">
+  <div class="pv-drag-handle"></div>
   <div class="pv-head"><div class="pv-title">🗺️ Rotadan</div><button class="pv-close" onclick="switchPanel('main')">✕</button></div>
   <p style="color:var(--muted);font-size:13px;line-height:1.5;margin-bottom:14px">Yol üzerindeki en iyi restoranları keşfet. Aşağıya <b style="color:var(--accent)">başlangıç</b> ve <b style="color:var(--red)">varış</b> yaz ya da haritaya tıkla.</p>
 
@@ -470,12 +480,14 @@ footer strong{color:var(--muted);font-weight:600}
 
 <!-- Ziyaret paneli -->
 <div class="panel-view" id="ziyaretPanel">
+  <div class="pv-drag-handle"></div>
   <div class="pv-head"><div class="pv-title">✅ Ziyaret Ettiklerim</div><button class="pv-close" onclick="switchPanel('main')">✕</button></div>
   <div id="ziyaretList"></div>
 </div>
 
 <!-- Profil paneli -->
 <div class="panel-view" id="profilPanel">
+  <div class="pv-drag-handle"></div>
   <div class="pv-head"><div class="pv-title">👤 Profilim</div><button class="pv-close" onclick="switchPanel('main')">✕</button></div>
   <div id="profilContent">
     <!-- Giriş yapılmamışsa -->
@@ -561,7 +573,7 @@ footer strong{color:var(--muted);font-weight:600}
 <!-- MODAL -->
 <div class="modal-bg" id="modalBg">
   <div class="modal">
-    <div class="modal-handle"></div>
+    <div class="modal-handle" id="modalHandle"></div>
     <button class="modal-close" id="modalClose">✕ Kapat</button>
     <div id="modalContent"></div>
   </div>
@@ -571,6 +583,7 @@ footer strong{color:var(--muted);font-weight:600}
 <!-- Rehber overlay - JS gerektirmez, position fixed -->
 <div id="rehberPanel" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg);z-index:50;overflow-y:auto;max-width:480px;margin:0 auto">
   <div style="padding:56px 0 100px">
+    <div class="pv-drag-handle" style="margin:0 auto 10px"></div>
     <div style="padding:18px 22px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(246,236,224,.10)">
       <div style="font-family:'Fraunces',serif;font-weight:600;font-size:22px;color:#f6ece0">💡 Nasıl Kullanılır?</div>
       <button onclick="switchPanel('profil')" style="background:rgba(255,255,255,.1);border:none;color:#f6ece0;border-radius:8px;padding:6px 12px;font-size:13px;cursor:pointer;font-family:inherit">✕ Kapat</button>
@@ -653,7 +666,7 @@ footer strong{color:var(--muted);font-weight:600}
 
 <footer>
   Rotaste<br>
-  <strong>Geliştirici: RotasteTeam</strong> — V1.8.1<br>
+  <strong>Geliştirici: RotasteTeam</strong> — V1.8.2<br>
   İletişim: <a href="mailto:rotaste@hotmail.com" style="color:var(--accentsoft);text-decoration:none">rotaste@hotmail.com</a>
 </footer>
 
@@ -1777,7 +1790,7 @@ function toggleZiyaret(e,idx){
 }
 
 
-/* ===== PREMIUM POLISH JS (V1.8.1) ===== */
+/* ===== PREMIUM POLISH JS (V1.8.2) ===== */
 const PROFIL_SVG = '<svg viewBox="0 0 24 24" style="width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
 let userKonum = null; // {lat,lng} — mesafe hesabı için
 
@@ -2112,7 +2125,7 @@ if('serviceWorker' in navigator){
     caches.keys().then(adlar=>{
       adlar.forEach(ad=>{
         // Bu sürümün cache'i dışındakileri sil
-        if(ad && ad.indexOf('lezzet-v1.8.1')===-1) caches.delete(ad);
+        if(ad && ad.indexOf('lezzet-v1.8.2')===-1) caches.delete(ad);
       });
     }).catch(()=>{});
   }
@@ -2120,7 +2133,7 @@ if('serviceWorker' in navigator){
 
 
 /* =============================================
-   GEOMETRİK AĞ — üçgen/beşgen düğümler, neon nabızlar (V1.8.1)
+   GEOMETRİK AĞ — üçgen/beşgen düğümler, neon nabızlar (V1.8.2)
    ============================================= */
 (function(){
   const cv=document.getElementById('agCanvas');
@@ -2246,6 +2259,90 @@ if('serviceWorker' in navigator){
     requestAnimationFrame(kare_cizim);
   }
   kare_cizim();
+})();
+
+
+/* =============================================
+   AŞAĞI SÜRÜKLEYEREK KAPATMA (V1.8.2)
+   ============================================= */
+(function(){
+  const ESIK_ORAN = 0.22;   // yüksekliğin bu oranı kadar sürüklenirse kapanır
+  const ESIK_HIZ   = 0.5;   // px/ms — hızlı bir "fırlatma" da kapatır
+
+  function surukleBagla(el, kapatFn, sadeceTutamacTan){
+    if(!el || el.__swipeBagliMi) return;
+    el.__swipeBagliMi = true;
+    let basY=0, guncelY=0, yukseklik=0, suruklemede=false, basT=0;
+
+    function baslat(y, hedef){
+      if(sadeceTutamacTan && !hedef.closest('.pv-drag-handle,#modalHandle')) return;
+      if(!sadeceTutamacTan){
+        // Tam ekran panellerde: üstten kaydırılmamışsa VE dokunulan yer üst başlık/tutamaç bandındaysa izin ver
+        const ustBantMi = (y - el.getBoundingClientRect().top) < 90;
+        if(el.scrollTop > 4 || !ustBantMi) return;
+      }
+      basY = y; guncelY = y; basT = Date.now();
+      yukseklik = el.getBoundingClientRect().height || window.innerHeight;
+      suruklemede = true;
+      el.classList.add('dragging');
+    }
+    function hareket(y){
+      if(!suruklemede) return;
+      guncelY = y;
+      let delta = guncelY - basY;
+      if(delta < 0) delta = 0; // sadece aşağı
+      el.style.transform = `translateY(${delta}px)`;
+      if(el.id==='modalBg' || el.classList.contains('modal')) {
+        const bg = document.getElementById('modalBg');
+        if(bg) bg.style.background = `rgba(0,0,0,${Math.max(0,.65-(delta/yukseklik)*.65)})`;
+      }
+    }
+    function bitir(){
+      if(!suruklemede) return;
+      suruklemede = false;
+      el.classList.remove('dragging');
+      const delta = Math.max(0, guncelY - basY);
+      const gecenMs = Math.max(1, Date.now() - basT);
+      const hiz = delta / gecenMs;
+      if(delta > yukseklik*ESIK_ORAN || hiz > ESIK_HIZ){
+        el.style.transform = `translateY(${yukseklik}px)`;
+        setTimeout(()=>{ kapatFn(); el.style.transform=''; if(document.getElementById('modalBg')) document.getElementById('modalBg').style.background=''; }, 220);
+      } else {
+        el.style.transform = '';
+        if(document.getElementById('modalBg')) document.getElementById('modalBg').style.background='';
+      }
+    }
+
+    el.addEventListener('touchstart', e=>baslat(e.touches[0].clientY, e.target), {passive:true});
+    el.addEventListener('touchmove', e=>{ if(suruklemede){ hareket(e.touches[0].clientY); } }, {passive:true});
+    el.addEventListener('touchend', bitir, {passive:true});
+
+    // Masaüstü (mouse) desteği — sadece tutamaçtan başlatılır ki normal tıklamalar bozulmasın
+    el.addEventListener('mousedown', e=>{
+      if(!e.target.closest('.pv-drag-handle,#modalHandle')) return;
+      baslat(e.clientY, e.target);
+      const mm=ev=>hareket(ev.clientY);
+      const mu=()=>{ bitir(); document.removeEventListener('mousemove',mm); document.removeEventListener('mouseup',mu); };
+      document.addEventListener('mousemove',mm);
+      document.addEventListener('mouseup',mu);
+    });
+  }
+
+  // Tam ekran paneller: her yerden sürüklenebilir (içerik en üstteyken)
+  ['favPanel','rotaPanel','ziyaretPanel','profilPanel','rehberPanel'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(!el) return;
+    surukleBagla(el, ()=>{
+      if(id==='rehberPanel') switchPanel('profil');
+      else switchPanel('main');
+    }, false);
+  });
+
+  // Modal: bottom-sheet, sadece tutamaçtan (kart içeriği kaydırılabilir olduğu için)
+  const modalEl = document.querySelector('.modal');
+  if(modalEl){
+    surukleBagla(modalEl, ()=>{ modalBg.classList.remove('open'); }, true);
+  }
 })();
 
 </script>

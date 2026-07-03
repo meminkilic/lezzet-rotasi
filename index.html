@@ -187,7 +187,10 @@ label{font-size:11px;color:var(--muted);font-weight:600;padding-left:2px}
 .modal-bg.open{display:flex}
 .modal{background:var(--surface);border-radius:22px 22px 0 0;width:100%;max-width:480px;max-height:88vh;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:20px;animation:slideup .28s ease;transition:background .8s}
 @keyframes slideup{from{opacity:0;transform:translateY(100%)}to{opacity:1;transform:none}}
-.modal-handle{width:36px;height:4px;background:var(--s2);border-radius:2px;margin:0 auto 16px}
+.modal-handle{width:100%;height:30px;margin:-8px 0 8px;cursor:grab;touch-action:none;display:flex;align-items:center;justify-content:center}
+.modal-handle::after{content:'';width:46px;height:6px;background:var(--s3);border-radius:3px;transition:background .15s,width .15s}
+.modal-handle:active::after{background:var(--accentsoft);width:56px}
+.modal-handle:active{cursor:grabbing}
 .modal-close{float:right;background:var(--s2);border:none;color:var(--muted);border-radius:8px;padding:4px 10px;font-size:13px;cursor:pointer;font-family:inherit}
 .modal h2{font-family:'Fraunces',serif;font-weight:600;font-size:22px;margin-bottom:4px;clear:both}
 .mcuisine{color:var(--accentsoft);font-size:12.5px;font-weight:600;margin-bottom:10px}
@@ -235,7 +238,7 @@ label{font-size:11px;color:var(--muted);font-weight:600;padding-left:2px}
 footer{padding:16px 22px 22px;text-align:center;color:var(--dim);font-size:11px;line-height:1.7;transition:color .6s}
 footer strong{color:var(--muted);font-weight:600}
 
-/* ===== PREMIUM POLISH (V1.9.1) ===== */
+/* ===== PREMIUM POLISH (V1.9.2) ===== */
 .fchip{padding:10px 18px;font-size:13px;border-radius:22px;transition:all .25s cubic-bezier(.2,.8,.3,1)}
 .fchip:active{transform:scale(.94)}
 .fchip.active{background:var(--accent)!important;color:#fff!important;border-color:var(--accent)!important;box-shadow:0 0 16px rgba(124,194,66,.35)}
@@ -267,7 +270,7 @@ footer strong{color:var(--muted);font-weight:600}
 .btab .ico{display:flex;align-items:center;justify-content:center;height:24px}
 .btab .ico img{width:24px;height:24px;border-radius:50%;object-fit:cover}
 
-/* ===== CANLI ARKA PLAN — AURORA (V1.9.1) ===== */
+/* ===== CANLI ARKA PLAN — AURORA (V1.9.2) ===== */
 .aurora{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
 .aurora span{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;will-change:transform}
 .aurora .a1{width:440px;height:440px;background:radial-gradient(circle,rgba(46,94,28,.6),transparent 70%);top:-130px;left:-110px;animation:aur1 26s ease-in-out infinite alternate}
@@ -290,7 +293,7 @@ footer strong{color:var(--muted);font-weight:600}
   .aurora span{animation:none!important}
 }
 
-/* ===== LOGO YOLU & ARABALAR (V1.9.1) ===== */
+/* ===== LOGO YOLU & ARABALAR (V1.9.2) ===== */
 .logo-sahne{position:relative;display:inline-block;animation:logoin .9s cubic-bezier(.2,.9,.3,1) both, logofloat 4.5s ease-in-out 1.2s infinite, logoglow 4.5s ease-in-out 1.2s infinite}
 .logo-sahne img{display:block;animation:none!important}
 .logo-yol{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
@@ -308,7 +311,7 @@ footer strong{color:var(--muted);font-weight:600}
   #agCanvas{display:none}
 }
 
-/* ===== AŞAĞI SÜRÜKLEYEREK KAPATMA (V1.9.1) ===== */
+/* ===== AŞAĞI SÜRÜKLEYEREK KAPATMA (V1.9.2) ===== */
 .panel-view,#rehberPanel{transition:transform .28s cubic-bezier(.2,.8,.3,1)}
 .panel-view.dragging,#rehberPanel.dragging{transition:none}
 .modal{transition:transform .28s cubic-bezier(.2,.8,.3,1)}
@@ -318,7 +321,7 @@ footer strong{color:var(--muted);font-weight:600}
 .pv-drag-handle:active::after{background:var(--accentsoft);width:56px}
 .pv-drag-handle:active{cursor:grabbing}
 
-/* ===== MODAL SEKMELER: Yorumlar / Tavsiyeler / Menü (V1.9.1) ===== */
+/* ===== MODAL SEKMELER: Yorumlar / Tavsiyeler / Menü (V1.9.2) ===== */
 .mtabs{display:flex;gap:4px;background:var(--s2);border-radius:12px;padding:4px;margin:14px 0 10px}
 .mtab{flex:1;text-align:center;padding:9px 6px;border-radius:9px;font-size:12.5px;font-weight:700;color:var(--muted);cursor:pointer;transition:all .2s;user-select:none;border:none;background:transparent;font-family:inherit}
 .mtab.active{background:var(--accent);color:#fff}
@@ -695,7 +698,7 @@ footer strong{color:var(--muted);font-weight:600}
 
 <footer>
   Rotaste<br>
-  <strong>Geliştirici: RotasteTeam</strong> — V1.9.1<br>
+  <strong>Geliştirici: RotasteTeam</strong> — V1.9.2<br>
   İletişim: <a href="mailto:rotaste@hotmail.com" style="color:var(--accentsoft);text-decoration:none">rotaste@hotmail.com</a>
 </footer>
 
@@ -1822,7 +1825,7 @@ function toggleZiyaret(e,idx){
 }
 
 
-/* ===== PREMIUM POLISH JS (V1.9.1) ===== */
+/* ===== PREMIUM POLISH JS (V1.9.2) ===== */
 const PROFIL_SVG = '<svg viewBox="0 0 24 24" style="width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
 let userKonum = null; // {lat,lng} — mesafe hesabı için
 
@@ -2176,7 +2179,7 @@ if('serviceWorker' in navigator){
     caches.keys().then(adlar=>{
       adlar.forEach(ad=>{
         // Bu sürümün cache'i dışındakileri sil
-        if(ad && ad.indexOf('lezzet-v1.9.1')===-1) caches.delete(ad);
+        if(ad && ad.indexOf('lezzet-v1.9.2')===-1) caches.delete(ad);
       });
     }).catch(()=>{});
   }
@@ -2184,7 +2187,7 @@ if('serviceWorker' in navigator){
 
 
 /* =============================================
-   GEOMETRİK AĞ — üçgen/beşgen düğümler, neon nabızlar (V1.9.1)
+   GEOMETRİK AĞ — üçgen/beşgen düğümler, neon nabızlar (V1.9.2)
    ============================================= */
 (function(){
   const cv=document.getElementById('agCanvas');
@@ -2314,7 +2317,7 @@ if('serviceWorker' in navigator){
 
 
 /* =============================================
-   AŞAĞI SÜRÜKLEYEREK KAPATMA (V1.9.1)
+   AŞAĞI SÜRÜKLEYEREK KAPATMA (V1.9.2)
    Event'ler PANELE değil, doğrudan tutamaç (handle)
    elementine bağlanır — böylece tarayıcı scroll'u
    asla arka plana/panele yönlendiremez.
@@ -2420,7 +2423,7 @@ if('serviceWorker' in navigator){
 
 
 /* =============================================
-   MODAL SEKMELERİ: Yorumlar / Tavsiyeler / Menü (V1.9.1)
+   MODAL SEKMELERİ: Yorumlar / Tavsiyeler / Menü (V1.9.2)
    ============================================= */
 let modalAktifRestoran = null; // {id, name} — sekme fonksiyonları için
 

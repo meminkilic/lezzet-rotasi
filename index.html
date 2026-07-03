@@ -30,7 +30,7 @@
 
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;-webkit-tap-highlight-color:transparent}
-body{font-family:'DM Sans',system-ui,sans-serif;background:radial-gradient(120% 80% at 50% -10%,var(--grad1),var(--grad2) 55%);color:var(--cream);-webkit-font-smoothing:antialiased;min-height:100vh;transition:background 1.2s ease,color .6s ease}
+body{font-family:'DM Sans',system-ui,sans-serif;background:radial-gradient(120% 80% at 50% -10%,var(--grad1),var(--grad2) 55%);color:var(--cream);-webkit-font-smoothing:antialiased;min-height:100vh;overscroll-behavior-y:none;transition:background 1.2s ease,color .6s ease}
 .app{max-width:480px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column}
 
 /* Bölge rozeti */
@@ -141,7 +141,7 @@ label{font-size:11px;color:var(--muted);font-weight:600;padding-left:2px}
 .badge-count.show{display:inline-block}
 
 /* Panel görünümleri */
-.panel-view{display:none;position:fixed;top:0;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;z-index:60;background:var(--bg);overflow-y:auto;-webkit-overflow-scrolling:touch;padding:18px 22px calc(80px + env(safe-area-inset-bottom));box-sizing:border-box;animation:fade .2s ease}
+.panel-view{display:none;position:fixed;top:0;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;z-index:60;background:var(--bg);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:18px 22px calc(80px + env(safe-area-inset-bottom));box-sizing:border-box;animation:fade .2s ease}
 .panel-view[style*="block"],.panel-view.active{display:block!important}
 @keyframes fade{from{opacity:0}to{opacity:1}}
 .pv-title{font-family:'Fraunces',serif;font-weight:600;font-size:20px;margin-bottom:14px}
@@ -183,9 +183,9 @@ label{font-size:11px;color:var(--muted);font-weight:600;padding-left:2px}
 .empty-pv .ico{font-size:32px;display:block;margin-bottom:10px}
 
 /* Modal */
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:100;display:none;align-items:flex-end;justify-content:center}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:100;display:none;align-items:flex-end;justify-content:center;overscroll-behavior:contain}
 .modal-bg.open{display:flex}
-.modal{background:var(--surface);border-radius:22px 22px 0 0;width:100%;max-width:480px;max-height:88vh;overflow-y:auto;padding:20px;animation:slideup .28s ease;transition:background .8s}
+.modal{background:var(--surface);border-radius:22px 22px 0 0;width:100%;max-width:480px;max-height:88vh;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:20px;animation:slideup .28s ease;transition:background .8s}
 @keyframes slideup{from{opacity:0;transform:translateY(100%)}to{opacity:1;transform:none}}
 .modal-handle{width:36px;height:4px;background:var(--s2);border-radius:2px;margin:0 auto 16px}
 .modal-close{float:right;background:var(--s2);border:none;color:var(--muted);border-radius:8px;padding:4px 10px;font-size:13px;cursor:pointer;font-family:inherit}
@@ -235,7 +235,7 @@ label{font-size:11px;color:var(--muted);font-weight:600;padding-left:2px}
 footer{padding:16px 22px 22px;text-align:center;color:var(--dim);font-size:11px;line-height:1.7;transition:color .6s}
 footer strong{color:var(--muted);font-weight:600}
 
-/* ===== PREMIUM POLISH (V1.9.0) ===== */
+/* ===== PREMIUM POLISH (V1.9.1) ===== */
 .fchip{padding:10px 18px;font-size:13px;border-radius:22px;transition:all .25s cubic-bezier(.2,.8,.3,1)}
 .fchip:active{transform:scale(.94)}
 .fchip.active{background:var(--accent)!important;color:#fff!important;border-color:var(--accent)!important;box-shadow:0 0 16px rgba(124,194,66,.35)}
@@ -267,7 +267,7 @@ footer strong{color:var(--muted);font-weight:600}
 .btab .ico{display:flex;align-items:center;justify-content:center;height:24px}
 .btab .ico img{width:24px;height:24px;border-radius:50%;object-fit:cover}
 
-/* ===== CANLI ARKA PLAN — AURORA (V1.9.0) ===== */
+/* ===== CANLI ARKA PLAN — AURORA (V1.9.1) ===== */
 .aurora{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
 .aurora span{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;will-change:transform}
 .aurora .a1{width:440px;height:440px;background:radial-gradient(circle,rgba(46,94,28,.6),transparent 70%);top:-130px;left:-110px;animation:aur1 26s ease-in-out infinite alternate}
@@ -290,7 +290,7 @@ footer strong{color:var(--muted);font-weight:600}
   .aurora span{animation:none!important}
 }
 
-/* ===== LOGO YOLU & ARABALAR (V1.9.0) ===== */
+/* ===== LOGO YOLU & ARABALAR (V1.9.1) ===== */
 .logo-sahne{position:relative;display:inline-block;animation:logoin .9s cubic-bezier(.2,.9,.3,1) both, logofloat 4.5s ease-in-out 1.2s infinite, logoglow 4.5s ease-in-out 1.2s infinite}
 .logo-sahne img{display:block;animation:none!important}
 .logo-yol{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
@@ -308,7 +308,7 @@ footer strong{color:var(--muted);font-weight:600}
   #agCanvas{display:none}
 }
 
-/* ===== AŞAĞI SÜRÜKLEYEREK KAPATMA (V1.9.0) ===== */
+/* ===== AŞAĞI SÜRÜKLEYEREK KAPATMA (V1.9.1) ===== */
 .panel-view,#rehberPanel{transition:transform .28s cubic-bezier(.2,.8,.3,1)}
 .panel-view.dragging,#rehberPanel.dragging{transition:none}
 .modal{transition:transform .28s cubic-bezier(.2,.8,.3,1)}
@@ -318,7 +318,7 @@ footer strong{color:var(--muted);font-weight:600}
 .pv-drag-handle:active::after{background:var(--accentsoft);width:56px}
 .pv-drag-handle:active{cursor:grabbing}
 
-/* ===== MODAL SEKMELER: Yorumlar / Tavsiyeler / Menü (V1.9.0) ===== */
+/* ===== MODAL SEKMELER: Yorumlar / Tavsiyeler / Menü (V1.9.1) ===== */
 .mtabs{display:flex;gap:4px;background:var(--s2);border-radius:12px;padding:4px;margin:14px 0 10px}
 .mtab{flex:1;text-align:center;padding:9px 6px;border-radius:9px;font-size:12.5px;font-weight:700;color:var(--muted);cursor:pointer;transition:all .2s;user-select:none;border:none;background:transparent;font-family:inherit}
 .mtab.active{background:var(--accent);color:#fff}
@@ -695,7 +695,7 @@ footer strong{color:var(--muted);font-weight:600}
 
 <footer>
   Rotaste<br>
-  <strong>Geliştirici: RotasteTeam</strong> — V1.9.0<br>
+  <strong>Geliştirici: RotasteTeam</strong> — V1.9.1<br>
   İletişim: <a href="mailto:rotaste@hotmail.com" style="color:var(--accentsoft);text-decoration:none">rotaste@hotmail.com</a>
 </footer>
 
@@ -1548,7 +1548,7 @@ async function rotaOpenModal(idx){
     ${r.lat&&r.lng?`<button class="modal-map-btn" onclick="openMap(${r.lat},${r.lng},'${encodeURIComponent(r.name)}')">🗺️ Haritada Aç</button>`:''}
     ${modalSekmeGovde()}`;
   modalAktifRestoran = {id:r.id, name:r.name};
-  modalBg.classList.add('open'); document.querySelector('.modal').style.transform='';
+  modalAc();
   if(!r.id){ $('#modalRevs').innerHTML='<div class="no-rev">Detay bilgisi yok.</div>'; return; }
   try{
     const data=await (await fetch(`${loadProxy()}/api/detay/${r.id}`,{signal:AbortSignal.timeout(12000)})).json();
@@ -1822,7 +1822,7 @@ function toggleZiyaret(e,idx){
 }
 
 
-/* ===== PREMIUM POLISH JS (V1.9.0) ===== */
+/* ===== PREMIUM POLISH JS (V1.9.1) ===== */
 const PROFIL_SVG = '<svg viewBox="0 0 24 24" style="width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
 let userKonum = null; // {lat,lng} — mesafe hesabı için
 
@@ -1978,8 +1978,27 @@ function mapChooser(opts){
    MODAL
    ============================================= */
 const modalBg=$('#modalBg');
-$('#modalClose').onclick=()=>modalBg.classList.remove('open');
-modalBg.onclick=e=>{ if(e.target===modalBg) modalBg.classList.remove('open'); };
+$('#modalClose').onclick=()=>modalKapat();
+modalBg.onclick=e=>{ if(e.target===modalBg) modalKapat(); };
+
+let __scrollKilitY = 0;
+function modalAc(){
+  __scrollKilitY = window.scrollY || document.documentElement.scrollTop || 0;
+  document.body.style.position = 'fixed';
+  document.body.style.top = `-${__scrollKilitY}px`;
+  document.body.style.left = '0';
+  document.body.style.right = '0';
+  modalBg.classList.add('open');
+  const m=document.querySelector('.modal'); if(m) m.style.transform='';
+}
+function modalKapat(){
+  modalBg.classList.remove('open');
+  document.body.style.position = '';
+  document.body.style.top = '';
+  document.body.style.left = '';
+  document.body.style.right = '';
+  window.scrollTo(0, __scrollKilitY);
+}
 
 async function openModal(idx){
   if(!lastList) return;
@@ -1998,7 +2017,7 @@ async function openModal(idx){
     ${r.lat&&r.lng?`<button class="modal-map-btn" onclick="openMap(${r.lat},${r.lng},'${encodeURIComponent(r.name)}')">🗺️ Haritada Aç</button>`:''}
     ${modalSekmeGovde()}`;
   modalAktifRestoran = {id:r.id, name:r.name};
-  modalBg.classList.add('open'); document.querySelector('.modal').style.transform='';
+  modalAc();
   if(!r.id||!lastLive){ $('#modalRevs').innerHTML='<div class="no-rev">Yorumlar için gerçek veri modu gerekli.</div>'; return; }
   try{
     const data=await (await fetch(`${loadProxy()}/api/detay/${r.id}`,{signal:AbortSignal.timeout(12000)})).json();
@@ -2157,7 +2176,7 @@ if('serviceWorker' in navigator){
     caches.keys().then(adlar=>{
       adlar.forEach(ad=>{
         // Bu sürümün cache'i dışındakileri sil
-        if(ad && ad.indexOf('lezzet-v1.9.0')===-1) caches.delete(ad);
+        if(ad && ad.indexOf('lezzet-v1.9.1')===-1) caches.delete(ad);
       });
     }).catch(()=>{});
   }
@@ -2165,7 +2184,7 @@ if('serviceWorker' in navigator){
 
 
 /* =============================================
-   GEOMETRİK AĞ — üçgen/beşgen düğümler, neon nabızlar (V1.9.0)
+   GEOMETRİK AĞ — üçgen/beşgen düğümler, neon nabızlar (V1.9.1)
    ============================================= */
 (function(){
   const cv=document.getElementById('agCanvas');
@@ -2295,7 +2314,7 @@ if('serviceWorker' in navigator){
 
 
 /* =============================================
-   AŞAĞI SÜRÜKLEYEREK KAPATMA (V1.9.0)
+   AŞAĞI SÜRÜKLEYEREK KAPATMA (V1.9.1)
    Event'ler PANELE değil, doğrudan tutamaç (handle)
    elementine bağlanır — böylece tarayıcı scroll'u
    asla arka plana/panele yönlendiremez.
@@ -2387,7 +2406,7 @@ if('serviceWorker' in navigator){
     const modalEl = document.querySelector('.modal');
     if(modalEl){
       const handle=document.getElementById('modalHandle');
-      surukleBagla(handle, modalEl, ()=>{ modalBg.classList.remove('open'); }, '');
+      surukleBagla(handle, modalEl, ()=>{ modalKapat(); }, '');
     }
   }
 
@@ -2401,7 +2420,7 @@ if('serviceWorker' in navigator){
 
 
 /* =============================================
-   MODAL SEKMELERİ: Yorumlar / Tavsiyeler / Menü (V1.9.0)
+   MODAL SEKMELERİ: Yorumlar / Tavsiyeler / Menü (V1.9.1)
    ============================================= */
 let modalAktifRestoran = null; // {id, name} — sekme fonksiyonları için
 

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Rotaste — Proxy Sunucusu
-Geliştirici: Mehmet Emin KILIÇ — V1.5.0
+Geliştirici: Mehmet Emin KILIÇ — V1.8.1
 """
 import os, requests
 from flask import Flask, request, jsonify, send_file, Response
@@ -163,9 +163,15 @@ def restoranlar():
     try:
         if metin:
             sorgu = f"{metin} {tur} restoran" if tur else f"{metin} restoran"
+            gövde = {"textQuery":sorgu,"maxResultCount":20,"languageCode":"tr","regionCode":"TR","includedType":"restaurant"}
+            if lat and lng:
+                try: yaricap = float(request.args.get("yaricap", 15000))
+                except: yaricap = 15000.0
+                yaricap = max(50.0, min(yaricap, 50000.0))
+                gövde["locationBias"] = {"circle":{"center":{"latitude":float(lat),"longitude":float(lng)},"radius":yaricap}}
             r = requests.post(f"{PLACES_BASE}:searchText",
                 headers=_headers(FIELD_MASK_LIST),
-                json={"textQuery":sorgu,"maxResultCount":20,"languageCode":"tr","regionCode":"TR","includedType":"restaurant"},
+                json=gövde,
                 timeout=12)
         elif lat and lng:
             try: yaricap = float(request.args.get("yaricap",2500))

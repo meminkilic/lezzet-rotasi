@@ -235,7 +235,7 @@ label{font-size:11px;color:var(--muted);font-weight:600;padding-left:2px}
 footer{padding:16px 22px 22px;text-align:center;color:var(--dim);font-size:11px;line-height:1.7;transition:color .6s}
 footer strong{color:var(--muted);font-weight:600}
 
-/* ===== PREMIUM POLISH (V1.8.3) ===== */
+/* ===== PREMIUM POLISH (V1.8.4) ===== */
 .fchip{padding:10px 18px;font-size:13px;border-radius:22px;transition:all .25s cubic-bezier(.2,.8,.3,1)}
 .fchip:active{transform:scale(.94)}
 .fchip.active{background:var(--accent)!important;color:#fff!important;border-color:var(--accent)!important;box-shadow:0 0 16px rgba(124,194,66,.35)}
@@ -267,7 +267,7 @@ footer strong{color:var(--muted);font-weight:600}
 .btab .ico{display:flex;align-items:center;justify-content:center;height:24px}
 .btab .ico img{width:24px;height:24px;border-radius:50%;object-fit:cover}
 
-/* ===== CANLI ARKA PLAN — AURORA (V1.8.3) ===== */
+/* ===== CANLI ARKA PLAN — AURORA (V1.8.4) ===== */
 .aurora{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
 .aurora span{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;will-change:transform}
 .aurora .a1{width:440px;height:440px;background:radial-gradient(circle,rgba(46,94,28,.6),transparent 70%);top:-130px;left:-110px;animation:aur1 26s ease-in-out infinite alternate}
@@ -290,7 +290,7 @@ footer strong{color:var(--muted);font-weight:600}
   .aurora span{animation:none!important}
 }
 
-/* ===== LOGO YOLU & ARABALAR (V1.8.3) ===== */
+/* ===== LOGO YOLU & ARABALAR (V1.8.4) ===== */
 .logo-sahne{position:relative;display:inline-block;animation:logoin .9s cubic-bezier(.2,.9,.3,1) both, logofloat 4.5s ease-in-out 1.2s infinite, logoglow 4.5s ease-in-out 1.2s infinite}
 .logo-sahne img{display:block;animation:none!important}
 .logo-yol{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
@@ -308,13 +308,14 @@ footer strong{color:var(--muted);font-weight:600}
   #agCanvas{display:none}
 }
 
-/* ===== AŞAĞI SÜRÜKLEYEREK KAPATMA (V1.8.3) ===== */
+/* ===== AŞAĞI SÜRÜKLEYEREK KAPATMA (V1.8.4) ===== */
 .panel-view,#rehberPanel{transition:transform .28s cubic-bezier(.2,.8,.3,1)}
 .panel-view.dragging,#rehberPanel.dragging{transition:none}
 .modal{transition:transform .28s cubic-bezier(.2,.8,.3,1)}
 .modal.dragging{transition:none}
-.pv-drag-handle{width:98px;height:34px;margin:0 auto -6px;cursor:grab;touch-action:none;display:flex;align-items:center;justify-content:center}
-.pv-drag-handle::after{content:'';width:38px;height:5px;background:var(--s3);border-radius:3px}
+.pv-drag-handle{width:100%;height:30px;margin:-6px 0 6px;cursor:grab;touch-action:none;display:flex;align-items:center;justify-content:center}
+.pv-drag-handle::after{content:'';width:46px;height:6px;background:var(--s3);border-radius:3px;transition:background .15s,width .15s}
+.pv-drag-handle:active::after{background:var(--accentsoft);width:56px}
 .pv-drag-handle:active{cursor:grabbing}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
@@ -667,7 +668,7 @@ footer strong{color:var(--muted);font-weight:600}
 
 <footer>
   Rotaste<br>
-  <strong>Geliştirici: RotasteTeam</strong> — V1.8.3<br>
+  <strong>Geliştirici: RotasteTeam</strong> — V1.8.4<br>
   İletişim: <a href="mailto:rotaste@hotmail.com" style="color:var(--accentsoft);text-decoration:none">rotaste@hotmail.com</a>
 </footer>
 
@@ -1794,7 +1795,7 @@ function toggleZiyaret(e,idx){
 }
 
 
-/* ===== PREMIUM POLISH JS (V1.8.3) ===== */
+/* ===== PREMIUM POLISH JS (V1.8.4) ===== */
 const PROFIL_SVG = '<svg viewBox="0 0 24 24" style="width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
 let userKonum = null; // {lat,lng} — mesafe hesabı için
 
@@ -2129,7 +2130,7 @@ if('serviceWorker' in navigator){
     caches.keys().then(adlar=>{
       adlar.forEach(ad=>{
         // Bu sürümün cache'i dışındakileri sil
-        if(ad && ad.indexOf('lezzet-v1.8.3')===-1) caches.delete(ad);
+        if(ad && ad.indexOf('lezzet-v1.8.4')===-1) caches.delete(ad);
       });
     }).catch(()=>{});
   }
@@ -2137,7 +2138,7 @@ if('serviceWorker' in navigator){
 
 
 /* =============================================
-   GEOMETRİK AĞ — üçgen/beşgen düğümler, neon nabızlar (V1.8.3)
+   GEOMETRİK AĞ — üçgen/beşgen düğümler, neon nabızlar (V1.8.4)
    ============================================= */
 (function(){
   const cv=document.getElementById('agCanvas');
@@ -2267,35 +2268,30 @@ if('serviceWorker' in navigator){
 
 
 /* =============================================
-   AŞAĞI SÜRÜKLEYEREK KAPATMA (V1.8.3)
+   AŞAĞI SÜRÜKLEYEREK KAPATMA (V1.8.4)
+   Event'ler PANELE değil, doğrudan tutamaç (handle)
+   elementine bağlanır — böylece tarayıcı scroll'u
+   asla arka plana/panele yönlendiremez.
    ============================================= */
 (function(){
   const ESIK_ORAN = 0.22;   // yüksekliğin bu oranı kadar sürüklenirse kapanır
   const ESIK_HIZ   = 0.5;   // px/ms — hızlı bir "fırlatma" da kapatır
 
-  function surukleBagla(el, kapatFn, opts){
-    if(!el || el.__swipeBagliMi) return;
-    el.__swipeBagliMi = true;
-    const sadeceTutamacTan = !!(opts && opts.sadeceTutamacTan);
-    const tabanTransform = (opts && opts.tabanTransform) || ''; // örn: 'translateX(-50%)'
-    let basY=0, guncelY=0, yukseklik=0, suruklemede=false, basT=0, basX=0;
+  function surukleBagla(handle, panelEl, kapatFn, tabanTransform){
+    if(!handle || !panelEl || handle.__swipeBagliMi) return;
+    handle.__swipeBagliMi = true;
+    let basY=0, guncelY=0, yukseklik=0, suruklemede=false, basT=0;
 
     function setTransform(deltaY){
-      el.style.transform = tabanTransform
+      panelEl.style.transform = tabanTransform
         ? `${tabanTransform} translateY(${deltaY}px)`
         : `translateY(${deltaY}px)`;
     }
-
-    function baslat(y, x, hedef){
-      if(sadeceTutamacTan && !hedef.closest('.pv-drag-handle,#modalHandle')) return;
-      if(!sadeceTutamacTan){
-        const ustBantMi = (y - el.getBoundingClientRect().top) < 90;
-        if(el.scrollTop > 4 || !ustBantMi) return;
-      }
-      basY = y; guncelY = y; basX = x; basT = Date.now();
-      yukseklik = el.getBoundingClientRect().height || window.innerHeight;
+    function baslat(y){
+      basY = y; guncelY = y; basT = Date.now();
+      yukseklik = panelEl.getBoundingClientRect().height || window.innerHeight;
       suruklemede = true;
-      el.classList.add('dragging');
+      panelEl.classList.add('dragging');
     }
     function hareket(y){
       if(!suruklemede) return;
@@ -2304,45 +2300,40 @@ if('serviceWorker' in navigator){
       if(delta < 0) delta = 0; // sadece aşağı
       setTransform(delta);
       const bg = document.getElementById('modalBg');
-      if(bg && (el.id==='modalBg' || el.classList.contains('modal'))){
+      if(bg && panelEl.classList.contains('modal')){
         bg.style.background = `rgba(0,0,0,${Math.max(0,.65-(delta/yukseklik)*.65)})`;
       }
     }
     function bitir(){
       if(!suruklemede) return;
       suruklemede = false;
-      el.classList.remove('dragging');
+      panelEl.classList.remove('dragging');
       const delta = Math.max(0, guncelY - basY);
       const gecenMs = Math.max(1, Date.now() - basT);
       const hiz = delta / gecenMs;
       const bg = document.getElementById('modalBg');
       if(delta > yukseklik*ESIK_ORAN || hiz > ESIK_HIZ){
         setTransform(yukseklik);
-        setTimeout(()=>{ kapatFn(); el.style.transform=tabanTransform; if(bg) bg.style.background=''; }, 220);
+        setTimeout(()=>{ kapatFn(); panelEl.style.transform=tabanTransform; if(bg) bg.style.background=''; }, 220);
       } else {
-        el.style.transform = tabanTransform;
+        panelEl.style.transform = tabanTransform;
         if(bg) bg.style.background='';
       }
     }
 
-    el.addEventListener('touchstart', e=>{
-      baslat(e.touches[0].clientY, e.touches[0].clientX, e.target);
-    }, {passive:true});
-    el.addEventListener('touchmove', e=>{
+    handle.addEventListener('touchstart', e=>{ baslat(e.touches[0].clientY); }, {passive:true});
+    handle.addEventListener('touchmove', e=>{
       if(!suruklemede) return;
-      const dy = e.touches[0].clientY - basY;
-      const dx = Math.abs(e.touches[0].clientX - basX);
-      // Dikey hareket yatay hareketten belirgin fazlaysa sayfa scrollunu iptal et, paneli sürükle
-      if(dy > 4 && dy > dx){ e.preventDefault(); }
+      e.preventDefault(); // handle üzerindeyiz, arka plan kaymasın
       hareket(e.touches[0].clientY);
     }, {passive:false});
-    el.addEventListener('touchend', bitir, {passive:true});
-    el.addEventListener('touchcancel', bitir, {passive:true});
+    handle.addEventListener('touchend', bitir, {passive:true});
+    handle.addEventListener('touchcancel', bitir, {passive:true});
 
-    // Masaüstü (mouse) desteği — sadece tutamaçtan başlatılır ki normal tıklamalar bozulmasın
-    el.addEventListener('mousedown', e=>{
-      if(!e.target.closest('.pv-drag-handle,#modalHandle')) return;
-      baslat(e.clientY, e.clientX, e.target);
+    // Masaüstü (mouse) desteği
+    handle.addEventListener('mousedown', e=>{
+      e.preventDefault();
+      baslat(e.clientY);
       const mm=ev=>hareket(ev.clientY);
       const mu=()=>{ bitir(); document.removeEventListener('mousemove',mm); document.removeEventListener('mouseup',mu); };
       document.addEventListener('mousemove',mm);
@@ -2353,20 +2344,23 @@ if('serviceWorker' in navigator){
   function baglaTumPaneller(){
     // Tam ekran paneller: .panel-view zaten translateX(-50%) kullanıyor, taban olarak koruyoruz
     ['favPanel','rotaPanel','ziyaretPanel','profilPanel'].forEach(id=>{
-      const el=document.getElementById(id);
-      if(!el) return;
-      surukleBagla(el, ()=>switchPanel('main'), {sadeceTutamacTan:false, tabanTransform:'translateX(-50%)'});
+      const panel=document.getElementById(id);
+      if(!panel) return;
+      const handle=panel.querySelector('.pv-drag-handle');
+      surukleBagla(handle, panel, ()=>switchPanel('main'), 'translateX(-50%)');
     });
 
     const rehber = document.getElementById('rehberPanel');
     if(rehber){
-      surukleBagla(rehber, ()=>switchPanel('profil'), {sadeceTutamacTan:false, tabanTransform:''});
+      const handle=rehber.querySelector('.pv-drag-handle');
+      surukleBagla(handle, rehber, ()=>switchPanel('profil'), '');
     }
 
-    // Modal: bottom-sheet, sadece tutamaçtan
+    // Modal: bottom-sheet
     const modalEl = document.querySelector('.modal');
     if(modalEl){
-      surukleBagla(modalEl, ()=>{ modalBg.classList.remove('open'); }, {sadeceTutamacTan:true, tabanTransform:''});
+      const handle=document.getElementById('modalHandle');
+      surukleBagla(handle, modalEl, ()=>{ modalBg.classList.remove('open'); }, '');
     }
   }
 

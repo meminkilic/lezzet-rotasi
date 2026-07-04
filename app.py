@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Rotaste — Proxy Sunucusu
-Geliştirici: Mehmet Emin KILIÇ — V1.9.5
+Geliştirici: Mehmet Emin KILIÇ — V1.10.0
 """
 import os, requests
 from flask import Flask, request, jsonify, send_file, Response
@@ -17,6 +17,7 @@ FIELD_MASK_LIST = ",".join([
     "places.id","places.displayName","places.formattedAddress",
     "places.rating","places.userRatingCount","places.primaryTypeDisplayName",
     "places.location","places.priceLevel","places.editorialSummary","places.photos",
+    "places.servesBeer","places.servesWine","places.servesCocktails",
 ])
 FIELD_MASK_DETAIL = ",".join([
     "id","displayName","formattedAddress","rating","userRatingCount",
@@ -33,6 +34,17 @@ PRICE_MAP = {
 def _headers(mask):
     return {"Content-Type":"application/json","X-Goog-Api-Key":API_KEY,"X-Goog-FieldMask":mask}
 
+def _alkol_durumu(p):
+    bira  = p.get("servesBeer")
+    sarap = p.get("servesWine")
+    kokteyl = p.get("servesCocktails")
+    if bira is None and sarap is None and kokteyl is None:
+        return None        # bilgi yok
+    elif bira or sarap or kokteyl:
+        return True         # alkol servisi var
+    else:
+        return False        # alkol servisi yok
+
 def _fmt_place(p):
     photos = p.get("photos") or []
     return {
@@ -47,6 +59,7 @@ def _fmt_place(p):
         "price":   PRICE_MAP.get(p.get("priceLevel",""),""),
         "summary": (p.get("editorialSummary") or {}).get("text",""),
         "photoRef": photos[0].get("name","") if photos else "",
+        "alkol":   _alkol_durumu(p),
     }
 
 def _fmt_reviews(reviews):
@@ -316,16 +329,7 @@ def detay(place_id):
         result["telefon"]  = p.get("internationalPhoneNumber","")
         result["website"]  = p.get("websiteUri","")
         # Alkol servisi (Google'ın resmi verisi)
-        bira  = p.get("servesBeer")
-        sarap = p.get("servesWine")
-        kokteyl = p.get("servesCocktails")
-        # Üçü de None ise Google bu mekan için bilgi vermemiş = belirsiz
-        if bira is None and sarap is None and kokteyl is None:
-            result["alkol"] = None        # bilgi yok
-        elif bira or sarap or kokteyl:
-            result["alkol"] = True         # alkol servisi var
-        else:
-            result["alkol"] = False        # alkol servisi yok
+        result["alkol"] = _alkol_durumu(p)
         return jsonify(result)
     except requests.exceptions.Timeout:
         return _hata("Zaman aşımı.", 504)

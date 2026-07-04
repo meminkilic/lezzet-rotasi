@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Rotaste — Proxy Sunucusu
-Geliştirici: Mehmet Emin KILIÇ — V1.8.1
+Geliştirici: Mehmet Emin KILIÇ — V1.9.5
 """
 import os, requests
 from flask import Flask, request, jsonify, send_file, Response
@@ -109,6 +109,18 @@ def icon512():
 @app.route("/apple-touch-icon.png")
 def apple_icon():
     return _serve_file("apple-touch-icon.png","image/png")
+
+@app.route("/gizlilik")
+def gizlilik():
+    try:
+        with open(os.path.join(BASE_DIR,"gizlilik.html"),encoding="utf-8") as f:
+            return f.read()
+    except FileNotFoundError:
+        return "Sayfa bulunamadı.", 404
+
+@app.route("/privacy")
+def privacy_redirect():
+    return gizlilik()
 
 @app.route("/test")
 def test():

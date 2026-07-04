@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gizlilik Politikası — Rotaste</title>
+<meta name="theme-color" content="#161a16">
+<style>
+  :root{
+    --bg:#161a16;--surface:#20251f;--s2:#2a3028;
+    --cream:#eef1ec;--muted:#9aa89a;--dim:#6e7a6c;
+    --accent:#7cc242;--accentsoft:#96d15f;--line:rgba(238,241,236,.08);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;font-family:'DM Sans',system-ui,-apple-system,sans-serif;
+    background:var(--bg);color:var(--cream);line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:720px;margin:0 auto;padding:48px 24px 80px}
+  .logo-row{display:flex;align-items:center;gap:10px;margin-bottom:36px}
+  .logo-row .pin{
+    width:34px;height:34px;border-radius:50% 50% 50% 0;background:var(--accent);
+    transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;
+  }
+  .logo-row .pin span{transform:rotate(45deg);color:#fff;font-weight:800;font-size:14px}
+  .logo-row .brand{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:22px;letter-spacing:-.01em}
+  h1{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:30px;margin:0 0 6px;color:var(--cream)}
+  .updated{color:var(--dim);font-size:13px;margin-bottom:36px}
+  h2{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:19px;color:var(--accentsoft);margin:36px 0 12px}
+  p,li{color:var(--muted);font-size:15px}
+  ul{padding-left:20px;margin:10px 0}
+  li{margin-bottom:6px}
+  a{color:var(--accentsoft)}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-top:8px}
+  .card b{color:var(--cream)}
+  .foot{margin-top:48px;padding-top:24px;border-top:1px solid var(--line);color:var(--dim);font-size:13px;text-align:center}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="logo-row">
+      <div class="pin"><span>R</span></div>
+      <div class="brand">Rotaste</div>
+    </div>
+
+    <h1>Gizlilik Politikası</h1>
+    <div class="updated">Son güncelleme: 4 Temmuz 2026</div>
+
+    <p>Rotaste ("biz", "bize", "uygulama"), Türkiye genelinde restoran keşfi yapmanı sağlayan bir web uygulamasıdır. Bu sayfa, uygulamayı kullanırken hangi bilgileri topladığımızı, bunları neden topladığımızı ve nasıl koruduğumuzu açıklar.</p>
+
+    <h2>1. Topladığımız Bilgiler</h2>
+    <p>Rotaste'ye Google ile veya e-posta/şifre ile giriş yaptığında aşağıdaki bilgileri işleriz:</p>
+    <ul>
+      <li><b>Kimlik bilgileri:</b> adın, e-posta adresin ve (varsa) Google profil fotoğrafın.</li>
+      <li><b>Kullanım verisi:</b> favorilere eklediğin restoranlar, ziyaret ettiğini işaretlediğin yerler, yazdığın tavsiyeler ve yorumlar, yüklediğin menü fotoğrafları.</li>
+      <li><b>Konum verisi:</b> yalnızca "Konumumu Kullan" özelliğini etkinleştirdiğinde, sana yakın restoranları önerebilmek için anlık konumun kullanılır. Bu bilgi sunucularımızda kalıcı olarak saklanmaz.</li>
+    </ul>
+
+    <h2>2. Google ile Giriş</h2>
+    <p>Google hesabınla giriş yapmayı tercih edersen, Google'dan yalnızca temel profil bilgilerini (ad, e-posta, profil fotoğrafı) talep ederiz. Bu bilgiler yalnızca hesabını oluşturmak ve seni tanımak için kullanılır; başka hiçbir amaçla işlenmez veya üçüncü taraflarla paylaşılmaz.</p>
+
+    <h2>3. Bilgilerini Nasıl Kullanıyoruz</h2>
+    <ul>
+      <li>Hesabını oluşturmak ve oturumunu yönetmek için</li>
+      <li>Favorilerini, ziyaretlerini ve tavsiyelerini cihazlar arasında senkronize etmek için</li>
+      <li>Sana yakın restoran önerileri sunmak için (yalnızca izin verdiğinde)</li>
+      <li>Yazdığın tavsiyeleri ve yüklediğin menü fotoğraflarını diğer Rotaste kullanıcılarıyla paylaşmak için</li>
+    </ul>
+
+    <h2>4. Bilgilerini Kimlerle Paylaşıyoruz</h2>
+    <p>Rotaste kullanıcı verilerini satmaz veya reklam amacıyla üçüncü taraflara aktarmaz. Verilerin şu hizmetlerde barındırılır:</p>
+    <div class="card">
+      <p style="margin:0"><b>Supabase</b> — hesap bilgilerin, favorilerin, tavsiyelerin ve fotoğrafların güvenli şekilde saklandığı veritabanı ve depolama altyapısı.</p>
+    </div>
+    <div class="card">
+      <p style="margin:0"><b>Google Places API</b> — restoran bilgileri (isim, adres, puan, yorumlar) Google'ın herkese açık verisinden alınır.</p>
+    </div>
+    <p>Yazdığın tavsiyeler, yıldız puanların ve yüklediğin menü fotoğrafları, o restoranı arayan diğer Rotaste kullanıcıları tarafından görülebilir. Bu, uygulamanın temel sosyal özelliğidir.</p>
+
+    <h2>5. Verilerini Silme</h2>
+    <p>Hesabını ve ilişkili tüm verilerini silmek istersen, <a href="mailto:rotaste@hotmail.com">rotaste@hotmail.com</a> adresinden bize ulaşman yeterli. Talebini en kısa sürede işleme alırız.</p>
+
+    <h2>6. Çerezler ve Yerel Depolama</h2>
+    <p>Rotaste, oturumunu hatırlamak ve tercihlerini (favoriler, geçmiş aramalar gibi) cihazında saklamak için tarayıcının yerel depolama alanını kullanır. Bu veriler pazarlama veya izleme amacıyla kullanılmaz.</p>
+
+    <h2>7. Değişiklikler</h2>
+    <p>Bu politika zaman zaman güncellenebilir. Önemli değişiklikler olduğunda bu sayfa üzerinden bilgilendirme yapılacaktır.</p>
+
+    <h2>8. Bize Ulaşın</h2>
+    <p>Gizlilikle ilgili sorularının için: <a href="mailto:rotaste@hotmail.com">rotaste@hotmail.com</a></p>
+
+    <div class="foot">© 2026 Rotaste — <a href="https://www.rotaste.com">www.rotaste.com</a></div>
+  </div>
+</body>
+</html>

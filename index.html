@@ -238,7 +238,7 @@ label{font-size:11px;color:var(--muted);font-weight:600;padding-left:2px}
 footer{padding:16px 22px 22px;text-align:center;color:var(--dim);font-size:11px;line-height:1.7;transition:color .6s}
 footer strong{color:var(--muted);font-weight:600}
 
-/* ===== PREMIUM POLISH (V1.9.4) ===== */
+/* ===== PREMIUM POLISH (V1.9.6) ===== */
 .fchip{padding:10px 18px;font-size:13px;border-radius:22px;transition:all .25s cubic-bezier(.2,.8,.3,1)}
 .fchip:active{transform:scale(.94)}
 .fchip.active{background:var(--accent)!important;color:#fff!important;border-color:var(--accent)!important;box-shadow:0 0 16px rgba(124,194,66,.35)}
@@ -270,7 +270,7 @@ footer strong{color:var(--muted);font-weight:600}
 .btab .ico{display:flex;align-items:center;justify-content:center;height:24px}
 .btab .ico img{width:24px;height:24px;border-radius:50%;object-fit:cover}
 
-/* ===== CANLI ARKA PLAN — AURORA (V1.9.4) ===== */
+/* ===== CANLI ARKA PLAN — AURORA (V1.9.6) ===== */
 .aurora{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
 .aurora span{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;will-change:transform}
 .aurora .a1{width:440px;height:440px;background:radial-gradient(circle,rgba(46,94,28,.6),transparent 70%);top:-130px;left:-110px;animation:aur1 26s ease-in-out infinite alternate}
@@ -293,7 +293,7 @@ footer strong{color:var(--muted);font-weight:600}
   .aurora span{animation:none!important}
 }
 
-/* ===== LOGO YOLU & ARABALAR (V1.9.4) ===== */
+/* ===== LOGO YOLU & ARABALAR (V1.9.6) ===== */
 .logo-sahne{position:relative;display:inline-block;animation:logoin .9s cubic-bezier(.2,.9,.3,1) both, logofloat 4.5s ease-in-out 1.2s infinite, logoglow 4.5s ease-in-out 1.2s infinite}
 .logo-sahne img{display:block;animation:none!important}
 .logo-yol{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
@@ -311,7 +311,7 @@ footer strong{color:var(--muted);font-weight:600}
   #agCanvas{display:none}
 }
 
-/* ===== AŞAĞI SÜRÜKLEYEREK KAPATMA (V1.9.4) ===== */
+/* ===== AŞAĞI SÜRÜKLEYEREK KAPATMA (V1.9.6) ===== */
 .panel-view,#rehberPanel{transition:transform .28s cubic-bezier(.2,.8,.3,1)}
 .panel-view.dragging,#rehberPanel.dragging{transition:none}
 .modal{transition:transform .28s cubic-bezier(.2,.8,.3,1)}
@@ -321,7 +321,7 @@ footer strong{color:var(--muted);font-weight:600}
 .pv-drag-handle:active::after{background:var(--accentsoft);width:56px}
 .pv-drag-handle:active{cursor:grabbing}
 
-/* ===== MODAL SEKMELER: Yorumlar / Tavsiyeler / Menü (V1.9.4) ===== */
+/* ===== MODAL SEKMELER: Yorumlar / Tavsiyeler / Menü (V1.9.6) ===== */
 .mtabs{display:flex;gap:4px;background:var(--s2);border-radius:12px;padding:4px;margin:14px 0 10px}
 .mtab{flex:1;text-align:center;padding:9px 6px;border-radius:9px;font-size:12.5px;font-weight:700;color:var(--muted);cursor:pointer;transition:all .2s;user-select:none;border:none;background:transparent;font-family:inherit}
 .mtab.active{background:var(--accent);color:#fff}
@@ -348,7 +348,7 @@ footer strong{color:var(--muted);font-weight:600}
 .tav-login-cta{text-align:center;padding:20px 10px;color:var(--muted);font-size:13px;line-height:1.6}
 .tav-login-cta button{margin-top:10px}
 
-/* ===== MENÜ FOTOĞRAFLARI (V1.9.4) ===== */
+/* ===== MENÜ FOTOĞRAFLARI (V1.9.6) ===== */
 .menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
 .menu-thumb{position:relative;aspect-ratio:1/1;border-radius:12px;overflow:hidden;background:var(--s2);border:1px solid var(--line)}
 .menu-thumb img{width:100%;height:100%;object-fit:cover;display:block;cursor:pointer}
@@ -360,6 +360,17 @@ footer strong{color:var(--muted);font-weight:600}
 .menu-lightbox.open{display:flex}
 .menu-lightbox img{max-width:100%;max-height:85vh;border-radius:10px;object-fit:contain}
 .menu-lightbox-close{position:absolute;top:20px;right:20px;background:rgba(255,255,255,.15);border:none;color:#fff;width:38px;height:38px;border-radius:50%;font-size:18px;cursor:pointer}
+
+/* ===== AUTH: hata mesajı + şifremi unuttum + sıfırlama (V1.9.6) ===== */
+.auth-link{background:none;border:none;color:var(--accentsoft);font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:underline;padding:4px 0}
+.auth-msg-box{font-size:12.5px;margin-top:10px;text-align:center;line-height:1.5;padding:0 4px}
+.auth-msg-box.err{color:var(--red)}
+.auth-msg-box.ok{color:var(--accentsoft)}
+.reset-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:150;display:none;align-items:center;justify-content:center;padding:24px}
+.reset-overlay.open{display:flex}
+.reset-card{background:var(--surface);border-radius:18px;padding:24px 22px;width:100%;max-width:360px}
+.reset-card h3{font-family:'Fraunces',serif;font-size:18px;color:var(--cream);margin-bottom:8px}
+.reset-card p{font-size:12.5px;color:var(--muted);margin-bottom:16px;line-height:1.5}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
@@ -557,7 +568,8 @@ footer strong{color:var(--muted);font-weight:600}
         <input type="password" id="authPass" placeholder="Şifre (min. 6 karakter)" class="auth-input">
         <button class="auth-btn primary-btn" onclick="girisEmail()">Giriş Yap</button>
         <button class="auth-btn secondary-btn" onclick="kayitEmail()">Yeni Hesap Oluştur</button>
-        <div id="authMsg" style="color:var(--red);font-size:12px;margin-top:10px;text-align:center"></div>
+        <button class="auth-link" onclick="sifremiUnuttum()">Şifremi unuttum</button>
+        <div id="authMsg" class="auth-msg-box"></div>
         <button class="auth-btn secondary-btn" style="margin-top:18px" onclick="switchPanel('rehber')">💡 Nasıl Kullanılır?</button>
       </div>
     </div>
@@ -594,6 +606,11 @@ footer strong{color:var(--muted);font-weight:600}
       </div>
       <button class="auth-btn secondary-btn" style="margin-top:18px" onclick="switchPanel('rehber')">💡 Nasıl Kullanılır?</button>
       <button class="auth-btn danger-btn" style="margin-top:10px" onclick="cikisYap()">Çıkış Yap</button>
+    </div>
+    <div style="text-align:center;margin-top:28px;padding-top:16px;border-top:1px solid var(--line)">
+      <a href="/gizlilik" target="_blank" rel="noopener" style="color:var(--dim);font-size:11px;text-decoration:none;margin:0 8px">Gizlilik Politikası</a>
+      <span style="color:var(--dim);font-size:11px">·</span>
+      <a href="/sartlar" target="_blank" rel="noopener" style="color:var(--dim);font-size:11px;text-decoration:none;margin:0 8px">Hizmet Şartları</a>
     </div>
   </div>
 </div>
@@ -635,6 +652,18 @@ footer strong{color:var(--muted);font-weight:600}
 <div class="menu-lightbox" id="menuLightbox" onclick="if(event.target===this) menuLightboxKapat()">
   <button class="menu-lightbox-close" onclick="menuLightboxKapat()">✕</button>
   <img id="menuLightboxImg" src="" alt="Menü fotoğrafı">
+</div>
+
+<!-- Yeni şifre belirleme (şifremi unuttum akışı) -->
+<div class="reset-overlay" id="resetOverlay">
+  <div class="reset-card">
+    <h3>🔑 Yeni Şifre Belirle</h3>
+    <p>Hesabın için yeni bir şifre gir. En az 6 karakter olmalı.</p>
+    <input type="password" id="resetPass1" placeholder="Yeni şifre" class="auth-input">
+    <input type="password" id="resetPass2" placeholder="Yeni şifre (tekrar)" class="auth-input">
+    <button class="auth-btn primary-btn" onclick="yeniSifreKaydet()">Şifreyi Kaydet</button>
+    <div id="resetMsg" class="auth-msg-box"></div>
+  </div>
 </div>
 
 <input type="file" id="menuFotoInput" accept="image/*" capture="environment" style="display:none" onchange="menuFotoYukle(event)">
@@ -726,7 +755,7 @@ footer strong{color:var(--muted);font-weight:600}
 
 <footer>
   Rotaste<br>
-  <strong>Geliştirici: RotasteTeam</strong> — V1.9.4<br>
+  <strong>Geliştirici: RotasteTeam</strong> — V1.9.6<br>
   İletişim: <a href="mailto:rotaste@hotmail.com" style="color:var(--accentsoft);text-decoration:none">rotaste@hotmail.com</a>
 </footer>
 
@@ -757,7 +786,12 @@ if (supa) {
     try {
       const { data: { session } } = await supa.auth.getSession();
       if (session) await oturumAc(session.user);
-      supa.auth.onAuthStateChange(async (_e, session) => {
+      supa.auth.onAuthStateChange(async (event, session) => {
+        if (event === 'PASSWORD_RECOVERY') {
+          // Kullanıcı e-postadaki sıfırlama linkine tıkladı: yeni şifre belirleme ekranını göster
+          document.getElementById('resetOverlay').classList.add('open');
+          return;
+        }
         if (session) await oturumAc(session.user);
         else oturumKapat();
       });
@@ -821,29 +855,54 @@ async function girisGoogle() {
     provider: 'google',
     options: { redirectTo: window.location.origin }
   });
-  if (error) authMesaj('Google girişi başarısız: ' + error.message);
+  if (error) authMesaj(authHataCevir(error.message), 'err');
 }
 
 async function girisEmail() {
-  if (!supa) return authMesaj('Bağlantı kurulamadı, sayfayı yenileyin');
+  if (!supa) return authMesaj('Bağlantı kurulamadı, sayfayı yenileyin','err');
   const email = document.getElementById('authEmail').value.trim();
   const pass = document.getElementById('authPass').value;
-  if (!email || !pass) return authMesaj('E-posta ve şifre gerekli');
+  if (!email || !pass) return authMesaj('E-posta ve şifre gerekli','err');
   authMesaj('');
   const { error } = await supa.auth.signInWithPassword({ email, password: pass });
-  if (error) authMesaj('Giriş hatası: ' + error.message);
+  if (error) authMesaj(authHataCevir(error.message), 'err');
 }
 
 async function kayitEmail() {
-  if (!supa) return authMesaj('Bağlantı kurulamadı, sayfayı yenileyin');
+  if (!supa) return authMesaj('Bağlantı kurulamadı, sayfayı yenileyin','err');
   const email = document.getElementById('authEmail').value.trim();
   const pass = document.getElementById('authPass').value;
-  if (!email || !pass) return authMesaj('E-posta ve şifre gerekli');
-  if (pass.length < 6) return authMesaj('Şifre en az 6 karakter olmalı');
+  if (!email || !pass) return authMesaj('E-posta ve şifre gerekli','err');
+  if (pass.length < 6) return authMesaj('Şifre en az 6 karakter olmalı','err');
   authMesaj('');
   const { error } = await supa.auth.signUp({ email, password: pass });
-  if (error) authMesaj('Kayıt hatası: ' + error.message);
-  else authMesaj('✅ Doğrulama e-postası gönderildi, kontrol et!');
+  if (error) authMesaj(authHataCevir(error.message), 'err');
+  else authMesaj('✅ Doğrulama e-postası gönderildi, gelen kutunu kontrol et!', 'ok');
+}
+
+async function sifremiUnuttum() {
+  if (!supa) return authMesaj('Bağlantı kurulamadı, sayfayı yenileyin','err');
+  const email = document.getElementById('authEmail').value.trim();
+  if (!email) return authMesaj('Önce e-posta adresini yaz, sonra "Şifremi unuttum"a bas.','err');
+  authMesaj('Gönderiliyor…');
+  const { error } = await supa.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin });
+  if (error) authMesaj(authHataCevir(error.message), 'err');
+  else authMesaj('✅ Şifre sıfırlama linki e-postana gönderildi.', 'ok');
+}
+
+async function yeniSifreKaydet() {
+  const p1 = document.getElementById('resetPass1').value;
+  const p2 = document.getElementById('resetPass2').value;
+  const msg = document.getElementById('resetMsg');
+  const goster = (t,c)=>{ if(msg){ msg.textContent=t; msg.className='auth-msg-box '+c; } };
+  if (!p1 || !p2) return goster('Her iki alanı da doldur.','err');
+  if (p1.length < 6) return goster('Şifre en az 6 karakter olmalı.','err');
+  if (p1 !== p2) return goster('Şifreler eşleşmiyor.','err');
+  goster('Kaydediliyor…','');
+  const { error } = await supa.auth.updateUser({ password: p1 });
+  if (error) { goster(authHataCevir(error.message), 'err'); return; }
+  goster('✅ Şifren güncellendi!', 'ok');
+  setTimeout(()=>{ document.getElementById('resetOverlay').classList.remove('open'); }, 1400);
 }
 
 // Kullanıcının Supabase Storage'a yüklediği özel avatarı localStorage'dan getir
@@ -888,9 +947,24 @@ async function cikisYap() {
   showToast('Çıkış yapıldı');
 }
 
-function authMesaj(msg) {
+function authHataCevir(msg){
+  const m = (msg||'').toLowerCase();
+  if(m.includes('invalid login credentials')) return 'E-posta veya şifre hatalı.';
+  if(m.includes('user already registered') || m.includes('already registered')) return 'Bu e-posta zaten kayıtlı. Giriş yapmayı dene.';
+  if(m.includes('email not confirmed')) return 'E-postanı henüz doğrulamadın. Gelen kutunu kontrol et.';
+  if(m.includes('password should be at least')) return 'Şifre en az 6 karakter olmalı.';
+  if(m.includes('invalid email') || m.includes('unable to validate email')) return 'Geçerli bir e-posta adresi gir.';
+  if(m.includes('rate limit') || m.includes('too many requests')) return 'Çok fazla deneme yapıldı, birkaç dakika sonra tekrar dene.';
+  if(m.includes('network') || m.includes('fetch')) return 'Bağlantı sorunu, internetini kontrol et.';
+  if(m.includes('user not found')) return 'Bu e-posta ile kayıtlı bir hesap bulunamadı.';
+  if(m.includes('same password') || m.includes('should be different')) return 'Yeni şifre eskisinden farklı olmalı.';
+  return 'Bir şeyler ters gitti, lütfen tekrar dene.';
+}
+function authMesaj(msg, tur) {
   const el = document.getElementById('authMsg');
-  if (el) el.textContent = msg;
+  if (!el) return;
+  el.textContent = msg;
+  el.className = 'auth-msg-box' + (tur ? ' '+tur : '');
 }
 
 /* =============================================
@@ -1876,7 +1950,7 @@ function toggleZiyaret(e,idx){
 }
 
 
-/* ===== PREMIUM POLISH JS (V1.9.4) ===== */
+/* ===== PREMIUM POLISH JS (V1.9.6) ===== */
 const PROFIL_SVG = '<svg viewBox="0 0 24 24" style="width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
 let userKonum = null; // {lat,lng} — mesafe hesabı için
 
@@ -2142,7 +2216,7 @@ function ziyaretSil(i){
 }
 updateZiyaretBadge(); renderZiyaretPanel();
 
-/* ===== Tavsiyelerim paneli (V1.9.4) ===== */
+/* ===== Tavsiyelerim paneli (V1.9.6) ===== */
 async function renderTavsiyelerimPanel(){
   const el=$('#tavsiyelerimList');
   if(!el) return;
@@ -2185,7 +2259,7 @@ async function tavsiyelerimSil(id){
 }
 
 /* =============================================
-   MENÜ FOTOĞRAFLARI (V1.9.4)
+   MENÜ FOTOĞRAFLARI (V1.9.6)
    ============================================= */
 async function menuFotolariYukle(r){
   const kutu=$('#menuIcerik');
@@ -2366,7 +2440,7 @@ if('serviceWorker' in navigator){
     caches.keys().then(adlar=>{
       adlar.forEach(ad=>{
         // Bu sürümün cache'i dışındakileri sil
-        if(ad && ad.indexOf('lezzet-v1.9.4')===-1) caches.delete(ad);
+        if(ad && ad.indexOf('lezzet-v1.9.6')===-1) caches.delete(ad);
       });
     }).catch(()=>{});
   }
@@ -2374,7 +2448,7 @@ if('serviceWorker' in navigator){
 
 
 /* =============================================
-   GEOMETRİK AĞ — üçgen/beşgen düğümler, neon nabızlar (V1.9.4)
+   GEOMETRİK AĞ — üçgen/beşgen düğümler, neon nabızlar (V1.9.6)
    ============================================= */
 (function(){
   const cv=document.getElementById('agCanvas');
@@ -2504,7 +2578,7 @@ if('serviceWorker' in navigator){
 
 
 /* =============================================
-   AŞAĞI SÜRÜKLEYEREK KAPATMA (V1.9.4)
+   AŞAĞI SÜRÜKLEYEREK KAPATMA (V1.9.6)
    Event'ler PANELE değil, doğrudan tutamaç (handle)
    elementine bağlanır — böylece tarayıcı scroll'u
    asla arka plana/panele yönlendiremez.
@@ -2610,7 +2684,7 @@ if('serviceWorker' in navigator){
 
 
 /* =============================================
-   MODAL SEKMELERİ: Yorumlar / Tavsiyeler / Menü (V1.9.4)
+   MODAL SEKMELERİ: Yorumlar / Tavsiyeler / Menü (V1.9.6)
    ============================================= */
 let modalAktifRestoran = null; // {id, name} — sekme fonksiyonları için
 

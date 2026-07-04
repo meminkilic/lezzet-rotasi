@@ -122,6 +122,18 @@ def gizlilik():
 def privacy_redirect():
     return gizlilik()
 
+@app.route("/sartlar")
+def sartlar():
+    try:
+        with open(os.path.join(BASE_DIR,"sartlar.html"),encoding="utf-8") as f:
+            return f.read()
+    except FileNotFoundError:
+        return "Sayfa bulunamadı.", 404
+
+@app.route("/terms")
+def terms_redirect():
+    return sartlar()
+
 @app.route("/test")
 def test():
     """Google bağlantı testi."""

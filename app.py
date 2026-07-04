@@ -110,6 +110,10 @@ def icon512():
 def apple_icon():
     return _serve_file("apple-touch-icon.png","image/png")
 
+@app.route("/mail-logo.png")
+def mail_logo():
+    return _serve_file("mail-logo.png","image/png")
+
 @app.route("/google78e2bcd15de4f807.html")
 def google_site_verification():
     return _serve_file("google78e2bcd15de4f807.html","text/html")

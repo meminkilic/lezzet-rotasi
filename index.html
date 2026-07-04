@@ -238,7 +238,7 @@ label{font-size:11px;color:var(--muted);font-weight:600;padding-left:2px}
 footer{padding:16px 22px 22px;text-align:center;color:var(--dim);font-size:11px;line-height:1.7;transition:color .6s}
 footer strong{color:var(--muted);font-weight:600}
 
-/* ===== PREMIUM POLISH (V1.9.2) ===== */
+/* ===== PREMIUM POLISH (V1.9.4) ===== */
 .fchip{padding:10px 18px;font-size:13px;border-radius:22px;transition:all .25s cubic-bezier(.2,.8,.3,1)}
 .fchip:active{transform:scale(.94)}
 .fchip.active{background:var(--accent)!important;color:#fff!important;border-color:var(--accent)!important;box-shadow:0 0 16px rgba(124,194,66,.35)}
@@ -270,7 +270,7 @@ footer strong{color:var(--muted);font-weight:600}
 .btab .ico{display:flex;align-items:center;justify-content:center;height:24px}
 .btab .ico img{width:24px;height:24px;border-radius:50%;object-fit:cover}
 
-/* ===== CANLI ARKA PLAN — AURORA (V1.9.2) ===== */
+/* ===== CANLI ARKA PLAN — AURORA (V1.9.4) ===== */
 .aurora{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
 .aurora span{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;will-change:transform}
 .aurora .a1{width:440px;height:440px;background:radial-gradient(circle,rgba(46,94,28,.6),transparent 70%);top:-130px;left:-110px;animation:aur1 26s ease-in-out infinite alternate}
@@ -293,7 +293,7 @@ footer strong{color:var(--muted);font-weight:600}
   .aurora span{animation:none!important}
 }
 
-/* ===== LOGO YOLU & ARABALAR (V1.9.2) ===== */
+/* ===== LOGO YOLU & ARABALAR (V1.9.4) ===== */
 .logo-sahne{position:relative;display:inline-block;animation:logoin .9s cubic-bezier(.2,.9,.3,1) both, logofloat 4.5s ease-in-out 1.2s infinite, logoglow 4.5s ease-in-out 1.2s infinite}
 .logo-sahne img{display:block;animation:none!important}
 .logo-yol{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
@@ -311,7 +311,7 @@ footer strong{color:var(--muted);font-weight:600}
   #agCanvas{display:none}
 }
 
-/* ===== AŞAĞI SÜRÜKLEYEREK KAPATMA (V1.9.2) ===== */
+/* ===== AŞAĞI SÜRÜKLEYEREK KAPATMA (V1.9.4) ===== */
 .panel-view,#rehberPanel{transition:transform .28s cubic-bezier(.2,.8,.3,1)}
 .panel-view.dragging,#rehberPanel.dragging{transition:none}
 .modal{transition:transform .28s cubic-bezier(.2,.8,.3,1)}
@@ -321,7 +321,7 @@ footer strong{color:var(--muted);font-weight:600}
 .pv-drag-handle:active::after{background:var(--accentsoft);width:56px}
 .pv-drag-handle:active{cursor:grabbing}
 
-/* ===== MODAL SEKMELER: Yorumlar / Tavsiyeler / Menü (V1.9.2) ===== */
+/* ===== MODAL SEKMELER: Yorumlar / Tavsiyeler / Menü (V1.9.4) ===== */
 .mtabs{display:flex;gap:4px;background:var(--s2);border-radius:12px;padding:4px;margin:14px 0 10px}
 .mtab{flex:1;text-align:center;padding:9px 6px;border-radius:9px;font-size:12.5px;font-weight:700;color:var(--muted);cursor:pointer;transition:all .2s;user-select:none;border:none;background:transparent;font-family:inherit}
 .mtab.active{background:var(--accent);color:#fff}
@@ -347,6 +347,19 @@ footer strong{color:var(--muted);font-weight:600}
 .tav-del{background:none;border:none;color:var(--red);font-size:11.5px;cursor:pointer;padding:2px 6px;font-family:inherit}
 .tav-login-cta{text-align:center;padding:20px 10px;color:var(--muted);font-size:13px;line-height:1.6}
 .tav-login-cta button{margin-top:10px}
+
+/* ===== MENÜ FOTOĞRAFLARI (V1.9.4) ===== */
+.menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.menu-thumb{position:relative;aspect-ratio:1/1;border-radius:12px;overflow:hidden;background:var(--s2);border:1px solid var(--line)}
+.menu-thumb img{width:100%;height:100%;object-fit:cover;display:block;cursor:pointer}
+.menu-thumb .mt-del{position:absolute;top:6px;right:6px;background:rgba(0,0,0,.6);border:none;color:#fff;width:26px;height:26px;border-radius:50%;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.menu-thumb .mt-date{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.7));color:#fff;font-size:9.5px;padding:12px 6px 5px;text-align:center}
+.menu-upload-btn{width:100%;padding:13px;border-radius:12px;border:2px dashed var(--line);background:transparent;color:var(--accentsoft);font-weight:700;font-family:inherit;font-size:13.5px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:border-color .2s,background .2s}
+.menu-upload-btn:active{background:var(--s2);border-color:var(--accent)}
+.menu-lightbox{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
+.menu-lightbox.open{display:flex}
+.menu-lightbox img{max-width:100%;max-height:85vh;border-radius:10px;object-fit:contain}
+.menu-lightbox-close{position:absolute;top:20px;right:20px;background:rgba(255,255,255,.15);border:none;color:#fff;width:38px;height:38px;border-radius:50%;font-size:18px;cursor:pointer}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
@@ -461,14 +474,14 @@ footer strong{color:var(--muted);font-weight:600}
 <!-- Favoriler paneli -->
 <div class="panel-view" id="favPanel">
   <div class="pv-drag-handle"></div>
-  <div class="pv-head"><div class="pv-title">❤️ Favorilerim</div><button class="pv-close" onclick="switchPanel('main')">✕</button></div>
+  <div class="pv-head"><div class="pv-title">❤️ Favorilerim</div><button class="pv-close" onclick="panelKapatBirOnceki()">✕</button></div>
   <div id="favList"></div>
 </div>
 
 <!-- Rota paneli -->
 <div class="panel-view" id="rotaPanel">
   <div class="pv-drag-handle"></div>
-  <div class="pv-head"><div class="pv-title">🗺️ Rotadan</div><button class="pv-close" onclick="switchPanel('main')">✕</button></div>
+  <div class="pv-head"><div class="pv-title">🗺️ Rotadan</div><button class="pv-close" onclick="panelKapatBirOnceki()">✕</button></div>
   <p style="color:var(--muted);font-size:13px;line-height:1.5;margin-bottom:14px">Yol üzerindeki en iyi restoranları keşfet. Aşağıya <b style="color:var(--accent)">başlangıç</b> ve <b style="color:var(--red)">varış</b> yaz ya da haritaya tıkla.</p>
 
   <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px">
@@ -513,14 +526,21 @@ footer strong{color:var(--muted);font-weight:600}
 <!-- Ziyaret paneli -->
 <div class="panel-view" id="ziyaretPanel">
   <div class="pv-drag-handle"></div>
-  <div class="pv-head"><div class="pv-title">✅ Ziyaret Ettiklerim</div><button class="pv-close" onclick="switchPanel('main')">✕</button></div>
+  <div class="pv-head"><div class="pv-title">✅ Ziyaret Ettiklerim</div><button class="pv-close" onclick="panelKapatBirOnceki()">✕</button></div>
   <div id="ziyaretList"></div>
+</div>
+
+<!-- Tavsiyelerim paneli -->
+<div class="panel-view" id="tavsiyelerimPanel">
+  <div class="pv-drag-handle"></div>
+  <div class="pv-head"><div class="pv-title">💬 Tavsiyelerim</div><button class="pv-close" onclick="panelKapatBirOnceki()">✕</button></div>
+  <div id="tavsiyelerimList"></div>
 </div>
 
 <!-- Profil paneli -->
 <div class="panel-view" id="profilPanel">
   <div class="pv-drag-handle"></div>
-  <div class="pv-head"><div class="pv-title">👤 Profilim</div><button class="pv-close" onclick="switchPanel('main')">✕</button></div>
+  <div class="pv-head"><div class="pv-title">👤 Profilim</div><button class="pv-close" onclick="panelKapatBirOnceki()">✕</button></div>
   <div id="profilContent">
     <!-- Giriş yapılmamışsa -->
     <div id="authBox">
@@ -564,7 +584,7 @@ footer strong{color:var(--muted);font-weight:600}
           <div class="stat-num" id="statZiyaret">0</div>
           <div class="stat-lbl">✅ Ziyaret</div>
         </div>
-        <div class="stat-box">
+        <div class="stat-box" onclick="switchPanel('tavsiyelerim')">
           <div class="stat-num" id="statTavsiye">0</div>
           <div class="stat-lbl">💬 Tavsiye</div>
         </div>
@@ -582,22 +602,22 @@ footer strong{color:var(--muted);font-weight:600}
 
 <!-- Alt navigasyon -->
 <div class="bottom-tabs">
-  <button class="btab active" data-panel="main" onclick="switchPanel('main')">
+  <button class="btab active" data-panel="main" onclick="switchPanelKok('main')">
     <span class="ico"><svg viewBox="0 0 24 24"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3z"/><path d="M21 15v7"/></svg></span><span>Keşfet</span>
   </button>
-  <button class="btab" data-panel="fav" onclick="switchPanel('fav')">
+  <button class="btab" data-panel="fav" onclick="switchPanelKok('fav')">
     <span class="ico"><svg viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span><span>Favoriler</span>
     <span class="badge-count" id="favCount"></span>
   </button>
-  <button class="btab" data-panel="rota" onclick="switchPanel('rota')">
+  <button class="btab" data-panel="rota" onclick="switchPanelKok('rota')">
     <span class="ico"><svg viewBox="0 0 24 24"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg></span><span>Rotadan</span>
     <span class="badge-count" id="rotaCount"></span>
   </button>
-  <button class="btab" data-panel="ziyaret" onclick="switchPanel('ziyaret')">
+  <button class="btab" data-panel="ziyaret" onclick="switchPanelKok('ziyaret')">
     <span class="ico"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg></span><span>Ziyaret</span>
     <span class="badge-count" id="ziyaretCount"></span>
   </button>
-  <button class="btab" data-panel="profil" onclick="switchPanel('profil')" id="profilTab">
+  <button class="btab" data-panel="profil" onclick="switchPanelKok('profil')" id="profilTab">
     <span class="ico" id="profilIco"><svg viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><span>Profil</span>
   </button>
 </div>
@@ -611,6 +631,14 @@ footer strong{color:var(--muted);font-weight:600}
   </div>
 </div>
 
+<!-- Menü fotoğrafı büyütme (lightbox) -->
+<div class="menu-lightbox" id="menuLightbox" onclick="if(event.target===this) menuLightboxKapat()">
+  <button class="menu-lightbox-close" onclick="menuLightboxKapat()">✕</button>
+  <img id="menuLightboxImg" src="" alt="Menü fotoğrafı">
+</div>
+
+<input type="file" id="menuFotoInput" accept="image/*" capture="environment" style="display:none" onchange="menuFotoYukle(event)">
+
 
 <!-- Rehber overlay - JS gerektirmez, position fixed -->
 <div id="rehberPanel" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg);z-index:50;overflow-y:auto;max-width:480px;margin:0 auto">
@@ -618,7 +646,7 @@ footer strong{color:var(--muted);font-weight:600}
     <div class="pv-drag-handle" style="margin:0 auto 10px"></div>
     <div style="padding:18px 22px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(246,236,224,.10)">
       <div style="font-family:'Fraunces',serif;font-weight:600;font-size:22px;color:#f6ece0">💡 Nasıl Kullanılır?</div>
-      <button onclick="switchPanel('profil')" style="background:rgba(255,255,255,.1);border:none;color:#f6ece0;border-radius:8px;padding:6px 12px;font-size:13px;cursor:pointer;font-family:inherit">✕ Kapat</button>
+      <button onclick="panelKapatBirOnceki()" style="background:rgba(255,255,255,.1);border:none;color:#f6ece0;border-radius:8px;padding:6px 12px;font-size:13px;cursor:pointer;font-family:inherit">✕ Kapat</button>
     </div>
 
     <div style="display:flex;align-items:flex-start;gap:14px;padding:16px 22px;border-bottom:1px solid rgba(246,236,224,.08)">
@@ -698,7 +726,7 @@ footer strong{color:var(--muted);font-weight:600}
 
 <footer>
   Rotaste<br>
-  <strong>Geliştirici: RotasteTeam</strong> — V1.9.2<br>
+  <strong>Geliştirici: RotasteTeam</strong> — V1.9.4<br>
   İletişim: <a href="mailto:rotaste@hotmail.com" style="color:var(--accentsoft);text-decoration:none">rotaste@hotmail.com</a>
 </footer>
 
@@ -1642,15 +1670,23 @@ updateRotaBadge(); renderRotaPanel();
 /* =============================================
    PANEL SWITCH
    ============================================= */
-function switchPanel(panel){
+let panelGecmisi = ['main']; // sürüklenerek/✕ ile kapatınca "bir önceki"ne dönmek için
+
+function switchPanel(panel, gecmiseEkleme){
+  // Alt sekmelerden (fav/rota/ziyaret/tavsiyelerim/profil) direkt geliniyorsa geçmişi güncelle
+  if(!gecmiseEkleme){
+    const suan = panelGecmisi[panelGecmisi.length-1];
+    if(suan !== panel) panelGecmisi.push(panel);
+    if(panelGecmisi.length>6) panelGecmisi.shift();
+  }
   // Ana panel
   $('#mainPanel').style.display = panel==='main' ? 'block' : 'none';
   // Overlay paneller (fixed position)
-  ['favPanel','rotaPanel','ziyaretPanel','rehberPanel','profilPanel'].forEach(id=>{
+  ['favPanel','rotaPanel','ziyaretPanel','rehberPanel','profilPanel','tavsiyelerimPanel'].forEach(id=>{
     const el=document.getElementById(id);
     if(el) el.style.display='none';
   });
-  const panelMap={fav:'favPanel',rota:'rotaPanel',ziyaret:'ziyaretPanel',rehber:'rehberPanel',profil:'profilPanel'};
+  const panelMap={fav:'favPanel',rota:'rotaPanel',ziyaret:'ziyaretPanel',rehber:'rehberPanel',profil:'profilPanel',tavsiyelerim:'tavsiyelerimPanel'};
   if(panelMap[panel]){
     const el=document.getElementById(panelMap[panel]);
     if(el){
@@ -1659,11 +1695,26 @@ function switchPanel(panel){
       el.style.transform = (el.classList.contains('panel-view')) ? 'translateX(-50%)' : '';
     }
   }
-  if(panel==='fav'    && typeof renderFavPanel==='function')    renderFavPanel();
-  if(panel==='rota'   && typeof rotaHaritaBaslat==='function')  rotaHaritaBaslat();
-  if(panel==='ziyaret'&& typeof renderZiyaretPanel==='function')renderZiyaretPanel();
-  if(panel==='profil' && typeof profilIstatistik==='function')  profilIstatistik();
+  try{
+    if(panel==='fav'    && typeof renderFavPanel==='function')    renderFavPanel();
+    if(panel==='rota'   && typeof rotaHaritaBaslat==='function')  rotaHaritaBaslat();
+    if(panel==='ziyaret'&& typeof renderZiyaretPanel==='function')renderZiyaretPanel();
+    if(panel==='profil' && typeof profilIstatistik==='function')  profilIstatistik();
+    if(panel==='tavsiyelerim' && typeof renderTavsiyelerimPanel==='function') renderTavsiyelerimPanel();
+  }catch(e){ console.warn('Panel içerik yükleme hatası:', panel, e); }
   document.querySelectorAll('.btab').forEach(b=>b.classList.toggle('active',b.dataset.panel===panel));
+}
+
+function panelKapatBirOnceki(){
+  panelGecmisi.pop(); // şu anki paneli at
+  const hedef = panelGecmisi.pop() || 'main'; // bir öncekine dön
+  switchPanel(hedef, true);
+}
+function switchPanelKok(panel){
+  // Alt navigasyondan (Keşfet/Favoriler/Rotadan/Ziyaret/Profil) tıklanınca:
+  // Bu yeni bir "kök" seviye demektir, geçmiş sıfırlanır.
+  panelGecmisi = [panel];
+  switchPanel(panel, true);
 }
 
 /* Giriş yapılmamışsa panel içeriğinin üstüne uyarı bindir */
@@ -1825,7 +1876,7 @@ function toggleZiyaret(e,idx){
 }
 
 
-/* ===== PREMIUM POLISH JS (V1.9.2) ===== */
+/* ===== PREMIUM POLISH JS (V1.9.4) ===== */
 const PROFIL_SVG = '<svg viewBox="0 0 24 24" style="width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
 let userKonum = null; // {lat,lng} — mesafe hesabı için
 
@@ -1864,7 +1915,7 @@ async function doSearch(label,params){
   if(params.lat&&params.lng) temaUygula(bolgedenKoordinate(params.lat,params.lng));
   else if(params.metin){ const b=bolgedenSehir(params.metin); if(b) temaUygula(b); }
   gecmisKaydet(label,params);
-  switchPanel('main');
+  switchPanelKok('main');
   const proxy=loadProxy();
   if(!proxy){ render(demoFor(label),label,false); return; }
   showLoading(label);
@@ -2091,6 +2142,142 @@ function ziyaretSil(i){
 }
 updateZiyaretBadge(); renderZiyaretPanel();
 
+/* ===== Tavsiyelerim paneli (V1.9.4) ===== */
+async function renderTavsiyelerimPanel(){
+  const el=$('#tavsiyelerimList');
+  if(!el) return;
+  if(girisGerekli()){ el.innerHTML=girisUyarisiHTML('Tavsiyelerim'); return; }
+  if(!supa){ el.innerHTML='<div class="empty-pv"><span class="ico">⚠️</span>Bağlantı kurulamadı.</div>'; return; }
+  el.innerHTML='<div class="load-rev">Yükleniyor…</div>';
+  try{
+    const {data,error} = await supa.from('tavsiyeler')
+      .select('id,place_id,place_name,yorum,puan,created_at')
+      .eq('user_id', supaUser.id)
+      .order('created_at',{ascending:false});
+    if(error) throw error;
+    const list = data||[];
+    if(!list.length){ el.innerHTML='<div class="empty-pv"><span class="ico">💬</span>Henüz tavsiye bırakmadın.<br>Bir restoranın detayına gir, Tavsiyeler sekmesinden paylaş.</div>'; return; }
+    el.innerHTML = list.map(t=>{
+      const tarih = new Date(t.created_at).toLocaleDateString('tr-TR',{day:'numeric',month:'short',year:'numeric'});
+      return `<div class="ziyaret-card" style="flex-direction:column;align-items:stretch">
+        <div class="info" style="width:100%">
+          <div class="cname">${t.place_name||'Restoran'}</div>
+          <div class="tav-stars" style="margin:4px 0">${'★'.repeat(t.puan||0)}${'☆'.repeat(5-(t.puan||0))}</div>
+          <div class="tav-text">${(t.yorum||'').replace(/</g,'&lt;')}</div>
+          <div class="ziyaret-tarih">📅 ${tarih}</div>
+        </div>
+        <button class="fav-del" style="align-self:flex-end;margin-top:8px" onclick="tavsiyelerimSil('${t.id}')">🗑️ Sil</button>
+      </div>`;
+    }).join('');
+  }catch(e){
+    console.warn('Tavsiyelerim yükleme hatası:', e);
+    el.innerHTML='<div class="empty-pv"><span class="ico">⚠️</span>Tavsiyeler yüklenemedi.</div>';
+  }
+}
+async function tavsiyelerimSil(id){
+  if(!supa || !supaUser) return;
+  try{
+    await supa.from('tavsiyeler').delete().eq('id', id).eq('user_id', supaUser.id);
+    showToast('Tavsiye silindi.');
+    renderTavsiyelerimPanel();
+    if(typeof profilIstatistik==='function') profilIstatistik();
+  }catch(e){ console.warn('Tavsiyelerim silme hatası:', e); }
+}
+
+/* =============================================
+   MENÜ FOTOĞRAFLARI (V1.9.4)
+   ============================================= */
+async function menuFotolariYukle(r){
+  const kutu=$('#menuIcerik');
+  if(!kutu) return;
+  if(!supa){ kutu.innerHTML='<div class="no-rev">Menü fotoğrafları için bağlantı kurulamadı.</div>'; return; }
+  const pid = r.id || r.name;
+  kutu.innerHTML='<div class="load-rev">Yükleniyor…</div>';
+  try{
+    const {data,error} = await supa.from('menu_fotograflari')
+      .select('id,user_id,foto_url,created_at')
+      .eq('place_id', pid)
+      .order('created_at',{ascending:false});
+    if(error) throw error;
+    kutu.innerHTML = menuUstButonHTML() + menuGridHTML(data||[]);
+  }catch(e){
+    console.warn('Menü fotoğrafı yükleme hatası:', e);
+    kutu.innerHTML = menuUstButonHTML() + '<div class="no-rev">Menü fotoğrafları yüklenemedi.</div>';
+  }
+}
+
+function menuUstButonHTML(){
+  if(!supaUser){
+    return `<div class="tav-login-cta">Menü fotoğrafı paylaşmak için giriş yapmalısın.<br>
+      <button class="auth-btn primary-btn" style="max-width:220px;margin:10px auto 0" onclick="switchPanel('profil')">Giriş Yap</button>
+    </div>`;
+  }
+  return `<button class="menu-upload-btn" onclick="document.getElementById('menuFotoInput').click()">📷 Menü Fotoğrafı Ekle</button>`;
+}
+
+function menuGridHTML(list){
+  if(!list.length) return '<div class="no-rev" style="margin-top:10px">Henüz menü fotoğrafı yok. İlk fotoğrafı sen ekle!</div>';
+  return `<div class="menu-grid">${list.map(m=>{
+    const tarih = new Date(m.created_at).toLocaleDateString('tr-TR',{day:'numeric',month:'short'});
+    const kendim = supaUser && m.user_id===supaUser.id;
+    return `<div class="menu-thumb">
+      <img src="${m.foto_url}" alt="Menü fotoğrafı" onclick="menuLightboxAc('${m.foto_url}')">
+      <div class="mt-date">${tarih}</div>
+      ${kendim?`<button class="mt-del" onclick="menuFotoSil('${m.id}','${m.foto_url.replace(/'/g,"\\'")}')">✕</button>`:''}
+    </div>`;
+  }).join('')}</div>`;
+}
+
+async function menuFotoYukle(event){
+  const dosya = event.target.files && event.target.files[0];
+  event.target.value = ''; // aynı dosyayı tekrar seçebilmek için sıfırla
+  if(!dosya) return;
+  if(!supa || !supaUser){ showToast('Önce giriş yap'); return; }
+  if(!modalAktifRestoran){ showToast('Restoran bilgisi bulunamadı'); return; }
+  if(dosya.size > 8*1024*1024){ showToast('⚠️ Fotoğraf 8MB\'dan küçük olmalı'); return; }
+  showToast('Fotoğraf yükleniyor...');
+  try{
+    const r = modalAktifRestoran;
+    const pid = r.id || r.name;
+    const uzanti = (dosya.name.split('.').pop()||'jpg').toLowerCase();
+    const dosyaAdi = `${supaUser.id}/${pid.replace(/[^a-zA-Z0-9]/g,'_')}_${Date.now()}.${uzanti}`;
+    const { error: upErr } = await supa.storage.from('menu-fotograflari').upload(dosyaAdi, dosya, { contentType: dosya.type });
+    if(upErr) throw upErr;
+    const { data: urlData } = supa.storage.from('menu-fotograflari').getPublicUrl(dosyaAdi);
+    const { error: dbErr } = await supa.from('menu_fotograflari').insert({
+      user_id: supaUser.id, place_id: pid, place_name: r.name, foto_url: urlData.publicUrl
+    });
+    if(dbErr) throw dbErr;
+    showToast('✅ Menü fotoğrafı eklendi!');
+    menuFotolariYukle(r);
+  }catch(e){
+    console.error('Menü fotoğrafı yükleme hatası:', e);
+    showToast('⚠️ Yükleme başarısız');
+  }
+}
+
+async function menuFotoSil(id, fotoUrl){
+  if(!supa || !supaUser) return;
+  try{
+    await supa.from('menu_fotograflari').delete().eq('id', id).eq('user_id', supaUser.id);
+    // Storage'dan da temizlemeyi dene (URL'den dosya yolunu çıkar)
+    try{
+      const parcalar = fotoUrl.split('/menu-fotograflari/');
+      if(parcalar[1]) await supa.storage.from('menu-fotograflari').remove([decodeURIComponent(parcalar[1])]);
+    }catch(e){ console.warn('Storage temizleme hatası (önemli değil):', e); }
+    showToast('Fotoğraf silindi.');
+    if(modalAktifRestoran) menuFotolariYukle(modalAktifRestoran);
+  }catch(e){ console.warn('Menü fotoğrafı silme hatası:', e); }
+}
+
+function menuLightboxAc(url){
+  $('#menuLightboxImg').src = url;
+  $('#menuLightbox').classList.add('open');
+}
+function menuLightboxKapat(){
+  $('#menuLightbox').classList.remove('open');
+}
+
 /* =============================================
    PAYLAŞ
    ============================================= */
@@ -2179,7 +2366,7 @@ if('serviceWorker' in navigator){
     caches.keys().then(adlar=>{
       adlar.forEach(ad=>{
         // Bu sürümün cache'i dışındakileri sil
-        if(ad && ad.indexOf('lezzet-v1.9.2')===-1) caches.delete(ad);
+        if(ad && ad.indexOf('lezzet-v1.9.4')===-1) caches.delete(ad);
       });
     }).catch(()=>{});
   }
@@ -2187,7 +2374,7 @@ if('serviceWorker' in navigator){
 
 
 /* =============================================
-   GEOMETRİK AĞ — üçgen/beşgen düğümler, neon nabızlar (V1.9.2)
+   GEOMETRİK AĞ — üçgen/beşgen düğümler, neon nabızlar (V1.9.4)
    ============================================= */
 (function(){
   const cv=document.getElementById('agCanvas');
@@ -2317,7 +2504,7 @@ if('serviceWorker' in navigator){
 
 
 /* =============================================
-   AŞAĞI SÜRÜKLEYEREK KAPATMA (V1.9.2)
+   AŞAĞI SÜRÜKLEYEREK KAPATMA (V1.9.4)
    Event'ler PANELE değil, doğrudan tutamaç (handle)
    elementine bağlanır — böylece tarayıcı scroll'u
    asla arka plana/panele yönlendiremez.
@@ -2392,17 +2579,17 @@ if('serviceWorker' in navigator){
 
   function baglaTumPaneller(){
     // Tam ekran paneller: .panel-view zaten translateX(-50%) kullanıyor, taban olarak koruyoruz
-    ['favPanel','rotaPanel','ziyaretPanel','profilPanel'].forEach(id=>{
+    ['favPanel','rotaPanel','ziyaretPanel','profilPanel','tavsiyelerimPanel'].forEach(id=>{
       const panel=document.getElementById(id);
       if(!panel) return;
       const handle=panel.querySelector('.pv-drag-handle');
-      surukleBagla(handle, panel, ()=>switchPanel('main'), 'translateX(-50%)');
+      surukleBagla(handle, panel, ()=>panelKapatBirOnceki(), 'translateX(-50%)');
     });
 
     const rehber = document.getElementById('rehberPanel');
     if(rehber){
       const handle=rehber.querySelector('.pv-drag-handle');
-      surukleBagla(handle, rehber, ()=>switchPanel('profil'), '');
+      surukleBagla(handle, rehber, ()=>panelKapatBirOnceki(), '');
     }
 
     // Modal: bottom-sheet
@@ -2423,7 +2610,7 @@ if('serviceWorker' in navigator){
 
 
 /* =============================================
-   MODAL SEKMELERİ: Yorumlar / Tavsiyeler / Menü (V1.9.2)
+   MODAL SEKMELERİ: Yorumlar / Tavsiyeler / Menü (V1.9.4)
    ============================================= */
 let modalAktifRestoran = null; // {id, name} — sekme fonksiyonları için
 
@@ -2440,7 +2627,7 @@ function modalSekmeGovde(){
     <div id="tavsiyeIcerik"><div class="load-rev">Yükleniyor…</div></div>
   </div>
   <div class="mtab-panel" id="mtabMenu">
-    <div id="menuIcerik"><div class="load-rev">Yakında burada…</div></div>
+    <div id="menuIcerik"><div class="load-rev">Yükleniyor…</div></div>
   </div>`;
 }
 
@@ -2451,6 +2638,7 @@ function modalSekmeSec(tab){
   const el=document.getElementById(map[tab]);
   if(el) el.classList.add('active');
   if(tab==='tavsiye' && modalAktifRestoran) tavsiyeleriYukle(modalAktifRestoran);
+  if(tab==='menu' && modalAktifRestoran) menuFotolariYukle(modalAktifRestoran);
 }
 
 async function tavsiyeleriYukle(r){

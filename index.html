@@ -238,7 +238,7 @@ label{font-size:11px;color:var(--muted);font-weight:600;padding-left:2px}
 footer{padding:16px 22px 22px;text-align:center;color:var(--dim);font-size:11px;line-height:1.7;transition:color .6s}
 footer strong{color:var(--muted);font-weight:600}
 
-/* ===== PREMIUM POLISH (V1.10.1) ===== */
+/* ===== PREMIUM POLISH (V1.10.4) ===== */
 .fchip{padding:10px 18px;font-size:13px;border-radius:22px;transition:all .25s cubic-bezier(.2,.8,.3,1)}
 .fchip:active{transform:scale(.94)}
 .fchip.active{background:var(--accent)!important;color:#fff!important;border-color:var(--accent)!important;box-shadow:0 0 16px rgba(124,194,66,.35)}
@@ -254,14 +254,13 @@ footer strong{color:var(--muted);font-weight:600}
 .info-tip{position:relative;display:inline-block;margin-left:5px;cursor:pointer;color:var(--accentsoft);font-weight:800}
 .info-tip .tip-box{display:none;position:absolute;bottom:140%;right:-10px;width:238px;background:var(--s3);border:1px solid var(--line);border-radius:12px;padding:11px 13px;font-size:11.5px;line-height:1.6;color:var(--cream);z-index:40;box-shadow:var(--shadow);font-weight:500;text-align:left}
 .info-tip.show .tip-box{display:block}
-.serbest-bar{display:flex;gap:8px;margin-bottom:14px}
+.serbest-bar{display:flex;gap:8px;margin:0 22px 14px}
 .serbest-bar input{flex:1;padding:13px 16px;border-radius:14px;border:1px solid var(--line);background:var(--surface);color:var(--cream);font-size:14px;font-family:inherit;min-width:0}
 .serbest-bar input::placeholder{color:var(--dim)}
-.serbest-bar button{flex:0 0 auto;padding:0 20px;border:none;border-radius:14px;background:var(--accent);color:#fff;font-weight:700;font-family:inherit;font-size:14px;cursor:pointer;transition:transform .15s}
-.serbest-bar button:active{transform:scale(.95)}
-.alkol-filtre-btn{flex:0 0 auto!important;width:46px;padding:0!important;background:var(--surface)!important;border:1px solid var(--line)!important;display:flex;align-items:center;justify-content:center}
+.alkol-filtre-btn{flex:0 0 auto;width:46px;padding:0;border-radius:14px;border:1px solid var(--line);background:var(--surface);cursor:pointer;transition:transform .15s,background .2s,border-color .2s;display:flex;align-items:center;justify-content:center}
+.alkol-filtre-btn:active{transform:scale(.95)}
 .alkol-filtre-btn svg{stroke:var(--muted);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:stroke .2s}
-.alkol-filtre-btn.active{background:rgba(233,176,74,.18)!important;border-color:var(--gold)!important}
+.alkol-filtre-btn.active{background:rgba(233,176,74,.18);border-color:var(--gold)}
 .alkol-filtre-btn.active svg{stroke:var(--gold)}
 .why-line{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}
 .why-tag{font-size:10px;font-weight:700;color:var(--accentsoft);background:rgba(124,194,66,.09);border:1px solid rgba(124,194,66,.2);border-radius:7px;padding:3px 7px}
@@ -274,7 +273,7 @@ footer strong{color:var(--muted);font-weight:600}
 .btab .ico{display:flex;align-items:center;justify-content:center;height:24px}
 .btab .ico img{width:24px;height:24px;border-radius:50%;object-fit:cover}
 
-/* ===== CANLI ARKA PLAN — AURORA (V1.10.1) ===== */
+/* ===== CANLI ARKA PLAN — AURORA (V1.10.4) ===== */
 .aurora{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
 .aurora span{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;will-change:transform}
 .aurora .a1{width:440px;height:440px;background:radial-gradient(circle,rgba(46,94,28,.6),transparent 70%);top:-130px;left:-110px;animation:aur1 26s ease-in-out infinite alternate}
@@ -297,7 +296,7 @@ footer strong{color:var(--muted);font-weight:600}
   .aurora span{animation:none!important}
 }
 
-/* ===== LOGO YOLU & ARABALAR (V1.10.1) ===== */
+/* ===== LOGO YOLU & ARABALAR (V1.10.4) ===== */
 .logo-sahne{position:relative;display:inline-block;animation:logoin .9s cubic-bezier(.2,.9,.3,1) both, logofloat 4.5s ease-in-out 1.2s infinite, logoglow 4.5s ease-in-out 1.2s infinite}
 .logo-sahne img{display:block;animation:none!important}
 .logo-yol{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
@@ -315,7 +314,7 @@ footer strong{color:var(--muted);font-weight:600}
   #agCanvas{display:none}
 }
 
-/* ===== AŞAĞI SÜRÜKLEYEREK KAPATMA (V1.10.1) ===== */
+/* ===== AŞAĞI SÜRÜKLEYEREK KAPATMA (V1.10.4) ===== */
 .panel-view,#rehberPanel{transition:transform .28s cubic-bezier(.2,.8,.3,1)}
 .panel-view.dragging,#rehberPanel.dragging{transition:none}
 .modal{transition:transform .28s cubic-bezier(.2,.8,.3,1)}
@@ -325,7 +324,7 @@ footer strong{color:var(--muted);font-weight:600}
 .pv-drag-handle:active::after{background:var(--accentsoft);width:56px}
 .pv-drag-handle:active{cursor:grabbing}
 
-/* ===== MODAL SEKMELER: Yorumlar / Tavsiyeler / Menü (V1.10.1) ===== */
+/* ===== MODAL SEKMELER: Yorumlar / Tavsiyeler / Menü (V1.10.4) ===== */
 .mtabs{display:flex;gap:4px;background:var(--s2);border-radius:12px;padding:4px;margin:14px 0 10px}
 .mtab{flex:1;text-align:center;padding:9px 6px;border-radius:9px;font-size:12.5px;font-weight:700;color:var(--muted);cursor:pointer;transition:all .2s;user-select:none;border:none;background:transparent;font-family:inherit}
 .mtab.active{background:var(--accent);color:#fff}
@@ -352,7 +351,7 @@ footer strong{color:var(--muted);font-weight:600}
 .tav-login-cta{text-align:center;padding:20px 10px;color:var(--muted);font-size:13px;line-height:1.6}
 .tav-login-cta button{margin-top:10px}
 
-/* ===== MENÜ FOTOĞRAFLARI (V1.10.1) ===== */
+/* ===== MENÜ FOTOĞRAFLARI (V1.10.4) ===== */
 .menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
 .menu-thumb{position:relative;aspect-ratio:1/1;border-radius:12px;overflow:hidden;background:var(--s2);border:1px solid var(--line)}
 .menu-thumb img{width:100%;height:100%;object-fit:cover;display:block;cursor:pointer}
@@ -365,7 +364,7 @@ footer strong{color:var(--muted);font-weight:600}
 .menu-lightbox img{max-width:100%;max-height:85vh;border-radius:10px;object-fit:contain}
 .menu-lightbox-close{position:absolute;top:20px;right:20px;background:rgba(255,255,255,.15);border:none;color:#fff;width:38px;height:38px;border-radius:50%;font-size:18px;cursor:pointer}
 
-/* ===== AUTH: hata mesajı + şifremi unuttum + sıfırlama (V1.10.1) ===== */
+/* ===== AUTH: hata mesajı + şifremi unuttum + sıfırlama (V1.10.4) ===== */
 .auth-link{background:none;border:none;color:var(--accentsoft);font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:underline;padding:4px 0}
 .auth-msg-box{font-size:12.5px;margin-top:10px;text-align:center;line-height:1.5;padding:0 4px}
 .auth-msg-box.err{color:var(--red)}
@@ -421,15 +420,6 @@ footer strong{color:var(--muted);font-weight:600}
 
 <!-- Ana arama paneli -->
 <div id="mainPanel" style="display:none">
-  <!-- Son aramalar -->
-  <div class="serbest-bar">
-    <input type="text" id="serbestArama" placeholder="Mekan, kebap, pide veya kahve ara..." onkeydown="if(event.key==='Enter')serbestAra()">
-    <button onclick="serbestAra()">Ara</button>
-    <button id="alkolFiltreBtn" class="alkol-filtre-btn" onclick="alkolFiltreToggle()" title="Alkolsüz mekânları göster">
-      <svg viewBox="0 0 24 24" width="19" height="19"><path d="M8 3h8l-1 6a3 3 0 0 1-6 0z"/><path d="M12 9v7"/><path d="M9 20h6"/><path d="M12 16v4"/><line x1="3.5" y1="3.5" x2="20.5" y2="20.5"/></svg>
-    </button>
-  </div>
-
   <div class="gecmis" id="gecmisBar"></div>
 
   <div class="panel">
@@ -455,7 +445,6 @@ footer strong{color:var(--muted);font-weight:600}
         <input type="text" id="mah" placeholder="Birlik Mahallesi">
       </div>
     </div>
-    <button class="go" id="searchBtn">Sofraları getir</button>
   </div>
 
   <div style="position:relative">
@@ -476,6 +465,16 @@ footer strong{color:var(--muted);font-weight:600}
     <div class="fchip" data-tur="fast food">🍔 Fast Food</div>
     <div class="fchip" data-tur="vegan vejetaryen">🥗 Vegan & Vejetaryen</div>
   </div>
+  </div>
+
+  <div class="serbest-bar">
+    <input type="text" id="serbestArama" placeholder="Mekan adı veya yemek türü (isteğe bağlı)...">
+    <button id="alkolFiltreBtn" class="alkol-filtre-btn" onclick="alkolFiltreToggle()" title="Alkolsüz mekânları göster">
+      <svg viewBox="0 0 24 24" width="19" height="19"><path d="M8 3h8l-1 6a3 3 0 0 1-6 0z"/><path d="M12 9v7"/><path d="M9 20h6"/><path d="M12 16v4"/><line x1="3.5" y1="3.5" x2="20.5" y2="20.5"/></svg>
+    </button>
+  </div>
+
+  <button class="go" id="searchBtn" style="margin:4px 22px 14px;width:calc(100% - 44px)">Sofraları getir</button>
 
   <div class="results" id="results">
     <div class="empty"><span class="ico">🍽️</span>Bir konum seç ya da il/ilçe gir,<br>en iyi sofraları sıralayalım.</div>
@@ -757,7 +756,7 @@ footer strong{color:var(--muted);font-weight:600}
 
 <footer>
   Rotaste<br>
-  <strong>Geliştirici: RotasteTeam</strong> — V1.10.1<br>
+  <strong>Geliştirici: RotasteTeam</strong> — V1.10.4<br>
   İletişim: <a href="mailto:rotaste@hotmail.com" style="color:var(--accentsoft);text-decoration:none">rotaste@hotmail.com</a>
 </footer>
 
@@ -1956,17 +1955,9 @@ function toggleZiyaret(e,idx){
 }
 
 
-/* ===== PREMIUM POLISH JS (V1.10.1) ===== */
+/* ===== PREMIUM POLISH JS (V1.10.4) ===== */
 const PROFIL_SVG = '<svg viewBox="0 0 24 24" style="width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
 let userKonum = null; // {lat,lng} — mesafe hesabı için
-
-function serbestAra(){
-  const q = $('#serbestArama').value.trim();
-  if(!q){ $('#serbestArama').focus(); return; }
-  const params = {metin:q, tur:currentTur};
-  if(userKonum){ params.lat=userKonum.lat; params.lng=userKonum.lng; }
-  doSearch(userKonum ? `${q} (yakınımda)` : q, params);
-}
 
 function mesafeStr(r){
   if(!userKonum || !r.lat || !r.lng) return '';
@@ -2016,12 +2007,27 @@ async function doSearch(label,params){
 
 $('#searchBtn').onclick=()=>{
   const il=$('#il').value.trim(),ilce=$('#ilce').value.trim(),mah=$('#mah').value.trim();
-  if(!il&&!ilce&&!mah){ $('#il').focus(); return; }
-  const metin=[mah,ilce,il].filter(Boolean).join(' ');
-  const label=[mah,ilce,il].filter(Boolean).join(', ');
-  const params={metin,tur:currentTur};
+  const anahtarKelime = $('#serbestArama').value.trim();
+
+  // En az bir konum bilgisi şart: ya "Konumumu Kullan" ile enlem/boylam alınmış, ya da il/ilçe/mahalle girilmiş
+  if(!userKonum && !il && !ilce && !mah){
+    $('#il').focus();
+    showToast('📍 Önce konumunu kullan ya da il/ilçe gir');
+    return;
+  }
+
+  const yerMetni = [mah,ilce,il].filter(Boolean).join(' ');
+  // Backend'in "metin" parametresi: anahtar kelime + yer adı birleşik gönderilir (örn: "kokoreç Ankara Çankaya")
+  const metin = [anahtarKelime, yerMetni].filter(Boolean).join(' ').trim();
+
+  const parcalar = [anahtarKelime, [mah,ilce,il].filter(Boolean).join(', ')].filter(Boolean);
+  const label = parcalar.join(' · ') || 'Yakınımdaki sofralar';
+
+  const params = {tur:currentTur};
+  if(metin) params.metin = metin;
   if(userKonum){ params.lat=userKonum.lat; params.lng=userKonum.lng; }
-  doSearch(label,params);
+
+  doSearch(label, params);
 };
 
 /* =============================================
@@ -2222,7 +2228,7 @@ function ziyaretSil(i){
 }
 updateZiyaretBadge(); renderZiyaretPanel();
 
-/* ===== Tavsiyelerim paneli (V1.10.1) ===== */
+/* ===== Tavsiyelerim paneli (V1.10.4) ===== */
 async function renderTavsiyelerimPanel(){
   const el=$('#tavsiyelerimList');
   if(!el) return;
@@ -2265,7 +2271,7 @@ async function tavsiyelerimSil(id){
 }
 
 /* =============================================
-   MENÜ FOTOĞRAFLARI (V1.10.1)
+   MENÜ FOTOĞRAFLARI (V1.10.4)
    ============================================= */
 async function menuFotolariYukle(r){
   const kutu=$('#menuIcerik');
@@ -2446,7 +2452,7 @@ if('serviceWorker' in navigator){
     caches.keys().then(adlar=>{
       adlar.forEach(ad=>{
         // Bu sürümün cache'i dışındakileri sil
-        if(ad && ad.indexOf('lezzet-v1.10.1')===-1) caches.delete(ad);
+        if(ad && ad.indexOf('lezzet-v1.10.4')===-1) caches.delete(ad);
       });
     }).catch(()=>{});
   }
@@ -2454,7 +2460,7 @@ if('serviceWorker' in navigator){
 
 
 /* =============================================
-   GEOMETRİK AĞ — üçgen/beşgen düğümler, neon nabızlar (V1.10.1)
+   GEOMETRİK AĞ — üçgen/beşgen düğümler, neon nabızlar (V1.10.4)
    ============================================= */
 (function(){
   const cv=document.getElementById('agCanvas');
@@ -2584,7 +2590,7 @@ if('serviceWorker' in navigator){
 
 
 /* =============================================
-   AŞAĞI SÜRÜKLEYEREK KAPATMA (V1.10.1)
+   AŞAĞI SÜRÜKLEYEREK KAPATMA (V1.10.4)
    Event'ler PANELE değil, doğrudan tutamaç (handle)
    elementine bağlanır — böylece tarayıcı scroll'u
    asla arka plana/panele yönlendiremez.
@@ -2690,7 +2696,7 @@ if('serviceWorker' in navigator){
 
 
 /* =============================================
-   MODAL SEKMELERİ: Yorumlar / Tavsiyeler / Menü (V1.10.1)
+   MODAL SEKMELERİ: Yorumlar / Tavsiyeler / Menü (V1.10.4)
    ============================================= */
 let modalAktifRestoran = null; // {id, name} — sekme fonksiyonları için
 

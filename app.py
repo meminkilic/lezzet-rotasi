@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Rotaste — Proxy Sunucusu
-Geliştirici: Mehmet Emin KILIÇ — V1.10.0
+Geliştirici: Mehmet Emin KILIÇ — V1.12.5
 """
 import os, requests
 from flask import Flask, request, jsonify, send_file, Response
@@ -219,8 +219,8 @@ def restoranlar():
                 json=gövde,
                 timeout=12)
         elif lat and lng:
-            try: yaricap = float(request.args.get("yaricap",2500))
-            except: yaricap = 2500.0
+            try: yaricap = float(request.args.get("yaricap",15000))
+            except: yaricap = 15000.0
             yaricap = max(50.0, min(yaricap, 50000.0))
             if tur:
                 r = requests.post(f"{PLACES_BASE}:searchText",

@@ -1,7 +1,7 @@
 {
   "name": "Rotaste",
   "short_name": "Rotaste",
-  "description": "Şehir şehir, lokma lokma — Türkiye'nin en iyi sofralarını keşfet",
+  "description": "Route & Taste — Türkiye'nin en iyi sofralarını keşfet",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#161a16",

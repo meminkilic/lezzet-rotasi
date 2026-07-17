@@ -336,6 +336,53 @@ def detay(place_id):
     except requests.exceptions.RequestException as e:
         return _hata(f"Bağlantı hatası: {e}", 502)
 
+# ============================================================
+# HESAP SİLME (Apple Guideline 5.1.1 gereği)
+# Kullanıcı kendi hesabını siler. Güvenlik: kullanıcının access
+# token'ı doğrulanır, sonra service_role ile auth kaydı silinir.
+# service_role anahtarı SADECE burada (backend) kullanılır.
+# ============================================================
+SUPABASE_URL = os.environ.get("SUPABASE_URL", "https://rtkwqemvbfezywitiacx.supabase.co").strip()
+SUPABASE_SERVICE_KEY = os.environ.get("SUPABASE_SERVICE_KEY", "").strip()
+
+@app.route("/hesap-sil", methods=["POST"])
+def hesap_sil():
+    if not SUPABASE_SERVICE_KEY:
+        return _hata("Hesap silme şu an kullanılamıyor.", 503)
+    # 1) Kullanıcının access token'ını al (Authorization: Bearer <token>)
+    auth_header = request.headers.get("Authorization", "")
+    if not auth_header.startswith("Bearer "):
+        return _hata("Oturum bulunamadı.", 401)
+    token = auth_header.split("Bearer ", 1)[1].strip()
+    if not token:
+        return _hata("Geçersiz oturum.", 401)
+    try:
+        # 2) Token'ı doğrula: bu token gerçekten geçerli bir kullanıcıya mı ait?
+        me = requests.get(
+            f"{SUPABASE_URL}/auth/v1/user",
+            headers={"Authorization": f"Bearer {token}", "apikey": SUPABASE_SERVICE_KEY},
+            timeout=10
+        )
+        if me.status_code != 200:
+            return _hata("Oturum doğrulanamadı.", 401)
+        user_id = me.json().get("id")
+        if not user_id:
+            return _hata("Kullanıcı bulunamadı.", 404)
+        # 3) service_role ile kullanıcıyı kalıcı olarak sil
+        dele = requests.delete(
+            f"{SUPABASE_URL}/auth/v1/admin/users/{user_id}",
+            headers={"Authorization": f"Bearer {SUPABASE_SERVICE_KEY}", "apikey": SUPABASE_SERVICE_KEY},
+            timeout=10
+        )
+        if dele.status_code in (200, 204):
+            return jsonify({"ok": True, "mesaj": "Hesap silindi"})
+        return _hata("Hesap silinemedi, tekrar deneyin.", 502)
+    except requests.exceptions.Timeout:
+        return _hata("Zaman aşımı, tekrar deneyin.", 504)
+    except requests.exceptions.RequestException as e:
+        return _hata(f"Bağlantı hatası: {e}", 502)
+
+
 if __name__ == "__main__":
     if not API_KEY:
         print("\n[UYARI] GOOGLE_API_KEY tanımlı değil!\n")

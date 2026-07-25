@@ -1,5 +1,5 @@
-// Rotaste — Service Worker V1.12.15
-const CACHE = 'lezzet-v1.12.15';
+// Rotaste — Service Worker V1.12.16
+const CACHE = 'lezzet-v1.12.16';
 const STATIC = ['/', '/manifest.json'];
 
 self.addEventListener('install', e => {

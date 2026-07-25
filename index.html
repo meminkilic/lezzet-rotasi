@@ -246,7 +246,7 @@ label{font-size:11px;color:var(--muted);font-weight:600;padding-left:2px}
 footer{padding:16px 22px 22px;text-align:center;color:var(--dim);font-size:11px;line-height:1.7;transition:color .6s}
 footer strong{color:var(--muted);font-weight:600}
 
-/* ===== PREMIUM POLISH (V1.12.15) ===== */
+/* ===== PREMIUM POLISH (V1.12.16) ===== */
 .fchip{padding:10px 18px;font-size:13px;border-radius:22px;transition:all .25s cubic-bezier(.2,.8,.3,1)}
 .fchip:active{transform:scale(.94)}
 .fchip.active{background:var(--accent)!important;color:#fff!important;border-color:var(--accent)!important;box-shadow:0 0 16px rgba(124,194,66,.35)}
@@ -284,7 +284,7 @@ footer strong{color:var(--muted);font-weight:600}
 .btab .ico{display:flex;align-items:center;justify-content:center;height:24px}
 .btab .ico img{width:24px;height:24px;border-radius:50%;object-fit:cover}
 
-/* ===== CANLI ARKA PLAN — AURORA (V1.12.15) ===== */
+/* ===== CANLI ARKA PLAN — AURORA (V1.12.16) ===== */
 .aurora{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
 .aurora span{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;will-change:transform}
 .aurora .a1{width:440px;height:440px;background:radial-gradient(circle,rgba(46,94,28,.6),transparent 70%);top:-130px;left:-110px;animation:aur1 26s ease-in-out infinite alternate}
@@ -307,7 +307,7 @@ footer strong{color:var(--muted);font-weight:600}
   .aurora span{animation:none!important}
 }
 
-/* ===== LOGO YOLU & ARABALAR (V1.12.15) ===== */
+/* ===== LOGO YOLU & ARABALAR (V1.12.16) ===== */
 .logo-sahne{position:relative;display:inline-block;animation:logoin .9s cubic-bezier(.2,.9,.3,1) both, logofloat 4.5s ease-in-out 1.2s infinite, logoglow 4.5s ease-in-out 1.2s infinite}
 .logo-sahne img{display:block;animation:none!important}
 .logo-yol{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
@@ -325,7 +325,7 @@ footer strong{color:var(--muted);font-weight:600}
   #agCanvas{display:none}
 }
 
-/* ===== AŞAĞI SÜRÜKLEYEREK KAPATMA (V1.12.15) ===== */
+/* ===== AŞAĞI SÜRÜKLEYEREK KAPATMA (V1.12.16) ===== */
 .panel-view,#rehberPanel{transition:transform .28s cubic-bezier(.2,.8,.3,1)}
 .panel-view.dragging,#rehberPanel.dragging{transition:none}
 .modal{transition:transform .28s cubic-bezier(.2,.8,.3,1)}
@@ -335,7 +335,7 @@ footer strong{color:var(--muted);font-weight:600}
 .pv-drag-handle:active::after{background:var(--accentsoft);width:56px}
 .pv-drag-handle:active{cursor:grabbing}
 
-/* ===== MODAL SEKMELER: Yorumlar / Tavsiyeler / Menü (V1.12.15) ===== */
+/* ===== MODAL SEKMELER: Yorumlar / Tavsiyeler / Menü (V1.12.16) ===== */
 .mtabs{display:flex;gap:4px;background:var(--s2);border-radius:12px;padding:4px;margin:14px 0 10px}
 .mtab{flex:1;text-align:center;padding:9px 6px;border-radius:9px;font-size:12.5px;font-weight:700;color:var(--muted);cursor:pointer;transition:all .2s;user-select:none;border:none;background:transparent;font-family:inherit}
 .mtab.active{background:var(--accent);color:#fff}
@@ -362,7 +362,7 @@ footer strong{color:var(--muted);font-weight:600}
 .tav-login-cta{text-align:center;padding:20px 10px;color:var(--muted);font-size:13px;line-height:1.6}
 .tav-login-cta button{margin-top:10px}
 
-/* ===== MENÜ FOTOĞRAFLARI (V1.12.15) ===== */
+/* ===== MENÜ FOTOĞRAFLARI (V1.12.16) ===== */
 .menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
 .menu-thumb{position:relative;aspect-ratio:1/1;border-radius:12px;overflow:hidden;background:var(--s2);border:1px solid var(--line)}
 .menu-thumb img{width:100%;height:100%;object-fit:cover;display:block;cursor:pointer}
@@ -375,7 +375,7 @@ footer strong{color:var(--muted);font-weight:600}
 .menu-lightbox img{max-width:100%;max-height:85vh;border-radius:10px;object-fit:contain}
 .menu-lightbox-close{position:absolute;top:20px;right:20px;background:rgba(255,255,255,.15);border:none;color:#fff;width:38px;height:38px;border-radius:50%;font-size:18px;cursor:pointer}
 
-/* ===== AUTH: hata mesajı + şifremi unuttum + sıfırlama (V1.12.15) ===== */
+/* ===== AUTH: hata mesajı + şifremi unuttum + sıfırlama (V1.12.16) ===== */
 .auth-link{background:none;border:none;color:var(--accentsoft);font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:underline;padding:4px 0}
 .auth-msg-box{font-size:12.5px;margin-top:10px;text-align:center;line-height:1.5;padding:0 4px}
 .auth-msg-box.err{color:var(--red)}
@@ -542,7 +542,10 @@ footer strong{color:var(--muted);font-weight:600}
     <button class="rota-tur" data-tur="pide lahmacun" onclick="rotaTurSec(this,'pide lahmacun')">🫓 Pide</button>
   </div>
 
-  <button class="auth-btn primary-btn" id="rotaAraBtn" onclick="rotaAra()" style="margin-bottom:16px">🔍 Rota Üzerinde Ara</button>
+  <div id="rotaKilitBar" style="display:none;gap:8px;margin-bottom:14px">
+    <button class="auth-btn" onclick="rotaKilitAc()" style="flex:1;background:var(--s2);color:var(--accent);border:1px solid var(--accent)">🔓 Rotayı Değiştir</button>
+    <button class="auth-btn" onclick="rotaTemizle()" style="flex:0 0 auto;background:var(--s2);color:var(--red);border:1px solid var(--red)">🗑️ Sıfırla</button>
+  </div>
 
   <div id="rotaSonuc"></div>
 </div>
@@ -773,7 +776,7 @@ footer strong{color:var(--muted);font-weight:600}
 
 <footer>
   Rotaste<br>
-  <strong>Geliştirici: RotasteTeam</strong> — V1.12.15<br>
+  <strong>Geliştirici: RotasteTeam</strong> — V1.12.16<br>
   İletişim: <a href="mailto:info@rotaste.com" style="color:var(--accentsoft);text-decoration:none">info@rotaste.com</a><br>
   <a href="https://www.instagram.com/rotasteofficial" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;color:var(--accentsoft);text-decoration:none;margin-top:8px">
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
@@ -1669,6 +1672,7 @@ let rotaKoordinatlar=[]; // OSRM'den gelen yol noktaları (aktif/seçili rota)
 let rotaRestoranMarkers=[]; // haritadaki restoran işaretleri
 let rotaSonuclar=[]; // Rotadan arama sonuçları (sıralı)
 let rotaAlternatifCizgiler=[]; // haritadaki soluk alternatif rota çizgileri (tıklanabilir)
+let rotaKilitli=false; // rota çizilince true olur; başlangıç/varış değiştirilemez (el kayması önlenir)
 
 function rotaHaritaBaslat(){
   if(typeof L==='undefined'){ return; } // Leaflet yüklenmediyse
@@ -1684,13 +1688,41 @@ function rotaHaritaBaslat(){
 }
 
 function noktaSecModu(hangi){
+  if(rotaKilitli) return; // kilitliyken nokta modu değişmez
   rotaAktifNokta=hangi;
   document.getElementById('btnNoktaA').classList.toggle('active',hangi==='A');
   document.getElementById('btnNoktaB').classList.toggle('active',hangi==='B');
 }
 
+// Rota çizilince başlangıç/varış girişlerini kilitle (el kayması ile rota değişmesin)
+function rotaKilitle(){
+  rotaKilitli=true;
+  ['rotaAdres1','rotaAdres2'].forEach(id=>{ const el=$('#'+id); if(el) el.disabled=true; });
+  ['btnNoktaA','btnNoktaB'].forEach(id=>{ const el=$('#'+id); if(el){ el.disabled=true; el.style.opacity='.45'; } });
+  const kb=$('#rotaKonumBtn'); if(kb){ kb.disabled=true; kb.style.opacity='.45'; }
+  // "Bul" butonları
+  document.querySelectorAll('#rotaPanel .rota-nokta-btn').forEach(b=>{
+    if(b.textContent.trim()==='Bul'){ b.disabled=true; b.style.opacity='.45'; }
+  });
+  const bar=$('#rotaKilitBar'); if(bar) bar.style.display='flex';
+}
+
+// Kilidi aç ama noktaları koru (kullanıcı tek noktayı düzeltebilsin)
+function rotaKilitAc(){
+  rotaKilitli=false;
+  ['rotaAdres1','rotaAdres2'].forEach(id=>{ const el=$('#'+id); if(el) el.disabled=false; });
+  ['btnNoktaA','btnNoktaB'].forEach(id=>{ const el=$('#'+id); if(el){ el.disabled=false; el.style.opacity=''; } });
+  const kb=$('#rotaKonumBtn'); if(kb){ kb.disabled=false; kb.style.opacity=''; }
+  document.querySelectorAll('#rotaPanel .rota-nokta-btn').forEach(b=>{
+    if(b.textContent.trim()==='Bul'){ b.disabled=false; b.style.opacity=''; }
+  });
+  const bar=$('#rotaKilitBar'); if(bar) bar.style.display='none';
+  showToast('🔓 Rota kilidi açıldı, noktaları düzenleyebilirsin');
+}
+
 // Yazılan adresi koordinata çevir (Nominatim/OSM geocoding)
 async function rotaAdresBul(hangi){
+  if(rotaKilitli){ showToast('Önce "Rotayı Değiştir" ile kilidi aç'); return; }
   const inputId = hangi==='A' ? 'rotaAdres1' : 'rotaAdres2';
   const adres = document.getElementById(inputId).value.trim();
   if(!adres){ showToast('Bir yer adı yaz'); return; }
@@ -1718,6 +1750,7 @@ async function rotaAdresBul(hangi){
 
 // Kullanıcının GPS konumunu doğrudan A noktası (başlangıç) yap
 function rotaKonumumuKullan(){
+  if(rotaKilitli){ showToast('Önce "Rotayı Değiştir" ile kilidi aç'); return; }
   const btn = $('#rotaKonumBtn');
   function konumuUygula(lat,lng){
     const latlng = L.latLng(lat,lng);
@@ -1750,6 +1783,7 @@ function rotaKonumumuKullan(){
 }
 
 function rotaHaritaTikla(latlng){
+  if(rotaKilitli) return; // kilitliyken harita tıklaması noktaları oynatmaz (el kayması koruması)
   if(rotaAktifNokta==='A'){
     rotaNoktaA=latlng;
     if(rotaMarkerA) rotaMap.removeLayer(rotaMarkerA);
@@ -1791,6 +1825,7 @@ function rotaAlternatifOlustur(coords){
       rotaAlternatifCizgiler.push(rotaAlternatifOlustur(oncekiAna));
     }
     showToast('🔄 Rota değiştirildi');
+    rotaAra(); // yeni seçilen rota üzerinde otomatik yeniden ara
   });
   return cizgi;
 }
@@ -1819,6 +1854,10 @@ async function rotaCiz(){
 
       rotaMap.fitBounds(rotaCizgi.getBounds(),{padding:[30,30]});
       if(digerRotalar.length) showToast(`${digerRotalar.length} alternatif rota bulundu, haritadan seçebilirsin`);
+
+      // Rota hazır: girişleri kilitle ve otomatik aramayı başlat (Bul tuşuna gerek yok)
+      rotaKilitle();
+      rotaAra();
     }
   }catch(e){ showToast('Rota çizilemedi, tekrar dene'); }
 }
@@ -1840,6 +1879,7 @@ function rotaTurSec(btn,tur){
 }
 
 function rotaTemizle(){
+  if(rotaKilitli) rotaKilitAc(); // kilidi aç, girişleri tekrar etkinleştir
   rotaNoktaA=rotaNoktaB=null; rotaKoordinatlar=[];
   if(rotaMarkerA){ rotaMap.removeLayer(rotaMarkerA); rotaMarkerA=null; }
   if(rotaMarkerB){ rotaMap.removeLayer(rotaMarkerB); rotaMarkerB=null; }
@@ -2262,7 +2302,7 @@ function toggleZiyaret(e,idx){
 }
 
 
-/* ===== PREMIUM POLISH JS (V1.12.15) ===== */
+/* ===== PREMIUM POLISH JS (V1.12.16) ===== */
 const PROFIL_SVG = '<svg viewBox="0 0 24 24" style="width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
 let userKonum = null; // {lat,lng} — mesafe hesabı için
 
@@ -2549,7 +2589,7 @@ async function ziyaretSil(i){
 }
 updateZiyaretBadge(); renderZiyaretPanel();
 
-/* ===== Tavsiyelerim paneli (V1.12.15) ===== */
+/* ===== Tavsiyelerim paneli (V1.12.16) ===== */
 async function renderTavsiyelerimPanel(){
   const el=$('#tavsiyelerimList');
   if(!el) return;
@@ -2592,7 +2632,7 @@ async function tavsiyelerimSil(id){
 }
 
 /* =============================================
-   MENÜ FOTOĞRAFLARI (V1.12.15)
+   MENÜ FOTOĞRAFLARI (V1.12.16)
    ============================================= */
 async function menuFotolariYukle(r){
   const kutu=$('#menuIcerik');
@@ -2773,7 +2813,7 @@ if('serviceWorker' in navigator){
     caches.keys().then(adlar=>{
       adlar.forEach(ad=>{
         // Bu sürümün cache'i dışındakileri sil
-        if(ad && ad.indexOf('lezzet-v1.12.15')===-1) caches.delete(ad);
+        if(ad && ad.indexOf('lezzet-v1.12.16')===-1) caches.delete(ad);
       });
     }).catch(()=>{});
   }
@@ -2781,7 +2821,7 @@ if('serviceWorker' in navigator){
 
 
 /* =============================================
-   GEOMETRİK AĞ — üçgen/beşgen düğümler, neon nabızlar (V1.12.15)
+   GEOMETRİK AĞ — üçgen/beşgen düğümler, neon nabızlar (V1.12.16)
    ============================================= */
 (function(){
   const cv=document.getElementById('agCanvas');
@@ -2911,7 +2951,7 @@ if('serviceWorker' in navigator){
 
 
 /* =============================================
-   AŞAĞI SÜRÜKLEYEREK KAPATMA (V1.12.15)
+   AŞAĞI SÜRÜKLEYEREK KAPATMA (V1.12.16)
    Event'ler PANELE değil, doğrudan tutamaç (handle)
    elementine bağlanır — böylece tarayıcı scroll'u
    asla arka plana/panele yönlendiremez.
@@ -3017,7 +3057,7 @@ if('serviceWorker' in navigator){
 
 
 /* =============================================
-   MODAL SEKMELERİ: Yorumlar / Tavsiyeler / Menü (V1.12.15)
+   MODAL SEKMELERİ: Yorumlar / Tavsiyeler / Menü (V1.12.16)
    ============================================= */
 let modalAktifRestoran = null; // {id, name} — sekme fonksiyonları için
 

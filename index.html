@@ -246,7 +246,7 @@ label{font-size:11px;color:var(--muted);font-weight:600;padding-left:2px}
 footer{padding:16px 22px 22px;text-align:center;color:var(--dim);font-size:11px;line-height:1.7;transition:color .6s}
 footer strong{color:var(--muted);font-weight:600}
 
-/* ===== PREMIUM POLISH (V1.12.16) ===== */
+/* ===== PREMIUM POLISH (V1.12.17) ===== */
 .fchip{padding:10px 18px;font-size:13px;border-radius:22px;transition:all .25s cubic-bezier(.2,.8,.3,1)}
 .fchip:active{transform:scale(.94)}
 .fchip.active{background:var(--accent)!important;color:#fff!important;border-color:var(--accent)!important;box-shadow:0 0 16px rgba(124,194,66,.35)}
@@ -284,7 +284,7 @@ footer strong{color:var(--muted);font-weight:600}
 .btab .ico{display:flex;align-items:center;justify-content:center;height:24px}
 .btab .ico img{width:24px;height:24px;border-radius:50%;object-fit:cover}
 
-/* ===== CANLI ARKA PLAN — AURORA (V1.12.16) ===== */
+/* ===== CANLI ARKA PLAN — AURORA (V1.12.17) ===== */
 .aurora{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
 .aurora span{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;will-change:transform}
 .aurora .a1{width:440px;height:440px;background:radial-gradient(circle,rgba(46,94,28,.6),transparent 70%);top:-130px;left:-110px;animation:aur1 26s ease-in-out infinite alternate}
@@ -307,7 +307,7 @@ footer strong{color:var(--muted);font-weight:600}
   .aurora span{animation:none!important}
 }
 
-/* ===== LOGO YOLU & ARABALAR (V1.12.16) ===== */
+/* ===== LOGO YOLU & ARABALAR (V1.12.17) ===== */
 .logo-sahne{position:relative;display:inline-block;animation:logoin .9s cubic-bezier(.2,.9,.3,1) both, logofloat 4.5s ease-in-out 1.2s infinite, logoglow 4.5s ease-in-out 1.2s infinite}
 .logo-sahne img{display:block;animation:none!important}
 .logo-yol{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
@@ -325,7 +325,7 @@ footer strong{color:var(--muted);font-weight:600}
   #agCanvas{display:none}
 }
 
-/* ===== AŞAĞI SÜRÜKLEYEREK KAPATMA (V1.12.16) ===== */
+/* ===== AŞAĞI SÜRÜKLEYEREK KAPATMA (V1.12.17) ===== */
 .panel-view,#rehberPanel{transition:transform .28s cubic-bezier(.2,.8,.3,1)}
 .panel-view.dragging,#rehberPanel.dragging{transition:none}
 .modal{transition:transform .28s cubic-bezier(.2,.8,.3,1)}
@@ -335,7 +335,7 @@ footer strong{color:var(--muted);font-weight:600}
 .pv-drag-handle:active::after{background:var(--accentsoft);width:56px}
 .pv-drag-handle:active{cursor:grabbing}
 
-/* ===== MODAL SEKMELER: Yorumlar / Tavsiyeler / Menü (V1.12.16) ===== */
+/* ===== MODAL SEKMELER: Yorumlar / Tavsiyeler / Menü (V1.12.17) ===== */
 .mtabs{display:flex;gap:4px;background:var(--s2);border-radius:12px;padding:4px;margin:14px 0 10px}
 .mtab{flex:1;text-align:center;padding:9px 6px;border-radius:9px;font-size:12.5px;font-weight:700;color:var(--muted);cursor:pointer;transition:all .2s;user-select:none;border:none;background:transparent;font-family:inherit}
 .mtab.active{background:var(--accent);color:#fff}
@@ -362,7 +362,7 @@ footer strong{color:var(--muted);font-weight:600}
 .tav-login-cta{text-align:center;padding:20px 10px;color:var(--muted);font-size:13px;line-height:1.6}
 .tav-login-cta button{margin-top:10px}
 
-/* ===== MENÜ FOTOĞRAFLARI (V1.12.16) ===== */
+/* ===== MENÜ FOTOĞRAFLARI (V1.12.17) ===== */
 .menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
 .menu-thumb{position:relative;aspect-ratio:1/1;border-radius:12px;overflow:hidden;background:var(--s2);border:1px solid var(--line)}
 .menu-thumb img{width:100%;height:100%;object-fit:cover;display:block;cursor:pointer}
@@ -375,7 +375,7 @@ footer strong{color:var(--muted);font-weight:600}
 .menu-lightbox img{max-width:100%;max-height:85vh;border-radius:10px;object-fit:contain}
 .menu-lightbox-close{position:absolute;top:20px;right:20px;background:rgba(255,255,255,.15);border:none;color:#fff;width:38px;height:38px;border-radius:50%;font-size:18px;cursor:pointer}
 
-/* ===== AUTH: hata mesajı + şifremi unuttum + sıfırlama (V1.12.16) ===== */
+/* ===== AUTH: hata mesajı + şifremi unuttum + sıfırlama (V1.12.17) ===== */
 .auth-link{background:none;border:none;color:var(--accentsoft);font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:underline;padding:4px 0}
 .auth-msg-box{font-size:12.5px;margin-top:10px;text-align:center;line-height:1.5;padding:0 4px}
 .auth-msg-box.err{color:var(--red)}
@@ -513,7 +513,6 @@ footer strong{color:var(--muted);font-weight:600}
         <input type="text" id="rotaAdres1" placeholder="📍 Başlangıç (örn: Ankara)" class="auth-input" style="margin-bottom:0;width:100%;box-sizing:border-box" autocomplete="off" onkeydown="if(event.key==='Enter')rotaAdresBul('A')">
         <div class="autocomplete-list" id="rotaAc1"></div>
       </div>
-      <button class="rota-nokta-btn" style="flex:0 0 auto;padding:11px 14px" onclick="rotaAdresBul('A')">Bul</button>
     </div>
     <button class="rota-konum-btn" id="rotaKonumBtn" onclick="rotaKonumumuKullan()">📍 Konumumu başlangıç yap</button>
     <div style="display:flex;gap:8px">
@@ -521,7 +520,6 @@ footer strong{color:var(--muted);font-weight:600}
         <input type="text" id="rotaAdres2" placeholder="🏁 Varış (örn: Bursa)" class="auth-input" style="margin-bottom:0;width:100%;box-sizing:border-box" autocomplete="off" onkeydown="if(event.key==='Enter')rotaAdresBul('B')">
         <div class="autocomplete-list" id="rotaAc2"></div>
       </div>
-      <button class="rota-nokta-btn" style="flex:0 0 auto;padding:11px 14px" onclick="rotaAdresBul('B')">Bul</button>
     </div>
   </div>
 
@@ -546,6 +544,8 @@ footer strong{color:var(--muted);font-weight:600}
     <button class="auth-btn" onclick="rotaKilitAc()" style="flex:1;background:var(--s2);color:var(--accent);border:1px solid var(--accent)">🔓 Rotayı Değiştir</button>
     <button class="auth-btn" onclick="rotaTemizle()" style="flex:0 0 auto;background:var(--s2);color:var(--red);border:1px solid var(--red)">🗑️ Sıfırla</button>
   </div>
+
+  <button class="auth-btn primary-btn" id="rotaAraBtn" onclick="rotaAra()" style="margin-bottom:16px">🔍 Rota Üzerinde Ara</button>
 
   <div id="rotaSonuc"></div>
 </div>
@@ -776,7 +776,7 @@ footer strong{color:var(--muted);font-weight:600}
 
 <footer>
   Rotaste<br>
-  <strong>Geliştirici: RotasteTeam</strong> — V1.12.16<br>
+  <strong>Geliştirici: RotasteTeam</strong> — V1.12.17<br>
   İletişim: <a href="mailto:info@rotaste.com" style="color:var(--accentsoft);text-decoration:none">info@rotaste.com</a><br>
   <a href="https://www.instagram.com/rotasteofficial" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;color:var(--accentsoft);text-decoration:none;margin-top:8px">
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
@@ -1672,6 +1672,9 @@ let rotaKoordinatlar=[]; // OSRM'den gelen yol noktaları (aktif/seçili rota)
 let rotaRestoranMarkers=[]; // haritadaki restoran işaretleri
 let rotaSonuclar=[]; // Rotadan arama sonuçları (sıralı)
 let rotaAlternatifCizgiler=[]; // haritadaki soluk alternatif rota çizgileri (tıklanabilir)
+let rotaEtiketleri=[]; // haritadaki "Rota 1/2" tıklanabilir etiketleri
+let rotaSecenekleri=[]; // OSRM'den gelen tüm rota seçenekleri [[[lat,lng],...], ...]
+let rotaSeciliIndeks=0; // seçili rotanın indeksi
 let rotaKilitli=false; // rota çizilince true olur; başlangıç/varış değiştirilemez (el kayması önlenir)
 
 function rotaHaritaBaslat(){
@@ -1700,10 +1703,6 @@ function rotaKilitle(){
   ['rotaAdres1','rotaAdres2'].forEach(id=>{ const el=$('#'+id); if(el) el.disabled=true; });
   ['btnNoktaA','btnNoktaB'].forEach(id=>{ const el=$('#'+id); if(el){ el.disabled=true; el.style.opacity='.45'; } });
   const kb=$('#rotaKonumBtn'); if(kb){ kb.disabled=true; kb.style.opacity='.45'; }
-  // "Bul" butonları
-  document.querySelectorAll('#rotaPanel .rota-nokta-btn').forEach(b=>{
-    if(b.textContent.trim()==='Bul'){ b.disabled=true; b.style.opacity='.45'; }
-  });
   const bar=$('#rotaKilitBar'); if(bar) bar.style.display='flex';
 }
 
@@ -1713,9 +1712,6 @@ function rotaKilitAc(){
   ['rotaAdres1','rotaAdres2'].forEach(id=>{ const el=$('#'+id); if(el) el.disabled=false; });
   ['btnNoktaA','btnNoktaB'].forEach(id=>{ const el=$('#'+id); if(el){ el.disabled=false; el.style.opacity=''; } });
   const kb=$('#rotaKonumBtn'); if(kb){ kb.disabled=false; kb.style.opacity=''; }
-  document.querySelectorAll('#rotaPanel .rota-nokta-btn').forEach(b=>{
-    if(b.textContent.trim()==='Bul'){ b.disabled=false; b.style.opacity=''; }
-  });
   const bar=$('#rotaKilitBar'); if(bar) bar.style.display='none';
   showToast('🔓 Rota kilidi açıldı, noktaları düzenleyebilirsin');
 }
@@ -1802,32 +1798,55 @@ function rotaHaritaTikla(latlng){
 function rotaAlternatifleriTemizle(){
   rotaAlternatifCizgiler.forEach(c=>rotaMap.removeLayer(c));
   rotaAlternatifCizgiler=[];
+  rotaEtiketleri.forEach(m=>rotaMap.removeLayer(m));
+  rotaEtiketleri=[];
+  rotaSecenekleri=[];
 }
 
-function rotaSecimiUygula(coords){
-  // coords: [[lat,lng], ...] formatında seçilen rota
-  rotaKoordinatlar=coords;
-  if(rotaCizgi) rotaMap.removeLayer(rotaCizgi);
-  rotaCizgi=L.polyline(rotaKoordinatlar,{color:'#7cc242',weight:5,opacity:.85}).addTo(rotaMap);
-  rotaCizgi.bringToFront();
-}
-
-function rotaAlternatifOlustur(coords){
-  const cizgi = L.polyline(coords,{color:'#9aa89a',weight:4,opacity:.55,dashArray:'2 8'})
-    .addTo(rotaMap)
-    .bindTooltip('Bu rotayı kullan', {sticky:true});
-  cizgi.on('click', ()=>{
-    const oncekiAna = rotaKoordinatlar;
-    rotaSecimiUygula(coords);
-    rotaMap.removeLayer(cizgi);
-    rotaAlternatifCizgiler = rotaAlternatifCizgiler.filter(c=>c!==cizgi);
-    if(oncekiAna && oncekiAna.length){
-      rotaAlternatifCizgiler.push(rotaAlternatifOlustur(oncekiAna));
-    }
-    showToast('🔄 Rota değiştirildi');
-    rotaAra(); // yeni seçilen rota üzerinde otomatik yeniden ara
+// Bir rotanın orta noktasına tıklanabilir "Rota N" etiketi koyar (ince çizgiye nişan almak gerekmez)
+function rotaEtiketiEkle(coords, indeks, secili){
+  const orta = coords[Math.floor(coords.length/2)];
+  const renk = secili ? '#7cc242' : '#9aa89a';
+  const ikon = L.divIcon({
+    className:'rota-etiket-ikon',
+    html:`<div style="background:${renk};color:#161a16;font-weight:800;font-size:12px;padding:4px 10px;border-radius:20px;box-shadow:0 2px 8px rgba(0,0,0,.4);white-space:nowrap;border:2px solid #fff">Rota ${indeks+1}${secili?' ✓':''}</div>`,
+    iconSize:[70,26], iconAnchor:[35,13]
   });
-  return cizgi;
+  const m = L.marker(orta,{icon:ikon,interactive:true,zIndexOffset:1000}).addTo(rotaMap);
+  m.on('click', ()=>rotaSec(indeks));
+  return m;
+}
+
+// Çizilen tüm rotaları (ana + alternatifler) haritada göster, etiketlerini koy
+function rotaSecenekleriGoster(secenekler, seciliIndeks){
+  const liste = secenekler.slice(); // temizleme yan etkisinden korunmak için yerel kopya
+  rotaAlternatifleriTemizle();
+  if(rotaCizgi){ rotaMap.removeLayer(rotaCizgi); rotaCizgi=null; }
+  rotaSecenekleri = liste;
+  liste.forEach((coords,i)=>{
+    const secili = (i===seciliIndeks);
+    if(secili){
+      rotaKoordinatlar = coords;
+      rotaCizgi = L.polyline(coords,{color:'#7cc242',weight:5,opacity:.9}).addTo(rotaMap);
+      rotaCizgi.bringToFront();
+    } else {
+      const c = L.polyline(coords,{color:'#9aa89a',weight:4,opacity:.5,dashArray:'2 8'}).addTo(rotaMap);
+      c.on('click', ()=>rotaSec(i));
+      rotaAlternatifCizgiler.push(c);
+    }
+  });
+  // Etiketleri en üste koy (çizgilerden sonra)
+  liste.forEach((coords,i)=>{
+    rotaEtiketleri.push(rotaEtiketiEkle(coords, i, i===seciliIndeks));
+  });
+}
+
+// Kullanıcı bir rotayı seçince (etikete ya da çizgiye tıklayınca)
+function rotaSec(indeks){
+  if(indeks===rotaSeciliIndeks) return;
+  rotaSeciliIndeks = indeks;
+  rotaSecenekleriGoster(rotaSecenekleri, indeks);
+  showToast(`✓ Rota ${indeks+1} seçildi`);
 }
 
 async function rotaCiz(){
@@ -1841,23 +1860,23 @@ async function rotaCiz(){
       rotaAlternatifleriTemizle();
       if(rotaCizgi){ rotaMap.removeLayer(rotaCizgi); rotaCizgi=null; }
 
-      // Ana (en hızlı) rota: OSRM her zaman ilk sırada en iyi rotayı döner
-      const anaCoords = data.routes[0].geometry.coordinates.map(c=>[c[1],c[0]]);
-      rotaSecimiUygula(anaCoords);
+      // Tüm rotaları [lat,lng] formatına çevir
+      const secenekler = data.routes.map(r => r.geometry.coordinates.map(c=>[c[1],c[0]]));
 
-      // Alternatifler varsa (2. ve sonrası): soluk gri, tıklanabilir çizgiler
-      const digerRotalar = data.routes.slice(1);
-      digerRotalar.forEach(r=>{
-        const coords = r.geometry.coordinates.map(c=>[c[1],c[0]]);
-        rotaAlternatifCizgiler.push(rotaAlternatifOlustur(coords));
-      });
+      // Tek rota → otomatik seçili (indeks 0). Çoklu → yine 0 varsayılan ama kullanıcı değiştirebilir.
+      rotaSeciliIndeks = 0;
+      rotaSecenekleriGoster(secenekler, 0);
 
-      rotaMap.fitBounds(rotaCizgi.getBounds(),{padding:[30,30]});
-      if(digerRotalar.length) showToast(`${digerRotalar.length} alternatif rota bulundu, haritadan seçebilirsin`);
+      rotaMap.fitBounds(rotaCizgi.getBounds(),{padding:[40,40]});
+      if(secenekler.length>1){
+        showToast(`${secenekler.length} rota bulundu — haritadan "Rota 1/2" seç, sonra tür seçip "Ara"ya bas`);
+      } else {
+        showToast('Rota hazır — tür seçip "Rota Üzerinde Ara"ya bas');
+      }
 
-      // Rota hazır: girişleri kilitle ve otomatik aramayı başlat (Bul tuşuna gerek yok)
+      // A+B seçildi, rota(lar) çizildi: girişleri kilitle (el kayması ile rota değişmesin)
+      // Otomatik arama YOK — kullanıcı tür seçip "Ara" butonuna basacak
       rotaKilitle();
-      rotaAra();
     }
   }catch(e){ showToast('Rota çizilemedi, tekrar dene'); }
 }
@@ -1885,6 +1904,7 @@ function rotaTemizle(){
   if(rotaMarkerB){ rotaMap.removeLayer(rotaMarkerB); rotaMarkerB=null; }
   if(rotaCizgi){ rotaMap.removeLayer(rotaCizgi); rotaCizgi=null; }
   rotaAlternatifleriTemizle();
+  rotaSeciliIndeks=0;
   rotaRestoranMarkers.forEach(m=>rotaMap.removeLayer(m));
   rotaRestoranMarkers=[];
   const a1=document.getElementById('rotaAdres1'); if(a1) a1.value='';
@@ -1895,7 +1915,8 @@ function rotaTemizle(){
 }
 
 async function rotaAra(){
-  if(!rotaKoordinatlar.length){ showToast('Önce haritadan başlangıç ve varış seç'); return; }
+  if(!rotaKoordinatlar.length){ showToast('Önce başlangıç ve varış seç'); return; }
+  if(!rotaTur || !rotaTur.trim()){ showToast('⚠️ Önce bir tür seç (kebap, köfte, kahvaltı...)'); return; }
   const sonuc=document.getElementById('rotaSonuc');
   sonuc.innerHTML='<div style="text-align:center;padding:30px;color:var(--muted)">🔍 Rota üzerinde aranıyor...</div>';
   try{
@@ -2033,7 +2054,7 @@ async function rotaOpenModal(idx){
       ex.innerHTML=h;
     }
     const revs=data.yorumlar||[];
-    const mapsUrl = `https://www.google.com/maps/place/?q=place_id:${r.id}`;
+    const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(r.name||"")}&query_place_id=${encodeURIComponent(r.id||"")}`;
     const mapsBtn = `<a href="${mapsUrl}" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:var(--s2);border:1px solid var(--line);color:var(--muted);border-radius:12px;padding:11px;font-family:inherit;font-weight:600;font-size:13.5px;text-decoration:none;margin-top:12px">🗺️ Google Maps'te tüm yorumları gör</a>`;
     $('#modalRevs').innerHTML=(revs.length
       ? revs.map(rv=>`<div class="rev-item"><div class="rev-author">${rv.author}</div><div class="rev-meta"><span class="rev-stars">${'★'.repeat(Math.round(rv.rating))}</span><span class="rev-time">${rv.time}</span></div>${rv.text?`<div class="rev-text">${rv.text}</div>`:''}</div>`).join('')
@@ -2302,7 +2323,7 @@ function toggleZiyaret(e,idx){
 }
 
 
-/* ===== PREMIUM POLISH JS (V1.12.16) ===== */
+/* ===== PREMIUM POLISH JS (V1.12.17) ===== */
 const PROFIL_SVG = '<svg viewBox="0 0 24 24" style="width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
 let userKonum = null; // {lat,lng} — mesafe hesabı için
 
@@ -2524,7 +2545,7 @@ async function openModal(idx){
       ex.innerHTML=h;
     }
     const revs=data.yorumlar||[];
-    const mapsUrl = `https://www.google.com/maps/place/?q=place_id:${r.id}`;
+    const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(r.name||"")}&query_place_id=${encodeURIComponent(r.id||"")}`;
     const mapsBtn = `<a href="${mapsUrl}" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:var(--s2);border:1px solid var(--line);color:var(--muted);border-radius:12px;padding:11px;font-family:inherit;font-weight:600;font-size:13.5px;text-decoration:none;margin-top:12px">🗺️ Google Maps'te tüm yorumları gör</a>`;
     $('#modalRevs').innerHTML=(revs.length
       ? revs.map(rv=>`<div class="rev-item"><div class="rev-author">${rv.author}</div><div class="rev-meta"><span class="rev-stars">${'★'.repeat(Math.round(rv.rating))}</span><span class="rev-time">${rv.time}</span></div>${rv.text?`<div class="rev-text">${rv.text}</div>`:''}</div>`).join('')
@@ -2589,7 +2610,7 @@ async function ziyaretSil(i){
 }
 updateZiyaretBadge(); renderZiyaretPanel();
 
-/* ===== Tavsiyelerim paneli (V1.12.16) ===== */
+/* ===== Tavsiyelerim paneli (V1.12.17) ===== */
 async function renderTavsiyelerimPanel(){
   const el=$('#tavsiyelerimList');
   if(!el) return;
@@ -2632,7 +2653,7 @@ async function tavsiyelerimSil(id){
 }
 
 /* =============================================
-   MENÜ FOTOĞRAFLARI (V1.12.16)
+   MENÜ FOTOĞRAFLARI (V1.12.17)
    ============================================= */
 async function menuFotolariYukle(r){
   const kutu=$('#menuIcerik');
@@ -2813,7 +2834,7 @@ if('serviceWorker' in navigator){
     caches.keys().then(adlar=>{
       adlar.forEach(ad=>{
         // Bu sürümün cache'i dışındakileri sil
-        if(ad && ad.indexOf('lezzet-v1.12.16')===-1) caches.delete(ad);
+        if(ad && ad.indexOf('lezzet-v1.12.17')===-1) caches.delete(ad);
       });
     }).catch(()=>{});
   }
@@ -2821,7 +2842,7 @@ if('serviceWorker' in navigator){
 
 
 /* =============================================
-   GEOMETRİK AĞ — üçgen/beşgen düğümler, neon nabızlar (V1.12.16)
+   GEOMETRİK AĞ — üçgen/beşgen düğümler, neon nabızlar (V1.12.17)
    ============================================= */
 (function(){
   const cv=document.getElementById('agCanvas');
@@ -2951,7 +2972,7 @@ if('serviceWorker' in navigator){
 
 
 /* =============================================
-   AŞAĞI SÜRÜKLEYEREK KAPATMA (V1.12.16)
+   AŞAĞI SÜRÜKLEYEREK KAPATMA (V1.12.17)
    Event'ler PANELE değil, doğrudan tutamaç (handle)
    elementine bağlanır — böylece tarayıcı scroll'u
    asla arka plana/panele yönlendiremez.
@@ -3057,7 +3078,7 @@ if('serviceWorker' in navigator){
 
 
 /* =============================================
-   MODAL SEKMELERİ: Yorumlar / Tavsiyeler / Menü (V1.12.16)
+   MODAL SEKMELERİ: Yorumlar / Tavsiyeler / Menü (V1.12.17)
    ============================================= */
 let modalAktifRestoran = null; // {id, name} — sekme fonksiyonları için
 

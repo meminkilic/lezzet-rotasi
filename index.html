@@ -40,6 +40,17 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:radial-gradient(120% 
 /* Header */
 header{padding:24px 22px 10px}
 .eyebrow{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--accentsoft);font-weight:600;margin-bottom:5px;transition:color .6s}
+/* ===== REHBER (Nasıl Kullanılır) ===== */
+.rehber-grup{margin-top:26px}
+.rehber-grup-bas{display:flex;align-items:center;gap:10px;padding:0 22px 12px;font-family:'Fraunces',serif;font-weight:600;font-size:17px;color:var(--cream);letter-spacing:.01em}
+.rehber-grup-no{font-family:'Fraunces',serif;font-size:12px;font-weight:600;color:var(--accent);letter-spacing:.12em;border:1px solid var(--accent);border-radius:20px;padding:2px 9px;opacity:.85}
+.rehber-sat{display:flex;align-items:flex-start;gap:14px;padding:13px 22px}
+.rehber-sat+.rehber-sat{border-top:1px solid var(--line)}
+.rehber-ikon{flex:0 0 34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:11px;background:var(--s2);color:var(--accent);border:1px solid var(--line);transition:background .8s,color .6s}
+.rehber-ikon svg{width:17px;height:17px}
+.rehber-adim{font-family:'Fraunces',serif;font-weight:600;font-size:14px;color:var(--accent)}
+.rehber-bas{font-family:'Fraunces',serif;font-weight:600;font-size:15.5px;color:var(--cream);margin-bottom:3px;transition:color .6s}
+.rehber-not{font-size:13px;color:var(--muted);line-height:1.65;transition:color .6s}
 h1{font-family:'Fraunces',serif;font-weight:600;font-size:32px;line-height:1.02}
 h1 em{font-style:italic;color:var(--gold);transition:color .6s}
 .tagline{color:var(--muted);font-size:13.5px;margin-top:6px;transition:color .6s}
@@ -246,7 +257,7 @@ label{font-size:11px;color:var(--muted);font-weight:600;padding-left:2px}
 footer{padding:16px 22px 22px;text-align:center;color:var(--dim);font-size:11px;line-height:1.7;transition:color .6s}
 footer strong{color:var(--muted);font-weight:600}
 
-/* ===== PREMIUM POLISH (V1.12.25) ===== */
+/* ===== PREMIUM POLISH (V1.12.26) ===== */
 .fchip{padding:10px 18px;font-size:13px;border-radius:22px;transition:all .25s cubic-bezier(.2,.8,.3,1)}
 .fchip:active{transform:scale(.94)}
 .fchip.active{background:var(--accent)!important;color:#fff!important;border-color:var(--accent)!important;box-shadow:0 0 16px rgba(124,194,66,.35)}
@@ -284,7 +295,7 @@ footer strong{color:var(--muted);font-weight:600}
 .btab .ico{display:flex;align-items:center;justify-content:center;height:24px}
 .btab .ico img{width:24px;height:24px;border-radius:50%;object-fit:cover}
 
-/* ===== CANLI ARKA PLAN — AURORA (V1.12.25) ===== */
+/* ===== CANLI ARKA PLAN — AURORA (V1.12.26) ===== */
 .aurora{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
 .aurora span{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;will-change:transform}
 .aurora .a1{width:440px;height:440px;background:radial-gradient(circle,rgba(46,94,28,.6),transparent 70%);top:-130px;left:-110px;animation:aur1 26s ease-in-out infinite alternate}
@@ -307,7 +318,7 @@ footer strong{color:var(--muted);font-weight:600}
   .aurora span{animation:none!important}
 }
 
-/* ===== LOGO YOLU & ARABALAR (V1.12.25) ===== */
+/* ===== LOGO YOLU & ARABALAR (V1.12.26) ===== */
 .logo-sahne{position:relative;display:inline-block;animation:logoin .9s cubic-bezier(.2,.9,.3,1) both, logofloat 4.5s ease-in-out 1.2s infinite, logoglow 4.5s ease-in-out 1.2s infinite}
 .logo-sahne img{display:block;animation:none!important}
 .logo-yol{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
@@ -325,7 +336,7 @@ footer strong{color:var(--muted);font-weight:600}
   #agCanvas{display:none}
 }
 
-/* ===== AŞAĞI SÜRÜKLEYEREK KAPATMA (V1.12.25) ===== */
+/* ===== AŞAĞI SÜRÜKLEYEREK KAPATMA (V1.12.26) ===== */
 .panel-view,#rehberPanel{transition:transform .28s cubic-bezier(.2,.8,.3,1)}
 .panel-view.dragging,#rehberPanel.dragging{transition:none}
 .modal{transition:transform .28s cubic-bezier(.2,.8,.3,1)}
@@ -335,7 +346,7 @@ footer strong{color:var(--muted);font-weight:600}
 .pv-drag-handle:active::after{background:var(--accentsoft);width:56px}
 .pv-drag-handle:active{cursor:grabbing}
 
-/* ===== MODAL SEKMELER: Yorumlar / Tavsiyeler / Menü (V1.12.25) ===== */
+/* ===== MODAL SEKMELER: Yorumlar / Tavsiyeler / Menü (V1.12.26) ===== */
 .mtabs{display:flex;gap:4px;background:var(--s2);border-radius:12px;padding:4px;margin:14px 0 10px}
 .mtab{flex:1;text-align:center;padding:9px 6px;border-radius:9px;font-size:12.5px;font-weight:700;color:var(--muted);cursor:pointer;transition:all .2s;user-select:none;border:none;background:transparent;font-family:inherit}
 .mtab.active{background:var(--accent);color:#fff}
@@ -362,7 +373,7 @@ footer strong{color:var(--muted);font-weight:600}
 .tav-login-cta{text-align:center;padding:20px 10px;color:var(--muted);font-size:13px;line-height:1.6}
 .tav-login-cta button{margin-top:10px}
 
-/* ===== MENÜ FOTOĞRAFLARI (V1.12.25) ===== */
+/* ===== MENÜ FOTOĞRAFLARI (V1.12.26) ===== */
 .menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
 .menu-thumb{position:relative;aspect-ratio:1/1;border-radius:12px;overflow:hidden;background:var(--s2);border:1px solid var(--line)}
 .menu-thumb img{width:100%;height:100%;object-fit:cover;display:block;cursor:pointer}
@@ -375,7 +386,7 @@ footer strong{color:var(--muted);font-weight:600}
 .menu-lightbox img{max-width:100%;max-height:85vh;border-radius:10px;object-fit:contain}
 .menu-lightbox-close{position:absolute;top:20px;right:20px;background:rgba(255,255,255,.15);border:none;color:#fff;width:38px;height:38px;border-radius:50%;font-size:18px;cursor:pointer}
 
-/* ===== AUTH: hata mesajı + şifremi unuttum + sıfırlama (V1.12.25) ===== */
+/* ===== AUTH: hata mesajı + şifremi unuttum + sıfırlama (V1.12.26) ===== */
 .auth-link{background:none;border:none;color:var(--accentsoft);font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:underline;padding:4px 0}
 .auth-msg-box{font-size:12.5px;margin-top:10px;text-align:center;line-height:1.5;padding:0 4px}
 .auth-msg-box.err{color:var(--red)}
@@ -585,7 +596,7 @@ footer strong{color:var(--muted);font-weight:600}
         <button class="auth-btn secondary-btn" onclick="kayitEmail()">Yeni Hesap Oluştur</button>
         <button class="auth-link" onclick="sifremiUnuttum()">Şifremi unuttum</button>
         <div id="authMsg" class="auth-msg-box"></div>
-        <button class="auth-btn secondary-btn" style="margin-top:18px" onclick="switchPanel('rehber')">💡 Nasıl Kullanılır?</button>
+        <button class="auth-btn secondary-btn" style="margin-top:18px" onclick="switchPanel('rehber')">Nasıl Kullanılır?</button>
       </div>
     </div>
     <!-- Giriş yapılmışsa -->
@@ -619,7 +630,7 @@ footer strong{color:var(--muted);font-weight:600}
       <div style="margin-top:8px">
         <p style="color:var(--muted);font-size:12px;text-align:center;display:flex;align-items:center;justify-content:center;gap:6px"><span style="color:var(--accent)">☁️</span> Favorilerin ve ziyaretlerin otomatik olarak buluta kaydediliyor</p>
       </div>
-      <button class="auth-btn secondary-btn" style="margin-top:18px" onclick="switchPanel('rehber')">💡 Nasıl Kullanılır?</button>
+      <button class="auth-btn secondary-btn" style="margin-top:18px" onclick="switchPanel('rehber')">Nasıl Kullanılır?</button>
       <button class="auth-btn danger-btn" style="margin-top:10px" onclick="cikisYap()">Çıkış Yap</button>
       <button class="auth-btn" style="margin-top:10px;background:transparent;border:1px solid var(--line);color:var(--muted);font-size:13px" onclick="hesapSilOnay()">Hesabımı Sil</button>
     </div>
@@ -689,81 +700,171 @@ footer strong{color:var(--muted);font-weight:600}
 <div id="rehberPanel" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg);z-index:50;overflow-y:auto;max-width:480px;margin:0 auto">
   <div style="padding:56px 0 100px">
     <div class="pv-drag-handle" style="margin:0 auto 10px"></div>
-    <div style="padding:18px 22px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(246,236,224,.10)">
-      <div style="font-family:'Fraunces',serif;font-weight:600;font-size:22px;color:#f6ece0">💡 Nasıl Kullanılır?</div>
-      <button onclick="panelKapatBirOnceki()" style="background:rgba(255,255,255,.1);border:none;color:#f6ece0;border-radius:8px;padding:6px 12px;font-size:13px;cursor:pointer;font-family:inherit">✕ Kapat</button>
+
+    <div style="padding:18px 22px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)">
+      <div style="font-family:'Fraunces',serif;font-weight:600;font-size:22px;color:var(--cream)">Nasıl Kullanılır?</div>
+      <button onclick="panelKapatBirOnceki()" style="background:rgba(255,255,255,.08);border:none;color:var(--cream);border-radius:8px;padding:6px 12px;font-size:13px;cursor:pointer;font-family:inherit">✕ Kapat</button>
     </div>
 
-    <div style="display:flex;align-items:flex-start;gap:14px;padding:16px 22px;border-bottom:1px solid rgba(246,236,224,.08)">
-      <span style="font-size:28px;flex:0 0 36px;text-align:center">📍</span>
-      <div><div style="font-family:'Fraunces',serif;font-weight:600;font-size:16px;color:#f6ece0;margin-bottom:4px">Konumunla ara</div>
-      <div style="font-size:13px;color:#b69f8c;line-height:1.6">"Konumumu kullan"a bas, çevrendeki en iyi restoranlar sıralanır.</div></div>
+    <div style="padding:20px 22px 6px">
+      <p style="font-size:14px;color:var(--muted);line-height:1.7;margin:0">
+        Rotaste iki şey için var: <strong style="color:var(--cream);font-weight:600">bulunduğun yerde</strong> iyi bir sofra bulmak,
+        ya da <strong style="color:var(--cream);font-weight:600">yol üstünde</strong> nerede duracağını bilmek.
+      </p>
     </div>
 
-    <div style="display:flex;align-items:flex-start;gap:14px;padding:16px 22px;border-bottom:1px solid rgba(246,236,224,.08)">
-      <span style="font-size:28px;flex:0 0 36px;text-align:center">🏙️</span>
-      <div><div style="font-family:'Fraunces',serif;font-weight:600;font-size:16px;color:#f6ece0;margin-bottom:4px">Şehir veya ilçe yaz</div>
-      <div style="font-size:13px;color:#b69f8c;line-height:1.6">Gideceğin yeri yaz — öneriler çıkar, seç ve ara.</div></div>
+    <!-- ===== KEŞFET ===== -->
+    <div class="rehber-grup">
+      <div class="rehber-grup-bas">
+        <span class="rehber-grup-no">01</span>
+        <span>Keşfet</span>
+      </div>
+
+      <div class="rehber-sat">
+        <span class="rehber-ikon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+        <div>
+          <div class="rehber-bas">Konumunla ara</div>
+          <div class="rehber-not">"Konumumu kullan"a bas — çevrendeki en iyi mekânlar sıralanır.</div>
+        </div>
+      </div>
+
+      <div class="rehber-sat">
+        <span class="rehber-ikon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></span>
+        <div>
+          <div class="rehber-bas">Şehir veya ilçe yaz</div>
+          <div class="rehber-not">Yazmaya başla, öneriler çıkar. Seç ve ara.</div>
+        </div>
+      </div>
+
+      <div class="rehber-sat">
+        <span class="rehber-ikon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M6 12h12M10 18h4"/></svg></span>
+        <div>
+          <div class="rehber-bas">Türe göre daralt</div>
+          <div class="rehber-not">Kebap, balık, kahvaltı… Ya da "Tümü"de bırak, ne varsa gelsin.</div>
+        </div>
+      </div>
+
+      <div class="rehber-sat">
+        <span class="rehber-ikon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.6 6.4.8-4.7 4.3 1.3 6.3L12 17l-5.6 3 1.3-6.3L3 9.4l6.4-.8L12 3z"/></svg></span>
+        <div>
+          <div class="rehber-bas">Akıllı sıralama</div>
+          <div class="rehber-not">Sadece puan değil, yorum sayısıyla birlikte değerlendirilir — 5 puanlı üç yorumlu yer öne çıkmaz.</div>
+        </div>
+      </div>
     </div>
 
-    <div style="display:flex;align-items:flex-start;gap:14px;padding:16px 22px;border-bottom:1px solid rgba(246,236,224,.08)">
-      <span style="font-size:28px;flex:0 0 36px;text-align:center">🎨</span>
-      <div><div style="font-family:'Fraunces',serif;font-weight:600;font-size:16px;color:#f6ece0;margin-bottom:4px">Renkler bölgeyi anlatır</div>
-      <div style="font-size:13px;color:#b69f8c;line-height:1.6">Ege'deysen mavi, Karadeniz'deysen yeşil — uygulama nerede olduğunu hisseder.</div></div>
+    <!-- ===== ROTADAN ===== -->
+    <div class="rehber-grup">
+      <div class="rehber-grup-bas">
+        <span class="rehber-grup-no">02</span>
+        <span>Rotadan</span>
+      </div>
+
+      <div style="padding:0 22px 14px">
+        <div style="font-size:13px;color:var(--muted);line-height:1.7">Yol üstündeki mekânları bulur. Dört adım:</div>
+      </div>
+
+      <div class="rehber-sat">
+        <span class="rehber-ikon rehber-adim">1</span>
+        <div>
+          <div class="rehber-bas">Başlangıç ve varış seç</div>
+          <div class="rehber-not">Yazarak, konumunu kullanarak ya da haritaya dokunarak.</div>
+        </div>
+      </div>
+
+      <div class="rehber-sat">
+        <span class="rehber-ikon rehber-adim">2</span>
+        <div>
+          <div class="rehber-bas">Rotanı seç</div>
+          <div class="rehber-not">Birden fazla güzergâh çıkarsa haritadaki "Rota 1 / Rota 2" etiketine dokun.</div>
+        </div>
+      </div>
+
+      <div class="rehber-sat">
+        <span class="rehber-ikon rehber-adim">3</span>
+        <div>
+          <div class="rehber-bas">Türü belirle</div>
+          <div class="rehber-not">Canın ne çekiyorsa. Fark etmezse "Tümü" kalsın.</div>
+        </div>
+      </div>
+
+      <div class="rehber-sat">
+        <span class="rehber-ikon rehber-adim">4</span>
+        <div>
+          <div class="rehber-bas">"Rota Üzerinde Ara"ya bas</div>
+          <div class="rehber-not">Aramadan sonra başlangıç ve varış kilitlenir — haritada gezinirken elin kayıp rotayı bozmaz. Değiştirmek istersen 🗑️ ile sıfırla.</div>
+        </div>
+      </div>
+
+      <div class="rehber-sat">
+        <span class="rehber-ikon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5"/><path d="M4 12h10a4 4 0 0 0 0-8H8"/><circle cx="18" cy="19" r="2"/></svg></span>
+        <div>
+          <div class="rehber-bas">Yoldan sapma mesafesi</div>
+          <div class="rehber-not">Her kartta "Yoldan 350 m" yazar. Sadece güzergâhın iki yanındaki mekânlar listelenir — uzaktakiler elenir.</div>
+        </div>
+      </div>
     </div>
 
-    <div style="display:flex;align-items:flex-start;gap:14px;padding:16px 22px;border-bottom:1px solid rgba(246,236,224,.08)">
-      <span style="font-size:28px;flex:0 0 36px;text-align:center">🥩</span>
-      <div><div style="font-family:'Fraunces',serif;font-weight:600;font-size:16px;color:#f6ece0;margin-bottom:4px">Mutfak türüne göre filtrele</div>
-      <div style="font-size:13px;color:#b69f8c;line-height:1.6">Kebap, balık, kahvaltı... istediğin türü seç, liste ona göre gelir.</div></div>
+    <!-- ===== KAYDET ===== -->
+    <div class="rehber-grup">
+      <div class="rehber-grup-bas">
+        <span class="rehber-grup-no">03</span>
+        <span>Kaydet ve paylaş</span>
+      </div>
+
+      <div class="rehber-sat">
+        <span class="rehber-ikon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1L12 21l7.7-7.6 1.1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></span>
+        <div>
+          <div class="rehber-bas">Favorilere ekle</div>
+          <div class="rehber-not">Kalbe dokun, Favoriler sekmesinde biriksin.</div>
+        </div>
+      </div>
+
+      <div class="rehber-sat">
+        <span class="rehber-ikon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+        <div>
+          <div class="rehber-bas">Ziyaret ettim</div>
+          <div class="rehber-not">Gittiğin yeri işaretle, geçmişin oluşsun.</div>
+        </div>
+      </div>
+
+      <div class="rehber-sat">
+        <span class="rehber-ikon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg></span>
+        <div>
+          <div class="rehber-bas">Arkadaşına gönder</div>
+          <div class="rehber-not">Tek dokunuşla WhatsApp'a ya da panoya.</div>
+        </div>
+      </div>
+
+      <div class="rehber-sat">
+        <span class="rehber-ikon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg></span>
+        <div>
+          <div class="rehber-bas">Haritada aç</div>
+          <div class="rehber-not">Apple veya Google Maps'te yol tarifi al.</div>
+        </div>
+      </div>
     </div>
 
-    <div style="display:flex;align-items:flex-start;gap:14px;padding:16px 22px;border-bottom:1px solid rgba(246,236,224,.08)">
-      <span style="font-size:28px;flex:0 0 36px;text-align:center">⭐</span>
-      <div><div style="font-family:'Fraunces',serif;font-weight:600;font-size:16px;color:#f6ece0;margin-bottom:4px">Akıllı sıralama</div>
-      <div style="font-size:13px;color:#b69f8c;line-height:1.6">"Puan + yorum dengesi" ile hem puanı hem popülerliği yüksek yerler öne çıkar.</div></div>
+    <!-- ===== İPUCU ===== -->
+    <div style="margin:8px 22px 0;padding:16px 18px;background:var(--surface);border:1px solid var(--line);border-radius:16px">
+      <div style="display:flex;align-items:center;gap:9px;margin-bottom:7px">
+        <span style="color:var(--accent);display:flex"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg></span>
+        <span style="font-family:'Fraunces',serif;font-weight:600;font-size:15px;color:var(--cream)">Küçük bir ayrıntı</span>
+      </div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.7">
+        Uygulamanın rengi bulunduğun bölgeye göre değişir — Ege'de mavi, Karadeniz'de yeşil, Akdeniz'de turuncu.
+        Nerede olduğunu hisseder.
+      </div>
     </div>
 
-    <div style="display:flex;align-items:flex-start;gap:14px;padding:16px 22px;border-bottom:1px solid rgba(246,236,224,.08)">
-      <span style="font-size:28px;flex:0 0 36px;text-align:center">📋</span>
-      <div><div style="font-family:'Fraunces',serif;font-weight:600;font-size:16px;color:#f6ece0;margin-bottom:4px">Detay ve yorumlar</div>
-      <div style="font-size:13px;color:#b69f8c;line-height:1.6">Karta bas, restoranın saatleri, telefonu ve Google yorumlarını gör.</div></div>
-    </div>
-
-    <div style="display:flex;align-items:flex-start;gap:14px;padding:16px 22px;border-bottom:1px solid rgba(246,236,224,.08)">
-      <span style="font-size:28px;flex:0 0 36px;text-align:center">🗺️</span>
-      <div><div style="font-family:'Fraunces',serif;font-weight:600;font-size:16px;color:#f6ece0;margin-bottom:4px">Haritada aç</div>
-      <div style="font-size:13px;color:#b69f8c;line-height:1.6">"Haritada Aç"a bas, Apple veya Google Maps'te yol tarifi al.</div></div>
-    </div>
-
-    <div style="display:flex;align-items:flex-start;gap:14px;padding:16px 22px;border-bottom:1px solid rgba(246,236,224,.08)">
-      <span style="font-size:28px;flex:0 0 36px;text-align:center">❤️</span>
-      <div><div style="font-family:'Fraunces',serif;font-weight:600;font-size:16px;color:#f6ece0;margin-bottom:4px">Favorilere ekle</div>
-      <div style="font-size:13px;color:#b69f8c;line-height:1.6">Kalp ikonuna bas, beğendiğin restoranı kaydet. Favoriler sekmesinde bulursun.</div></div>
-    </div>
-
-    <div style="display:flex;align-items:flex-start;gap:14px;padding:16px 22px;border-bottom:1px solid rgba(246,236,224,.08)">
-      <span style="font-size:28px;flex:0 0 36px;text-align:center">🗺️➕</span>
-      <div><div style="font-family:'Fraunces',serif;font-weight:600;font-size:16px;color:#f6ece0;margin-bottom:4px">Gün rotası oluştur</div>
-      <div style="font-size:13px;color:#b69f8c;line-height:1.6">Birkaç restoranı rotana ekle, "Tüm Rotayı Haritada Aç" ile sıralı yol tarifi al.</div></div>
-    </div>
-
-    <div style="display:flex;align-items:flex-start;gap:14px;padding:16px 22px;border-bottom:1px solid rgba(246,236,224,.08)">
-      <span style="font-size:28px;flex:0 0 36px;text-align:center">✅</span>
-      <div><div style="font-family:'Fraunces',serif;font-weight:600;font-size:16px;color:#f6ece0;margin-bottom:4px">Ziyaret ettim</div>
-      <div style="font-size:13px;color:#b69f8c;line-height:1.6">Gittiğin restoranı işaretle, ziyaret geçmişin oluşsun.</div></div>
-    </div>
-
-    <div style="display:flex;align-items:flex-start;gap:14px;padding:16px 22px;border-bottom:1px solid rgba(246,236,224,.08)">
-      <span style="font-size:28px;flex:0 0 36px;text-align:center">📤</span>
-      <div><div style="font-family:'Fraunces',serif;font-weight:600;font-size:16px;color:#f6ece0;margin-bottom:4px">Arkadaşına paylaş</div>
-      <div style="font-size:13px;color:#b69f8c;line-height:1.6">Beğendiğin restoranı tek tıkla WhatsApp veya panoya gönder.</div></div>
-    </div>
-
-    <div style="display:flex;align-items:flex-start;gap:14px;padding:16px 22px">
-      <span style="font-size:28px;flex:0 0 36px;text-align:center">📱</span>
-      <div><div style="font-family:'Fraunces',serif;font-weight:600;font-size:16px;color:#f6ece0;margin-bottom:4px">Ana ekrana ekle</div>
-      <div style="font-size:13px;color:#b69f8c;line-height:1.6">Safari'de "Paylaş → Ana Ekrana Ekle" de — uygulama gibi simge olur.</div></div>
+    <div style="margin:14px 22px 0;padding:16px 18px;background:var(--surface);border:1px solid var(--line);border-radius:16px">
+      <div style="display:flex;align-items:center;gap:9px;margin-bottom:7px">
+        <span style="color:var(--accent);display:flex"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2.5"/><path d="M11 18h2"/></svg></span>
+        <span style="font-family:'Fraunces',serif;font-weight:600;font-size:15px;color:var(--cream)">Ana ekrana ekle</span>
+      </div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.7">
+        Tarayıcıdan kullanıyorsan: Paylaş → "Ana Ekrana Ekle". Uygulama gibi açılır.
+      </div>
     </div>
 
   </div>
@@ -771,7 +872,7 @@ footer strong{color:var(--muted);font-weight:600}
 
 <footer>
   Rotaste<br>
-  <strong>Geliştirici: RotasteTeam</strong> — V1.12.25<br>
+  <strong>Geliştirici: RotasteTeam</strong> — V1.12.26<br>
   İletişim: <a href="mailto:info@rotaste.com" style="color:var(--accentsoft);text-decoration:none">info@rotaste.com</a><br>
   <a href="https://www.instagram.com/rotasteofficial" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;color:var(--accentsoft);text-decoration:none;margin-top:8px">
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
@@ -2329,7 +2430,7 @@ function toggleZiyaret(e,idx){
 }
 
 
-/* ===== PREMIUM POLISH JS (V1.12.25) ===== */
+/* ===== PREMIUM POLISH JS (V1.12.26) ===== */
 const PROFIL_SVG = '<svg viewBox="0 0 24 24" style="width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
 let userKonum = null; // {lat,lng} — mesafe hesabı için
 
@@ -2616,7 +2717,7 @@ async function ziyaretSil(i){
 }
 updateZiyaretBadge(); renderZiyaretPanel();
 
-/* ===== Tavsiyelerim paneli (V1.12.25) ===== */
+/* ===== Tavsiyelerim paneli (V1.12.26) ===== */
 async function renderTavsiyelerimPanel(){
   const el=$('#tavsiyelerimList');
   if(!el) return;
@@ -2659,7 +2760,7 @@ async function tavsiyelerimSil(id){
 }
 
 /* =============================================
-   MENÜ FOTOĞRAFLARI (V1.12.25)
+   MENÜ FOTOĞRAFLARI (V1.12.26)
    ============================================= */
 async function menuFotolariYukle(r){
   const kutu=$('#menuIcerik');
@@ -2840,7 +2941,7 @@ if('serviceWorker' in navigator){
     caches.keys().then(adlar=>{
       adlar.forEach(ad=>{
         // Bu sürümün cache'i dışındakileri sil
-        if(ad && ad.indexOf('lezzet-v1.12.25')===-1) caches.delete(ad);
+        if(ad && ad.indexOf('lezzet-v1.12.26')===-1) caches.delete(ad);
       });
     }).catch(()=>{});
   }
@@ -2848,7 +2949,7 @@ if('serviceWorker' in navigator){
 
 
 /* =============================================
-   GEOMETRİK AĞ — üçgen/beşgen düğümler, neon nabızlar (V1.12.25)
+   GEOMETRİK AĞ — üçgen/beşgen düğümler, neon nabızlar (V1.12.26)
    ============================================= */
 (function(){
   const cv=document.getElementById('agCanvas');
@@ -2978,7 +3079,7 @@ if('serviceWorker' in navigator){
 
 
 /* =============================================
-   AŞAĞI SÜRÜKLEYEREK KAPATMA (V1.12.25)
+   AŞAĞI SÜRÜKLEYEREK KAPATMA (V1.12.26)
    Event'ler PANELE değil, doğrudan tutamaç (handle)
    elementine bağlanır — böylece tarayıcı scroll'u
    asla arka plana/panele yönlendiremez.
@@ -3084,7 +3185,7 @@ if('serviceWorker' in navigator){
 
 
 /* =============================================
-   MODAL SEKMELERİ: Yorumlar / Tavsiyeler / Menü (V1.12.25)
+   MODAL SEKMELERİ: Yorumlar / Tavsiyeler / Menü (V1.12.26)
    ============================================= */
 let modalAktifRestoran = null; // {id, name} — sekme fonksiyonları için
 

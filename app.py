@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Rotaste — Proxy Sunucusu
-Geliştirici: Mehmet Emin KILIÇ — V1.12.22
+Geliştirici: Mehmet Emin KILIÇ — V1.12.23
 """
 import os, math, requests
 from flask import Flask, request, jsonify, send_file, Response
@@ -419,9 +419,27 @@ def rota_restoranlar():
         # Rotaya en yakın önce (frontend istediğinde puana göre yeniden sıralayabilir)
         liste.sort(key=lambda x: x.get("rota_mesafe_m", 999999))
 
+        # --- GİZLİ KALİTE EŞİĞİ ---
+        # Kullanıcıya gösterilmez; düşük puanlı / güvenilmez yerler listeye hiç girmez.
+        # Kademeli emniyet ağı: filtre sonrası çok az sonuç kalırsa eşik gevşer,
+        # gerekirse tamamen kalkar. Tenha güzergâhlarda boş ekran çıkmasın diye.
+        MIN_SONUC = 5
+        kademeler = [(4.0, 10), (3.5, 5), (0.0, 0)]
+        secilen = liste
+        for puan_esik, yorum_esik in kademeler:
+            aday = [r for r in liste
+                    if (r.get("rating") or 0) >= puan_esik
+                    and (r.get("reviews") or 0) >= yorum_esik]
+            if len(aday) >= MIN_SONUC or (puan_esik == 0.0 and yorum_esik == 0):
+                secilen = aday
+                break
+        kalite_elenen = len(liste) - len(secilen)
+        liste = secilen
+
         return jsonify({"kaynak": "google", "sayi": len(liste), "restoranlar": liste,
                         "arama_noktasi": len(ornek_noktalar),
                         "koridor_m": int(koridor), "elenen": elenen,
+                        "kalite_elenen": kalite_elenen,
                         "rota_uzunluk_m": int(rota_uzunluk)})
     except Exception as e:
         return _hata(f"Rota arama hatası: {e}", 500)

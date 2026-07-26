@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 """
 Rotaste — Proxy Sunucusu
-Geliştirici: Mehmet Emin KILIÇ — V1.12.23
+Geliştirici: Mehmet Emin KILIÇ — V1.12.25
 """
-import os, math, requests
+import os, math, time, threading, requests
+from collections import OrderedDict
 from flask import Flask, request, jsonify, send_file, Response
 from flask_cors import CORS
 
@@ -86,32 +87,6 @@ def _polyline_mesafe(lat, lng, xy, k):
             if en_kisa == 0.0:
                 break
     return en_kisa
-
-def _mesafe_bazli_ornekle(noktalar, adim_m, maks_nokta):
-    """Polyline'ı kümülatif mesafeye göre örnekler (nokta sayısına göre DEĞİL).
-    Böylece uzun rotalarda örnekler arası boşluk kalmaz."""
-    if len(noktalar) < 2:
-        return list(noktalar), 0.0
-    # Kümülatif mesafe
-    kum = [0.0]
-    for i in range(1, len(noktalar)):
-        kum.append(kum[-1] + _haversine(noktalar[i-1][0], noktalar[i-1][1],
-                                        noktalar[i][0],   noktalar[i][1]))
-    toplam = kum[-1]
-    # Maksimum nokta sınırını aşmamak için adımı adaptif büyüt
-    if toplam / adim_m > maks_nokta - 1:
-        adim_m = toplam / (maks_nokta - 1)
-    ornekler, hedef, j = [noktalar[0]], adim_m, 1
-    while hedef < toplam and len(ornekler) < maks_nokta:
-        while j < len(kum) and kum[j] < hedef:
-            j += 1
-        if j >= len(kum):
-            break
-        ornekler.append(noktalar[j])
-        hedef += adim_m
-    if len(ornekler) < maks_nokta and noktalar[-1] not in ornekler:
-        ornekler.append(noktalar[-1])
-    return ornekler, toplam
 
 def _alkol_durumu(p):
     bira  = p.get("servesBeer")
@@ -261,7 +236,21 @@ def test():
 
 @app.route("/saglik")
 def saglik():
-    return jsonify({"durum":"ok","anahtar_tanimli":bool(API_KEY)})
+    isabet = _grid_sayac["isabet"]
+    toplam = isabet + _grid_sayac["iskalama"]
+    return jsonify({
+        "durum": "ok",
+        "anahtar_tanimli": bool(API_KEY),
+        "izgara_cache": {
+            "hucre_kaydi": len(_grid_cache),
+            "isabet": isabet,
+            "iskalama": _grid_sayac["iskalama"],
+            "isabet_orani": round(isabet / toplam * 100, 1) if toplam else 0.0,
+            "ttl_sn": ROTA_CACHE_TTL,
+            "hucre_m": int(GRID_M),
+            "maks_nokta": int(os.environ.get("ROTA_MAX_NOKTA", "24")),
+        },
+    })
 
 @app.route("/api/foto/<path:photo_name>")
 def foto(photo_name):
@@ -326,11 +315,81 @@ def restoranlar():
     except requests.exceptions.RequestException as e:
         return _hata(f"Bağlantı hatası: {e}", 502)
 
+# ============================================================
+# IZGARA (GRID) CACHE
+# Rotanın tamamını değil, rotanın GEÇTİĞİ HÜCRELERİ cache'ler.
+# Böylece Ankara-Bursa ile Ankara-Eskişehir aramaları ortak
+# Ankara-Eskişehir hücrelerini paylaşır; kombinasyon patlaması
+# (81 il -> 6480 çift) sorunu ortadan kalkar.
+# Trafik arttıkça ızgara dolar, isabet oranı sürekli yükselir.
+# Not: bellek içi cache'tir; birden fazla worker varsa her biri
+# kendi ızgarasını tutar (yine de kazanç sağlar).
+# ============================================================
+ROTA_CACHE_TTL = int(os.environ.get("ROTA_CACHE_TTL", "900"))     # saniye (varsayılan 15 dk)
+ROTA_CACHE_MAX = int(os.environ.get("ROTA_CACHE_MAX", "4000"))    # en fazla kaç hücre kaydı
+GRID_M         = float(os.environ.get("ROTA_GRID_M", "1000"))     # hücre kenarı (metre)
+
+# Küresel sabit ızgara: hücre sınırları kullanıcıdan/rotadan bağımsızdır.
+# Boylam ölçeği Türkiye ortası (~39°) referans alınır; 36-42° arasında
+# hücre kenarı en fazla %8 oynar, bu kullanım için fazlasıyla yeterli.
+_GRID_DLAT = GRID_M / _DEG_LAT_M
+_GRID_DLNG = GRID_M / (_DEG_LAT_M * math.cos(math.radians(39.0)))
+
+_grid_cache = OrderedDict()   # anahtar -> (zaman, [restoran, ...])
+_grid_kilit = threading.Lock()
+_grid_sayac = {"isabet": 0, "iskalama": 0}
+
+def _hucre(lat, lng):
+    """Koordinatın düştüğü ızgara hücresinin (satır, sütun) indeksi."""
+    return (int(math.floor(lat / _GRID_DLAT)), int(math.floor(lng / _GRID_DLNG)))
+
+def _hucre_merkez(h):
+    """Hücrenin merkez koordinatı — arama bu noktadan yapılır."""
+    return ((h[0] + 0.5) * _GRID_DLAT, (h[1] + 0.5) * _GRID_DLNG)
+
+def _grid_anahtar(h, tur, yaricap):
+    return f"{h[0]}:{h[1]}:{tur.lower()}:{int(yaricap)}"
+
+def _grid_oku(anahtar):
+    with _grid_kilit:
+        kayit = _grid_cache.get(anahtar)
+        if not kayit:
+            _grid_sayac["iskalama"] += 1
+            return None
+        zaman, veri = kayit
+        if time.time() - zaman > ROTA_CACHE_TTL:
+            _grid_cache.pop(anahtar, None)
+            _grid_sayac["iskalama"] += 1
+            return None
+        _grid_cache.move_to_end(anahtar)
+        _grid_sayac["isabet"] += 1
+        return veri
+
+def _grid_yaz(anahtar, veri):
+    with _grid_kilit:
+        _grid_cache[anahtar] = (time.time(), veri)
+        _grid_cache.move_to_end(anahtar)
+        while len(_grid_cache) > ROTA_CACHE_MAX:
+            _grid_cache.popitem(last=False)
+
+def _rota_hucreleri(noktalar):
+    """Rotanın geçtiği hücreleri sırayla, tekrarsız döndürür.
+    Örnekleme noktalarını ızgaraya yuvarlamak yerine ızgaranın kendisini
+    kullanır; böylece başlangıç noktası birkaç yüz metre kaysa bile
+    aynı yoldan geçen rotalar AYNI hücre dizisini üretir."""
+    hucreler, son = [], None
+    for la, ln in noktalar:
+        h = _hucre(la, ln)
+        if h != son:
+            hucreler.append(h)
+            son = h
+    return hucreler
+
 @app.route("/api/rota-restoranlar", methods=["POST"])
 def rota_restoranlar():
     """Rota üzerindeki restoranları bulur.
-    Frontend'den gelen rota noktaları (polyline) boyunca örnekleme yapıp,
-    her örnekleme noktasının çevresinde restoran arar, tekilleştirir."""
+    Polyline boyunca mesafe bazlı örnekleme yapar, her örnekleme noktasının
+    çevresinde restoran arar, koridor filtresiyle rotadan uzakları eler."""
     if not API_KEY:
         return _hata("Sunucuda GOOGLE_API_KEY tanımlı değil.", 500)
     try:
@@ -353,24 +412,52 @@ def rota_restoranlar():
         if len(noktalar) < 2:
             return _hata("En az 2 rota noktası gerekli.")
 
-        # --- Mesafe bazlı örnekleme ---
-        # Yarıçapı R olan daireler, yarı genişliği w olan koridoru boşluksuz
-        # kaplasın istiyorsak merkezler arası mesafe <= 2*sqrt(R^2 - w^2) olmalı.
-        # (R=2500, w=2000 -> 3000 m). Nokta sayısı MAX_NOKTA ile sınırlı.
-        MAX_NOKTA = 24
+        # --- IZGARA HÜCRELERİNİ ÇIKAR ---
+        # Rotanın geçtiği hücreler; başlangıç noktası kaysa bile aynı kalır.
+        tum_hucreler = _rota_hucreleri(noktalar)
+        rota_uzunluk = 0.0
+        for i in range(1, len(noktalar)):
+            rota_uzunluk += _haversine(noktalar[i-1][0], noktalar[i-1][1],
+                                       noktalar[i][0],   noktalar[i][1])
+
+        # Arama merkezleri arası hedef mesafe: yarıçapı R olan daireler,
+        # yarı genişliği w olan koridoru boşluksuz kaplasın istiyorsak
+        # merkez aralığı <= 2*sqrt(R^2 - w^2) olmalı (R=2500, w=2000 -> 3000 m).
+        # MAX_NOKTA = arama başına Google çağrı üst sınırı (maliyet kolu).
+        MAX_NOKTA = int(os.environ.get("ROTA_MAX_NOKTA", "24"))
+        MAX_NOKTA = max(6, min(MAX_NOKTA, 60))
         if yaricap > koridor:
             ideal_adim = 2.0 * math.sqrt(yaricap*yaricap - koridor*koridor)
         else:
             ideal_adim = yaricap
         ideal_adim = max(1000.0, ideal_adim)
-        ornek_noktalar, rota_uzunluk = _mesafe_bazli_ornekle(noktalar, ideal_adim, MAX_NOKTA)
+
+        # Kaç hücrede bir arama yapılacak.
+        # Not: küresel hizalı (modülo) seçim de denendi — teoride paylaşımı
+        # artırması beklenirdi ama ölçümde bütçenin altına sarkıp kapsamayı
+        # yarıya düşürdü. Sıralı seçim hem bütçeyi tam kullanıyor hem de
+        # ölçümde daha yüksek paylaşım verdi, o yüzden bu tercih edildi.
+        atlama = max(1, int(round(ideal_adim / GRID_M)))
+        secili = tum_hucreler[::atlama]
+        if len(secili) > MAX_NOKTA:
+            # Maliyet sınırı: eşit aralıklarla seyrelt
+            adim = len(secili) / float(MAX_NOKTA)
+            secili = [secili[int(i * adim)] for i in range(MAX_NOKTA)]
 
         bulunanlar = {}  # place_id -> restoran (tekilleştirme)
-        for nk in ornek_noktalar:
-            try:
-                lat, lng = float(nk[0]), float(nk[1])
-            except (ValueError, IndexError, TypeError):
+        c_isabet = c_iskalama = 0
+        for h in secili:
+            anahtar = _grid_anahtar(h, tur, yaricap)
+            onbellek = _grid_oku(anahtar)
+            if onbellek is not None:
+                c_isabet += 1
+                for fp in onbellek:
+                    if fp.get("id") and fp["id"] not in bulunanlar:
+                        bulunanlar[fp["id"]] = dict(fp)
                 continue
+            c_iskalama += 1
+            lat, lng = _hucre_merkez(h)
+            hucre_sonuc = []
             try:
                 if tur:
                     r = requests.post(f"{PLACES_BASE}:searchText",
@@ -389,10 +476,15 @@ def rota_restoranlar():
                 if r.status_code == 200:
                     for p in r.json().get("places", []):
                         fp = _fmt_place(p)
-                        if fp.get("id") and fp["id"] not in bulunanlar:
-                            bulunanlar[fp["id"]] = fp
+                        if not fp.get("id"):
+                            continue
+                        hucre_sonuc.append(fp)
+                        if fp["id"] not in bulunanlar:
+                            bulunanlar[fp["id"]] = dict(fp)
+                    # Boş sonuç da cache'lenir: "burada mekân yok" bilgisi de değerlidir
+                    _grid_yaz(anahtar, hucre_sonuc)
             except requests.exceptions.RequestException:
-                continue  # bir nokta hata verirse diğerlerine devam
+                continue  # bir hücre hata verirse diğerlerine devam
 
         # --- KORİDOR FİLTRESİ ---
         # searchText'in locationBias'ı bir KISIT değil, sadece eğilimdir; bu yüzden
@@ -436,11 +528,14 @@ def rota_restoranlar():
         kalite_elenen = len(liste) - len(secilen)
         liste = secilen
 
-        return jsonify({"kaynak": "google", "sayi": len(liste), "restoranlar": liste,
-                        "arama_noktasi": len(ornek_noktalar),
-                        "koridor_m": int(koridor), "elenen": elenen,
-                        "kalite_elenen": kalite_elenen,
-                        "rota_uzunluk_m": int(rota_uzunluk)})
+        payload = {"kaynak": "google", "sayi": len(liste), "restoranlar": liste,
+                   "arama_noktasi": len(secili),
+                   "koridor_m": int(koridor), "elenen": elenen,
+                   "kalite_elenen": kalite_elenen,
+                   "rota_uzunluk_m": int(rota_uzunluk),
+                   "cache_isabet": c_isabet, "cache_iskalama": c_iskalama,
+                   "google_cagri": c_iskalama}
+        return jsonify(payload)
     except Exception as e:
         return _hata(f"Rota arama hatası: {e}", 500)
 

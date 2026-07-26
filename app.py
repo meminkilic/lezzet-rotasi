@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """
 Rotaste — Proxy Sunucusu
-Geliştirici: Mehmet Emin KILIÇ — V1.12.5
+Geliştirici: Mehmet Emin KILIÇ — V1.12.22
 """
-import os, requests
+import os, math, requests
 from flask import Flask, request, jsonify, send_file, Response
 from flask_cors import CORS
 
@@ -33,6 +33,85 @@ PRICE_MAP = {
 
 def _headers(mask):
     return {"Content-Type":"application/json","X-Goog-Api-Key":API_KEY,"X-Goog-FieldMask":mask}
+
+# ============================================================
+# ROTA KORİDOR ANALİZİ — geometri yardımcıları
+# Türkiye enlemlerinde (36-42°) equirectangular projeksiyon
+# segment başına ihmal edilebilir hata verir; koridor filtresi
+# için gereğinden fazla hassas.
+# ============================================================
+_DEG_LAT_M = 111132.0   # 1° enlem ≈ metre
+
+def _haversine(lat1, lng1, lat2, lng2):
+    """İki nokta arası büyük daire mesafesi (metre)."""
+    R = 6371000.0
+    p1, p2 = math.radians(lat1), math.radians(lat2)
+    dp = p2 - p1
+    dl = math.radians(lng2 - lng1)
+    a = math.sin(dp/2)**2 + math.cos(p1)*math.cos(p2)*math.sin(dl/2)**2
+    return 2 * R * math.asin(math.sqrt(a))
+
+def _projeksiyon_kur(noktalar):
+    """Polyline'ı yerel düzleme taşır. Ekvatoral düzeltme: Δlng·cos(φ).
+    Döner: (xy_listesi, lat0) — xy metre cinsinden."""
+    lat0 = sum(n[0] for n in noktalar) / len(noktalar)
+    k = math.cos(math.radians(lat0)) * _DEG_LAT_M   # 1° boylam ≈ metre (bu enlemde)
+    return [(n[1] * k, n[0] * _DEG_LAT_M) for n in noktalar], lat0, k
+
+def _nokta_segment_mesafe(px, py, ax, ay, bx, by):
+    """Noktadan doğru parçasına en kısa mesafe (düzlemde, metre)."""
+    dx, dy = bx - ax, by - ay
+    if dx == 0.0 and dy == 0.0:
+        return math.hypot(px - ax, py - ay)
+    # Projeksiyon parametresi t, [0,1] aralığına kırpılır (segment dışına taşmasın)
+    t = ((px - ax) * dx + (py - ay) * dy) / (dx*dx + dy*dy)
+    t = 0.0 if t < 0.0 else (1.0 if t > 1.0 else t)
+    return math.hypot(px - (ax + t*dx), py - (ay + t*dy))
+
+def _polyline_mesafe(lat, lng, xy, k):
+    """Noktadan polyline'a en kısa mesafe (metre). Klasik point-to-line distance:
+    tüm segmentlere dik mesafenin minimumu."""
+    px, py = lng * k, lat * _DEG_LAT_M
+    en_kisa = float("inf")
+    for i in range(len(xy) - 1):
+        ax, ay = xy[i]
+        bx, by = xy[i+1]
+        # Ucuz ön eleme: segment bbox'ı zaten çok uzaksa hesaplama yapma
+        if min(ax, bx) - en_kisa > px or max(ax, bx) + en_kisa < px:
+            if min(ay, by) - en_kisa > py or max(ay, by) + en_kisa < py:
+                continue
+        d = _nokta_segment_mesafe(px, py, ax, ay, bx, by)
+        if d < en_kisa:
+            en_kisa = d
+            if en_kisa == 0.0:
+                break
+    return en_kisa
+
+def _mesafe_bazli_ornekle(noktalar, adim_m, maks_nokta):
+    """Polyline'ı kümülatif mesafeye göre örnekler (nokta sayısına göre DEĞİL).
+    Böylece uzun rotalarda örnekler arası boşluk kalmaz."""
+    if len(noktalar) < 2:
+        return list(noktalar), 0.0
+    # Kümülatif mesafe
+    kum = [0.0]
+    for i in range(1, len(noktalar)):
+        kum.append(kum[-1] + _haversine(noktalar[i-1][0], noktalar[i-1][1],
+                                        noktalar[i][0],   noktalar[i][1]))
+    toplam = kum[-1]
+    # Maksimum nokta sınırını aşmamak için adımı adaptif büyüt
+    if toplam / adim_m > maks_nokta - 1:
+        adim_m = toplam / (maks_nokta - 1)
+    ornekler, hedef, j = [noktalar[0]], adim_m, 1
+    while hedef < toplam and len(ornekler) < maks_nokta:
+        while j < len(kum) and kum[j] < hedef:
+            j += 1
+        if j >= len(kum):
+            break
+        ornekler.append(noktalar[j])
+        hedef += adim_m
+    if len(ornekler) < maks_nokta and noktalar[-1] not in ornekler:
+        ornekler.append(noktalar[-1])
+    return ornekler, toplam
 
 def _alkol_durumu(p):
     bira  = p.get("servesBeer")
@@ -256,18 +335,35 @@ def rota_restoranlar():
         return _hata("Sunucuda GOOGLE_API_KEY tanımlı değil.", 500)
     try:
         veri = request.get_json(force=True) or {}
-        noktalar = veri.get("noktalar") or []   # [[lat,lng], [lat,lng], ...]
+        ham = veri.get("noktalar") or []   # [[lat,lng], [lat,lng], ...]
         tur = (veri.get("tur") or "").strip()
         yaricap = float(veri.get("yaricap", 2500))
-        yaricap = max(500.0, min(yaricap, 3000.0))  # 0.5-3 km arası
+        yaricap = max(500.0, min(yaricap, 3000.0))  # 0.5-3 km arası (arama yarıçapı)
+        # Koridor yarı genişliği: rotanın sağına/soluna kaç metre bakılacak
+        koridor = float(veri.get("koridor", 2000))
+        koridor = max(250.0, min(koridor, yaricap))  # arama yarıçapını aşamaz
+
+        # Geçersiz/bozuk noktaları ayıkla
+        noktalar = []
+        for n in ham:
+            try:
+                noktalar.append((float(n[0]), float(n[1])))
+            except (ValueError, IndexError, TypeError):
+                continue
         if len(noktalar) < 2:
             return _hata("En az 2 rota noktası gerekli.")
 
-        # Rota çok uzunsa örnekleme yap: en fazla 12 arama noktası
-        # (Google API maliyeti ve süre için sınır)
-        MAX_NOKTA = 12
-        adim = max(1, len(noktalar) // MAX_NOKTA)
-        ornek_noktalar = noktalar[::adim][:MAX_NOKTA]
+        # --- Mesafe bazlı örnekleme ---
+        # Yarıçapı R olan daireler, yarı genişliği w olan koridoru boşluksuz
+        # kaplasın istiyorsak merkezler arası mesafe <= 2*sqrt(R^2 - w^2) olmalı.
+        # (R=2500, w=2000 -> 3000 m). Nokta sayısı MAX_NOKTA ile sınırlı.
+        MAX_NOKTA = 24
+        if yaricap > koridor:
+            ideal_adim = 2.0 * math.sqrt(yaricap*yaricap - koridor*koridor)
+        else:
+            ideal_adim = yaricap
+        ideal_adim = max(1000.0, ideal_adim)
+        ornek_noktalar, rota_uzunluk = _mesafe_bazli_ornekle(noktalar, ideal_adim, MAX_NOKTA)
 
         bulunanlar = {}  # place_id -> restoran (tekilleştirme)
         for nk in ornek_noktalar:
@@ -298,9 +394,35 @@ def rota_restoranlar():
             except requests.exceptions.RequestException:
                 continue  # bir nokta hata verirse diğerlerine devam
 
-        liste = list(bulunanlar.values())
+        # --- KORİDOR FİLTRESİ ---
+        # searchText'in locationBias'ı bir KISIT değil, sadece eğilimdir; bu yüzden
+        # rotadan onlarca km uzaktaki güçlü metin eşleşmeleri de dönebiliyor.
+        # Burada her sonucun polyline'a gerçek dik mesafesini (point-to-line distance)
+        # hesaplayıp koridor dışında kalanları eliyoruz.
+        xy, _lat0, k = _projeksiyon_kur(noktalar)
+        esik = koridor * 1.15   # sınırdaki iyi mekânlar kıl payı elenmesin diye tolerans
+
+        liste = []
+        elenen = 0
+        for fp in bulunanlar.values():
+            lat, lng = fp.get("lat"), fp.get("lng")
+            if lat is None or lng is None:
+                elenen += 1
+                continue
+            d = _polyline_mesafe(float(lat), float(lng), xy, k)
+            if d > esik:
+                elenen += 1
+                continue
+            fp["rota_mesafe_m"] = int(round(d))
+            liste.append(fp)
+
+        # Rotaya en yakın önce (frontend istediğinde puana göre yeniden sıralayabilir)
+        liste.sort(key=lambda x: x.get("rota_mesafe_m", 999999))
+
         return jsonify({"kaynak": "google", "sayi": len(liste), "restoranlar": liste,
-                        "arama_noktasi": len(ornek_noktalar)})
+                        "arama_noktasi": len(ornek_noktalar),
+                        "koridor_m": int(koridor), "elenen": elenen,
+                        "rota_uzunluk_m": int(rota_uzunluk)})
     except Exception as e:
         return _hata(f"Rota arama hatası: {e}", 500)
 
